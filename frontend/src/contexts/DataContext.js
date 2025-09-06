@@ -87,7 +87,11 @@ export function DataProvider({ children }) {
       if (type === 'researchAreas') endpoint = '/api/research-areas';
       if (type === 'photoGallery') endpoint = '/api/photo-gallery';
       
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}${endpoint}`, { params });
+      // Use environment variable or fallback to relative URL for production
+      const baseURL = process.env.REACT_APP_BACKEND_URL || '/api';
+      const fullURL = baseURL.startsWith('http') ? `${baseURL}${endpoint}` : endpoint;
+      
+      const response = await axios.get(fullURL, { params });
       
       dispatch({
         type: 'SET_DATA',
