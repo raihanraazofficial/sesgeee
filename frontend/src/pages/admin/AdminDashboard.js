@@ -47,24 +47,6 @@ const AdminDashboard = () => {
     setLoading(false);
   }, [people, publications, projects, achievements]);
 
-  const fetchDashboardData = useCallback(async () => {
-    try {
-      setLoading(true);
-      // Fetch all data from Firestore
-      await Promise.all([
-        fetchData('people'),
-        fetchData('publications'),
-        fetchData('projects'),
-        fetchData('achievements'),
-        fetchData('news')
-      ]);
-    } catch (error) {
-      console.error('Error fetching dashboard data:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [fetchData]);
-
   const quickActions = [
     { name: 'Manage People', href: '/admin/people', icon: Users },
     { name: 'Publications', href: '/admin/publications', icon: FileText },
