@@ -388,7 +388,7 @@ export function DataProvider({ children }) {
     };
 
     loadInitialData();
-  }, []);
+  }, [fetchData]);
 
   const value = {
     ...state,
