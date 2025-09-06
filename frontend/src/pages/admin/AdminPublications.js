@@ -171,12 +171,7 @@ const AdminPublications = () => {
     }
   };
 
-  const formatAuthors = (authors) => {
-    if (!authors || authors.length === 0) return 'No authors';
-    if (authors.length === 1) return authors[0];
-    if (authors.length === 2) return `${authors[0]} and ${authors[1]}`;
-    return `${authors[0]} et al.`;
-  };
+
 
   const formatCitation = (pub) => {
     const authorsStr = Array.isArray(pub.authors) ? pub.authors.join(', ') : pub.authors || '';
