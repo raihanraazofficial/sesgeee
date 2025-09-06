@@ -395,7 +395,8 @@ Best regards,
 
                         {/* Action Buttons */}
                         <div className="flex items-center space-x-4">
-                          {publication.link && (
+                          {/* Publication Link - Always visible */}
+                          {publication.link ? (
                             <a
                               href={publication.link}
                               target="_blank"
@@ -405,6 +406,11 @@ Best regards,
                               <ExternalLink className="h-4 w-4" />
                               <span>Publication Link</span>
                             </a>
+                          ) : (
+                            <span className="flex items-center space-x-1 text-gray-500 text-sm font-medium cursor-not-allowed">
+                              <ExternalLink className="h-4 w-4" />
+                              <span>Publication Link</span>
+                            </span>
                           )}
 
                           {!publication.is_open_access && (
