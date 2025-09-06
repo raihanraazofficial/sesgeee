@@ -357,7 +357,7 @@ const AdminPublications = () => {
                     value={formData.authors.join(', ')}
                     onChange={handleInputChange}
                     className="form-input"
-                    placeholder="John Doe, Jane Smith, etc."
+                    placeholder="R. U. Raihan, S. Ahmad"
                     required
                   />
                 </div>
@@ -367,33 +367,171 @@ const AdminPublications = () => {
                     Publication Type *
                   </label>
                   <select
-                    name="type"
-                    value={formData.type}
+                    name="publication_type"
+                    value={formData.publication_type}
                     onChange={handleInputChange}
                     className="form-input"
                     required
                   >
                     <option value="journal">Journal Article</option>
-                    <option value="conference">Conference Paper</option>
-                    <option value="book">Book</option>
-                    <option value="chapter">Book Chapter</option>
-                    <option value="thesis">Thesis</option>
+                    <option value="conference">Conference Proceedings</option>
+                    <option value="book_chapter">Book Chapter</option>
                   </select>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Journal Fields */}
+              {formData.publication_type === 'journal' && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Journal/Conference *
+                    Journal Name *
                   </label>
                   <input
                     type="text"
-                    name="journal"
-                    value={formData.journal}
+                    name="journal_name"
+                    value={formData.journal_name}
                     onChange={handleInputChange}
                     className="form-input"
                     required
+                  />
+                </div>
+              )}
+
+              {/* Conference Fields */}
+              {formData.publication_type === 'conference' && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Conference Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="conference_name"
+                      value={formData.conference_name}
+                      onChange={handleInputChange}
+                      className="form-input"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Location (city, country)
+                    </label>
+                    <input
+                      type="text"
+                      name="location"
+                      value={formData.location}
+                      onChange={handleInputChange}
+                      className="form-input"
+                      placeholder="Dhaka, Bangladesh"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Book Chapter Fields */}
+              {formData.publication_type === 'book_chapter' && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Book Title *
+                      </label>
+                      <input
+                        type="text"
+                        name="book_title"
+                        value={formData.book_title}
+                        onChange={handleInputChange}
+                        className="form-input"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Edition
+                      </label>
+                      <input
+                        type="text"
+                        name="edition"
+                        value={formData.edition}
+                        onChange={handleInputChange}
+                        className="form-input"
+                        placeholder="1st ed."
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Editors (comma-separated)
+                      </label>
+                      <input
+                        type="text"
+                        name="editor"
+                        value={formData.editor.join(', ')}
+                        onChange={handleInputChange}
+                        className="form-input"
+                        placeholder="J. Smith, A. Johnson"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Publisher
+                      </label>
+                      <input
+                        type="text"
+                        name="publisher"
+                        value={formData.publisher}
+                        onChange={handleInputChange}
+                        className="form-input"
+                        placeholder="IEEE Press"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Volume
+                  </label>
+                  <input
+                    type="text"
+                    name="volume"
+                    value={formData.volume}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="12"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Issue/Number
+                  </label>
+                  <input
+                    type="text"
+                    name="issue"
+                    value={formData.issue}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="3"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Pages
+                  </label>
+                  <input
+                    type="text"
+                    name="pages"
+                    value={formData.pages}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="123-130"
                   />
                 </div>
 
@@ -414,88 +552,60 @@ const AdminPublications = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Volume
-                  </label>
-                  <input
-                    type="text"
-                    name="volume"
-                    value={formData.volume}
-                    onChange={handleInputChange}
-                    className="form-input"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Issue
-                  </label>
-                  <input
-                    type="text"
-                    name="issue"
-                    value={formData.issue}
-                    onChange={handleInputChange}
-                    className="form-input"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Pages
-                  </label>
-                  <input
-                    type="text"
-                    name="pages"
-                    value={formData.pages}
-                    onChange={handleInputChange}
-                    className="form-input"
-                    placeholder="1-10"
-                  />
-                </div>
-              </div>
-
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    DOI
+                    Month
                   </label>
-                  <input
-                    type="text"
-                    name="doi"
-                    value={formData.doi}
+                  <select
+                    name="month"
+                    value={formData.month}
                     onChange={handleInputChange}
                     className="form-input"
-                    placeholder="10.1000/182"
-                  />
+                  >
+                    <option value="">Select Month</option>
+                    <option value="Jan.">January</option>
+                    <option value="Feb.">February</option>
+                    <option value="Mar.">March</option>
+                    <option value="Apr.">April</option>
+                    <option value="May">May</option>
+                    <option value="Jun.">June</option>
+                    <option value="Jul.">July</option>
+                    <option value="Aug.">August</option>
+                    <option value="Sep.">September</option>
+                    <option value="Oct.">October</option>
+                    <option value="Nov.">November</option>
+                    <option value="Dec.">December</option>
+                  </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    URL
+                    Citations
                   </label>
                   <input
-                    type="url"
-                    name="url"
-                    value={formData.url}
+                    type="number"
+                    name="citations"
+                    value={formData.citations}
                     onChange={handleInputChange}
                     className="form-input"
-                    placeholder="https://example.com/paper"
+                    min="0"
+                    placeholder="0"
                   />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Abstract
+                  DOI/Publication Link
                 </label>
-                <textarea
-                  name="abstract"
-                  value={formData.abstract}
+                <input
+                  type="url"
+                  name="link"
+                  value={formData.link}
                   onChange={handleInputChange}
-                  rows={4}
                   className="form-input"
+                  placeholder="https://doi.org/10.1000/182 or https://ieeexplore.ieee.org/..."
                 />
               </div>
 
@@ -503,26 +613,49 @@ const AdminPublications = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Keywords (comma-separated)
                 </label>
-                <input
-                  type="text"
+                <textarea
                   name="keywords"
                   value={formData.keywords.join(', ')}
                   onChange={handleInputChange}
-                  className="form-input"
-                  placeholder="smart grid, renewable energy, etc."
+                  rows={3}
+                  className="form-input resize-none"
+                  placeholder="smart grid, renewable energy, power systems, machine learning"
                 />
+                <p className="text-xs text-gray-500 mt-1">Press comma (,) to separate keywords</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Research Areas
+                </label>
+                <select
+                  name="research_areas"
+                  multiple
+                  value={formData.research_areas}
+                  onChange={handleInputChange}
+                  className="form-input"
+                  size="4"
+                >
+                  {researchAreasList.map((area) => (
+                    <option key={area} value={area}>
+                      {area}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple research areas</p>
               </div>
 
               <div className="flex items-center">
                 <input
                   type="checkbox"
-                  name="is_featured"
-                  checked={formData.is_featured}
+                  name="is_open_access"
+                  checked={formData.is_open_access}
                   onChange={handleInputChange}
                   className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                 />
                 <label className="ml-2 block text-sm text-gray-700">
-                  Featured Publication
+                  Open Access Publication
+                  <span className="text-xs text-gray-500 block">Check if this publication is freely accessible (no "Request Paper" button will be shown)</span>
                 </label>
               </div>
 
