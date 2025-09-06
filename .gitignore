@@ -57,4 +57,7 @@ firebase-debug.*.log*
 # Misc
 *.tgz
 *.tar.gz
-.cache/
+.cache/-e 
+# Environment files
+*.env
+*.env.*
