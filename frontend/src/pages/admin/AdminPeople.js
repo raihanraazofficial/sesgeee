@@ -95,7 +95,9 @@ const AdminPeople = () => {
         google_scholar: '',
         researchgate: '',
         orcid: '',
-        linkedin: ''
+        linkedin: '',
+        github: '',
+        ieee: ''
       }
     });
     setShowModal(true);
