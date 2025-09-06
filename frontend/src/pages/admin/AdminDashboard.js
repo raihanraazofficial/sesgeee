@@ -19,7 +19,7 @@ const AdminDashboard = () => {
 
   const fetchDashboardStats = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('admin_session');
       const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
       
       const response = await axios.get(`${backendUrl}/api/dashboard/stats`, {
