@@ -58,21 +58,21 @@ const AdminSettings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-dark-800 border-b border-gray-700">
+      <div className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-4">
               <Link
                 to="/admin/dashboard"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
               >
                 <ArrowLeft className="h-6 w-6" />
               </Link>
               <div>
-                <h1 className="text-3xl font-bold font-heading text-white">Admin Settings</h1>
-                <p className="text-gray-400 mt-1">Manage system configuration and database</p>
+                <h1 className="text-3xl font-bold font-heading text-gray-900">Admin Settings</h1>
+                <p className="text-gray-600 mt-1">Manage system configuration and database</p>
               </div>
             </div>
           </div>
@@ -84,35 +84,35 @@ const AdminSettings = () => {
         <div className="space-y-8">
           
           {/* Database Management Section */}
-          <div className="glass rounded-xl p-8">
+          <div className="glass rounded-xl p-8 border border-gray-200 shadow-lg">
             <div className="flex items-center space-x-3 mb-6">
-              <Database className="h-8 w-8 text-primary-400" />
-              <h2 className="text-2xl font-bold text-white">Database Management</h2>
+              <Database className="h-8 w-8 text-primary-600" />
+              <h2 className="text-2xl font-bold text-gray-900">Database Management</h2>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
               {/* Initialize Database Card */}
-              <div className="bg-dark-700 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-white mb-3">Initialize Database</h3>
-                <p className="text-gray-400 text-sm mb-4">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">Initialize Database</h3>
+                <p className="text-gray-600 text-sm mb-4">
                   Create admin user and populate database with sample data for People, Publications, Projects, Achievements, and News.
                 </p>
                 
                 {initSuccess && (
-                  <div className="mb-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg">
+                  <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
                     <div className="flex items-center space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400" />
-                      <p className="text-green-400 text-sm">Database initialized successfully!</p>
+                      <CheckCircle className="h-4 w-4 text-green-600" />
+                      <p className="text-green-700 text-sm">Database initialized successfully!</p>
                     </div>
                   </div>
                 )}
 
                 {initError && (
-                  <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg">
+                  <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
                     <div className="flex items-center space-x-2">
-                      <AlertCircle className="h-4 w-4 text-red-400" />
-                      <p className="text-red-400 text-sm">Error: {initError}</p>
+                      <AlertCircle className="h-4 w-4 text-red-600" />
+                      <p className="text-red-700 text-sm">Error: {initError}</p>
                     </div>
                   </div>
                 )}
@@ -142,9 +142,9 @@ const AdminSettings = () => {
               </div>
 
               {/* Refresh Data Card */}
-              <div className="bg-dark-700 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-white mb-3">Refresh Data</h3>
-                <p className="text-gray-400 text-sm mb-4">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">Refresh Data</h3>
+                <p className="text-gray-600 text-sm mb-4">
                   Refresh all data from Firestore database to sync the latest changes across all admin panels.
                 </p>
 
@@ -170,49 +170,49 @@ const AdminSettings = () => {
           </div>
 
           {/* System Information */}
-          <div className="glass rounded-xl p-8">
+          <div className="glass rounded-xl p-8 border border-gray-200 shadow-lg">
             <div className="flex items-center space-x-3 mb-6">
-              <Settings className="h-8 w-8 text-secondary-400" />
-              <h2 className="text-2xl font-bold text-white">System Information</h2>
+              <Settings className="h-8 w-8 text-secondary-600" />
+              <h2 className="text-2xl font-bold text-gray-900">System Information</h2>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary-400 mb-2">v1.0.0</div>
-                <div className="text-gray-400 text-sm">System Version</div>
+                <div className="text-2xl font-bold text-primary-600 mb-2">v1.0.0</div>
+                <div className="text-gray-600 text-sm">System Version</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-400 mb-2">Firebase</div>
-                <div className="text-gray-400 text-sm">Database Type</div>
+                <div className="text-2xl font-bold text-green-600 mb-2">Firebase</div>
+                <div className="text-gray-600 text-sm">Database Type</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-400 mb-2">React</div>
-                <div className="text-gray-400 text-sm">Frontend Framework</div>
+                <div className="text-2xl font-bold text-blue-600 mb-2">React</div>
+                <div className="text-gray-600 text-sm">Frontend Framework</div>
               </div>
             </div>
           </div>
 
           {/* Admin Credentials */}
-          <div className="glass rounded-xl p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">Admin Credentials</h2>
-            <div className="bg-dark-700 rounded-lg p-4">
+          <div className="glass rounded-xl p-8 border border-gray-200 shadow-lg">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Admin Credentials</h2>
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-1">Username</label>
+                  <label className="block text-sm font-medium text-gray-600 mb-1">Username</label>
                   <input 
                     type="text" 
                     value="admin" 
                     readOnly 
-                    className="form-input bg-gray-800 cursor-not-allowed opacity-75"
+                    className="form-input bg-gray-100 cursor-not-allowed opacity-75"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-1">Password</label>
+                  <label className="block text-sm font-medium text-gray-600 mb-1">Password</label>
                   <input 
                     type="password" 
                     value="@dminsesg705" 
                     readOnly 
-                    className="form-input bg-gray-800 cursor-not-allowed opacity-75"
+                    className="form-input bg-gray-100 cursor-not-allowed opacity-75"
                   />
                 </div>
               </div>

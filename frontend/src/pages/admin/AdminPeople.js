@@ -150,21 +150,21 @@ const AdminPeople = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-dark-900">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-dark-800 border-b border-gray-700">
+      <div className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-4">
               <Link
                 to="/admin/dashboard"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
               >
                 <ArrowLeft className="h-6 w-6" />
               </Link>
               <div>
-                <h1 className="text-3xl font-bold font-heading text-white">Manage People</h1>
-                <p className="text-gray-400 mt-1">Add, edit, and manage team members</p>
+                <h1 className="text-3xl font-bold font-heading text-gray-900">Manage People</h1>
+                <p className="text-gray-600 mt-1">Add, edit, and manage team members</p>
               </div>
             </div>
             <button
@@ -182,7 +182,7 @@ const AdminPeople = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Category Tabs */}
         <div className="mb-8">
-          <div className="border-b border-gray-700">
+          <div className="border-b border-gray-200">
             <nav className="-mb-px flex space-x-8">
               {categories.map((category) => (
                 <button
@@ -190,8 +190,8 @@ const AdminPeople = () => {
                   onClick={() => handleTabChange(category.key)}
                   className={`py-2 px-1 border-b-2 font-medium text-sm ${
                     activeTab === category.key
-                      ? 'border-primary-500 text-primary-400'
-                      : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-300'
+                      ? 'border-primary-500 text-primary-600'
+                      : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
                   }`}
                 >
                   {category.label} ({category.count})
@@ -209,7 +209,7 @@ const AdminPeople = () => {
         ) : filteredPeople.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPeople.map((person) => (
-              <div key={person.id} className="glass rounded-xl p-6">
+              <div key={person.id} className="glass rounded-xl p-6 border border-gray-200 shadow-lg">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     {person.image && (
@@ -219,20 +219,20 @@ const AdminPeople = () => {
                         className="w-16 h-16 rounded-full object-cover mb-4"
                       />
                     )}
-                    <h3 className="text-lg font-semibold text-white mb-1">{person.name}</h3>
-                    <p className="text-primary-400 text-sm mb-1">{person.title}</p>
-                    <p className="text-gray-400 text-sm mb-3">{person.department}</p>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1">{person.name}</h3>
+                    <p className="text-primary-600 text-sm mb-1">{person.title}</p>
+                    <p className="text-gray-600 text-sm mb-3">{person.department}</p>
                   </div>
                   <div className="flex space-x-2">
                     <button
                       onClick={() => handleEdit(person)}
-                      className="text-gray-400 hover:text-primary-400 transition-colors"
+                      className="text-gray-600 hover:text-primary-600 transition-colors"
                     >
                       <Edit className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => handleDelete(person.id, person.name)}
-                      className="text-gray-400 hover:text-red-400 transition-colors"
+                      className="text-gray-600 hover:text-red-600 transition-colors"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -240,38 +240,38 @@ const AdminPeople = () => {
                 </div>
                 
                 {person.bio && (
-                  <p className="text-gray-300 text-sm mb-3 line-clamp-3">{person.bio}</p>
+                  <p className="text-gray-700 text-sm mb-3 line-clamp-3">{person.bio}</p>
                 )}
                 
                 {person.research_interests && person.research_interests.length > 0 && (
                   <div className="mb-3">
-                    <h4 className="text-white text-sm font-medium mb-2">Research Interests:</h4>
+                    <h4 className="text-gray-900 text-sm font-medium mb-2">Research Interests:</h4>
                     <div className="flex flex-wrap gap-1">
                       {person.research_interests.slice(0, 3).map((interest, index) => (
                         <span
                           key={index}
-                          className="px-2 py-1 bg-primary-500/20 text-primary-300 text-xs rounded-full"
+                          className="px-2 py-1 bg-primary-100 text-primary-700 text-xs rounded-full border border-primary-200"
                         >
                           {interest}
                         </span>
                       ))}
                       {person.research_interests.length > 3 && (
-                        <span className="text-gray-400 text-xs">+{person.research_interests.length - 3} more</span>
+                        <span className="text-gray-500 text-xs">+{person.research_interests.length - 3} more</span>
                       )}
                     </div>
                   </div>
                 )}
                 
                 {person.email && (
-                  <p className="text-gray-400 text-sm">{person.email}</p>
+                  <p className="text-gray-600 text-sm">{person.email}</p>
                 )}
               </div>
             ))}
           </div>
         ) : (
-          <div className="glass rounded-xl p-12 text-center">
-            <h3 className="text-xl font-semibold text-white mb-2">No Members Found in this Category</h3>
-            <p className="text-gray-400 mb-6">
+          <div className="glass rounded-xl p-12 text-center border border-gray-200 shadow-lg">
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">No Members Found in this Category</h3>
+            <p className="text-gray-600 mb-6">
               We are seeking members for our {activeTab.replace('_', ' ')} team. Join us to contribute to cutting-edge research in sustainable energy and smart grid technologies.
             </p>
             <div className="space-y-3">
@@ -282,7 +282,7 @@ const AdminPeople = () => {
                 Express Interest
               </button>
               <p className="text-sm text-gray-500">Join Our Research Team</p>
-              <p className="text-sm text-gray-400">
+              <p className="text-sm text-gray-600">
                 Interested in contributing to sustainable energy and smart grid research? We welcome collaborations with researchers, students, and industry partners.
               </p>
               <Link to="/contact" className="btn-secondary">
@@ -296,14 +296,14 @@ const AdminPeople = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-dark-800 rounded-xl p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
+          <div className="bg-white rounded-xl p-6 w-full max-w-2xl max-h-screen overflow-y-auto border border-gray-200 shadow-xl">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-2xl font-bold text-gray-900">
                 {editingPerson ? 'Edit Person' : 'Add New Person'}
               </h2>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-gray-400 hover:text-white"
+                className="text-gray-600 hover:text-gray-900"
               >
                 <X className="h-6 w-6" />
               </button>
@@ -312,7 +312,7 @@ const AdminPeople = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Name *
                   </label>
                   <input
@@ -326,7 +326,7 @@ const AdminPeople = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Title *
                   </label>
                   <input
@@ -341,7 +341,7 @@ const AdminPeople = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Department *
                 </label>
                 <input
@@ -355,7 +355,7 @@ const AdminPeople = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Category *
                 </label>
                 <select
@@ -372,7 +372,7 @@ const AdminPeople = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Bio
                 </label>
                 <textarea
@@ -385,7 +385,7 @@ const AdminPeople = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Research Interests (comma-separated)
                 </label>
                 <input
@@ -400,7 +400,7 @@ const AdminPeople = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Image URL
                   </label>
                   <input
@@ -413,7 +413,7 @@ const AdminPeople = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Email
                   </label>
                   <input
@@ -427,7 +427,7 @@ const AdminPeople = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Personal Website URL
                 </label>
                 <input
@@ -441,10 +441,10 @@ const AdminPeople = () => {
               </div>
 
               <div>
-                <h3 className="text-lg font-medium text-white mb-3">Social & Research Links</h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-3">Social & Research Links</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Google Scholar
                     </label>
                     <input
@@ -457,7 +457,7 @@ const AdminPeople = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       ResearchGate
                     </label>
                     <input
@@ -470,7 +470,7 @@ const AdminPeople = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       ORCID
                     </label>
                     <input
@@ -483,7 +483,7 @@ const AdminPeople = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       LinkedIn
                     </label>
                     <input
@@ -496,7 +496,7 @@ const AdminPeople = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       GitHub
                     </label>
                     <input
@@ -509,7 +509,7 @@ const AdminPeople = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       IEEE Profile
                     </label>
                     <input
