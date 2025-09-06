@@ -86,7 +86,9 @@ const Footer = () => {
               </div>
               <div className="mt-4">
                 <a 
-                  href="#" 
+                  href="https://maps.google.com/?q=BRAC+University,+Dhaka" 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-cyan-400 hover:text-cyan-300 transition-colors text-sm"
                 >
                   View on Map →
