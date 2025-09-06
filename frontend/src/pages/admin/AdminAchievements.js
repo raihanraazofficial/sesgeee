@@ -32,8 +32,8 @@ const AdminAchievements = () => {
   ];
 
   const filteredAchievements = achievements.filter(achievement => {
-    const matchesSearch = achievement.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         achievement.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = (achievement.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (achievement.description || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || achievement.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
