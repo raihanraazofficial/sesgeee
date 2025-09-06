@@ -22,8 +22,12 @@
       "dest": "/backend/server.py"
     },
     {
-      "src": "/(.*)",
+      "src": "/admin/(.*)",
       "dest": "/frontend/index.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
     }
   ],
   "env": {
