@@ -168,6 +168,7 @@ const Home = () => {
         height="h-[60vh]"
         showScrollIndicator={false}
         buttons={[]}
+        enableAnimations={true}
       />
 
       {/* About Us Section - Moved right after Hero */}
