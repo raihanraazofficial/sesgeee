@@ -437,32 +437,58 @@ async def login(request: LoginRequest):
 
 @app.get("/api/research-areas")
 async def get_research_areas():
-    return in_memory_db["research_areas"]
+    return get_collection_data("research_areas")
 
 @app.get("/api/research-areas/{area_id}")
 async def get_research_area(area_id: str):
-    area = next((area for area in in_memory_db["research_areas"] if area["id"] == area_id), None)
-    if not area:
-        raise HTTPException(status_code=404, detail="Research area not found")
-    return area
+    try:
+        if db is None:
+            area = next((area for area in in_memory_db["research_areas"] if area["id"] == area_id), None)
+            if not area:
+                raise HTTPException(status_code=404, detail="Research area not found")
+            return area
+        
+        doc_ref = db.collection("research_areas").document(area_id)
+        doc = doc_ref.get()
+        if not doc.exists:
+            raise HTTPException(status_code=404, detail="Research area not found")
+        
+        area_data = doc.to_dict()
+        area_data['id'] = doc.id
+        return area_data
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error fetching research area: {e}")
+        raise HTTPException(status_code=500, detail="Error fetching research area")
 
 @app.get("/api/people")
 async def get_people(category: Optional[str] = None):
-    people = in_memory_db["people"]
-    if category:
-        people = [p for p in people if p.get("category") == category]
-    return people
+    filters = [("category", "==", category)] if category else None
+    return get_collection_data("people", filters=filters)
 
 @app.post("/api/people")
 async def create_person(person: PersonCreate, current_user: dict = Depends(get_current_user)):
     if current_user["role"] != "admin":
         raise HTTPException(status_code=403, detail="Not enough permissions")
     
-    new_person = person.dict()
-    new_person["id"] = str(uuid.uuid4())
-    new_person["created_at"] = datetime.utcnow()
-    in_memory_db["people"].append(new_person)
-    return new_person
+    person_data = person.dict()
+    return add_document("people", person_data)
+
+@app.put("/api/people/{person_id}")
+async def update_person(person_id: str, person: PersonCreate, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    person_data = person.dict()
+    return update_document("people", person_id, person_data)
+
+@app.delete("/api/people/{person_id}")
+async def delete_person(person_id: str, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    return delete_document("people", person_id)
 
 @app.get("/api/publications")
 async def get_publications(
@@ -473,13 +499,19 @@ async def get_publications(
     sort_by: str = "year",
     sort_order: str = "desc"
 ):
-    publications = in_memory_db["publications"]
-    
-    # Apply filters
+    filters = []
     if publication_type:
-        publications = [p for p in publications if p.get("publication_type") == publication_type]
+        filters.append(("publication_type", "==", publication_type))
     if year:
-        publications = [p for p in publications if p.get("year") == year]
+        filters.append(("year", "==", year))
+    
+    # For Firebase, we'll get all data and filter search/research_area in Python
+    # since Firestore has limitations on complex queries
+    order_by = (sort_by, firestore.Query.DESCENDING if sort_order == "desc" else firestore.Query.ASCENDING) if db else None
+    
+    publications = get_collection_data("publications", filters=filters, order_by=order_by)
+    
+    # Apply additional filters
     if research_area:
         publications = [p for p in publications if research_area in p.get("research_areas", [])]
     if search:
@@ -488,15 +520,6 @@ async def get_publications(
                        search_lower in p.get("title", "").lower() or
                        any(search_lower in author.lower() for author in p.get("authors", []))]
     
-    # Sort publications
-    reverse = sort_order == "desc"
-    if sort_by == "year":
-        publications.sort(key=lambda x: x.get("year", 0), reverse=reverse)
-    elif sort_by == "citations":
-        publications.sort(key=lambda x: x.get("citations", 0), reverse=reverse)
-    elif sort_by == "title":
-        publications.sort(key=lambda x: x.get("title", "").lower(), reverse=reverse)
-    
     return publications
 
 @app.post("/api/publications")
@@ -504,77 +527,237 @@ async def create_publication(publication: PublicationCreate, current_user: dict 
     if current_user["role"] != "admin":
         raise HTTPException(status_code=403, detail="Not enough permissions")
     
-    new_publication = publication.dict()
-    new_publication["id"] = str(uuid.uuid4())
-    new_publication["created_at"] = datetime.utcnow()
-    in_memory_db["publications"].append(new_publication)
-    return new_publication
+    publication_data = publication.dict()
+    return add_document("publications", publication_data)
+
+@app.put("/api/publications/{publication_id}")
+async def update_publication(publication_id: str, publication: PublicationCreate, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    publication_data = publication.dict()
+    return update_document("publications", publication_id, publication_data)
+
+@app.delete("/api/publications/{publication_id}")
+async def delete_publication(publication_id: str, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    return delete_document("publications", publication_id)
 
 @app.get("/api/projects")
 async def get_projects(category: Optional[str] = None, status: Optional[str] = None):
-    projects = in_memory_db["projects"]
+    filters = []
     if category:
-        projects = [p for p in projects if p.get("category") == category]
+        filters.append(("category", "==", category))
     if status:
-        projects = [p for p in projects if p.get("status") == status]
-    return projects
+        filters.append(("status", "==", status))
+    
+    return get_collection_data("projects", filters=filters)
+
+@app.post("/api/projects")
+async def create_project(project: ProjectCreate, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    project_data = project.dict()
+    return add_document("projects", project_data)
+
+@app.put("/api/projects/{project_id}")
+async def update_project(project_id: str, project: ProjectCreate, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    project_data = project.dict()
+    return update_document("projects", project_id, project_data)
+
+@app.delete("/api/projects/{project_id}")
+async def delete_project(project_id: str, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    return delete_document("projects", project_id)
 
 @app.get("/api/achievements")
-async def get_achievements():
-    return in_memory_db["achievements"]
+async def get_achievements(category: Optional[str] = None):
+    filters = [("category", "==", category)] if category else None
+    return get_collection_data("achievements", filters=filters)
+
+@app.post("/api/achievements")
+async def create_achievement(achievement: AchievementCreate, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    achievement_data = achievement.dict()
+    return add_document("achievements", achievement_data)
+
+@app.put("/api/achievements/{achievement_id}")
+async def update_achievement(achievement_id: str, achievement: AchievementCreate, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    achievement_data = achievement.dict()
+    return update_document("achievements", achievement_id, achievement_data)
+
+@app.delete("/api/achievements/{achievement_id}")
+async def delete_achievement(achievement_id: str, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    return delete_document("achievements", achievement_id)
 
 @app.get("/api/news")
 async def get_news(featured: Optional[bool] = None, limit: Optional[int] = None):
-    news = in_memory_db["news"]
-    if featured is not None:
-        news = [n for n in news if n.get("is_featured") == featured]
+    filters = [("is_featured", "==", featured)] if featured is not None else None
+    order_by = ("published_date", firestore.Query.DESCENDING) if db else None
     
-    # Sort by published date
-    news.sort(key=lambda x: x.get("published_date", datetime.min), reverse=True)
-    
-    if limit:
-        news = news[:limit]
-    
+    news = get_collection_data("news", filters=filters, order_by=order_by, limit=limit)
     return news
+
+@app.post("/api/news")
+async def create_news(news: NewsCreate, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    news_data = news.dict()
+    return add_document("news", news_data)
+
+@app.put("/api/news/{news_id}")
+async def update_news(news_id: str, news: NewsCreate, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    news_data = news.dict()
+    return update_document("news", news_id, news_data)
+
+@app.delete("/api/news/{news_id}")
+async def delete_news(news_id: str, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    return delete_document("news", news_id)
 
 @app.get("/api/events")
 async def get_events(upcoming: Optional[bool] = None):
-    events = in_memory_db["events"]
+    order_by = ("date", firestore.Query.ASCENDING) if db else None
+    events = get_collection_data("events", order_by=order_by)
     
     if upcoming:
         current_date = datetime.utcnow()
-        events = [e for e in events if e.get("date", datetime.min) > current_date]
-    
-    # Sort by date
-    events.sort(key=lambda x: x.get("date", datetime.min))
+        events = [e for e in events if datetime.fromisoformat(e.get("date", "1970-01-01T00:00:00")) > current_date]
     
     return events
 
+@app.post("/api/events")
+async def create_event(event: EventCreate, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    event_data = event.dict()
+    return add_document("events", event_data)
+
+@app.put("/api/events/{event_id}")
+async def update_event(event_id: str, event: EventCreate, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    event_data = event.dict()
+    return update_document("events", event_id, event_data)
+
+@app.delete("/api/events/{event_id}")
+async def delete_event(event_id: str, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    return delete_document("events", event_id)
+
 @app.get("/api/photo-gallery")
 async def get_photo_gallery():
-    return in_memory_db["photo_gallery"]
+    return get_collection_data("photo_gallery")
+
+@app.post("/api/photo-gallery")
+async def create_photo(photo_data: dict, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    return add_document("photo_gallery", photo_data)
+
+@app.delete("/api/photo-gallery/{photo_id}")
+async def delete_photo(photo_id: str, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    return delete_document("photo_gallery", photo_id)
 
 @app.get("/api/settings")
 async def get_settings():
-    return in_memory_db["settings"]
+    try:
+        if db is None:
+            return in_memory_db["settings"]
+        
+        doc_ref = db.collection("settings").document("site_config")
+        doc = doc_ref.get()
+        if doc.exists:
+            return doc.to_dict()
+        else:
+            # Return default settings if none exist
+            return in_memory_db["settings"]
+    except Exception as e:
+        print(f"Error fetching settings: {e}")
+        return in_memory_db["settings"]
+
+@app.put("/api/settings")
+async def update_settings(settings_data: dict, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    
+    try:
+        if db is None:
+            in_memory_db["settings"].update(settings_data)
+            return in_memory_db["settings"]
+        
+        settings_data['updated_at'] = datetime.utcnow()
+        doc_ref = db.collection("settings").document("site_config")
+        doc_ref.set(settings_data, merge=True)
+        
+        # Return updated settings
+        updated_doc = doc_ref.get().to_dict()
+        for key, value in updated_doc.items():
+            if hasattr(value, 'isoformat'):
+                updated_doc[key] = value.isoformat()
+        return updated_doc
+    except Exception as e:
+        print(f"Error updating settings: {e}")
+        raise HTTPException(status_code=500, detail="Error updating settings")
 
 @app.get("/api/dashboard/stats")
 async def get_dashboard_stats(current_user: dict = Depends(get_current_user)):
     if current_user["role"] != "admin":
         raise HTTPException(status_code=403, detail="Not enough permissions")
     
-    stats = {
-        "total_publications": len(in_memory_db["publications"]),
-        "total_people": len(in_memory_db["people"]),
-        "total_projects": len(in_memory_db["projects"]),
-        "total_achievements": len(in_memory_db["achievements"]),
-        "total_news": len(in_memory_db["news"]),
-        "total_events": len(in_memory_db["events"]),
-        "total_citations": sum(p.get("citations", 0) for p in in_memory_db["publications"]),
-        "latest_year": max([p.get("year", 0) for p in in_memory_db["publications"]], default=2025)
-    }
-    
-    return stats
+    try:
+        people = get_collection_data("people")
+        publications = get_collection_data("publications")
+        projects = get_collection_data("projects")
+        achievements = get_collection_data("achievements")
+        news = get_collection_data("news")
+        events = get_collection_data("events")
+        
+        stats = {
+            "total_publications": len(publications),
+            "total_people": len(people),
+            "total_projects": len(projects),
+            "total_achievements": len(achievements),
+            "total_news": len(news),
+            "total_events": len(events),
+            "total_citations": sum(p.get("citations", 0) for p in publications),
+            "latest_year": max([p.get("year", 0) for p in publications], default=2025)
+        }
+        
+        return stats
+    except Exception as e:
+        print(f"Error fetching dashboard stats: {e}")
+        raise HTTPException(status_code=500, detail="Error fetching dashboard stats")
 
 if __name__ == "__main__":
     import uvicorn
