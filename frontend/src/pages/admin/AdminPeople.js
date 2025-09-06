@@ -427,6 +427,20 @@ const AdminPeople = () => {
               </div>
 
               <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Personal Website URL
+                </label>
+                <input
+                  type="url"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleInputChange}
+                  className="form-input"
+                  placeholder="https://example.com"
+                />
+              </div>
+
+              <div>
                 <h3 className="text-lg font-medium text-white mb-3">Social Links</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
