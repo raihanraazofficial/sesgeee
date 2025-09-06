@@ -179,19 +179,16 @@ const AdminPublications = () => {
   };
 
   const formatCitation = (pub) => {
-    const authorsStr = formatAuthors(pub.authors);
-    let citation = `${authorsStr}. "${pub.title}." `;
+    const authorsStr = Array.isArray(pub.authors) ? pub.authors.join(', ') : pub.authors || '';
     
-    if (pub.journal) {
-      citation += `${pub.journal}`;
-      if (pub.volume) citation += ` ${pub.volume}`;
-      if (pub.issue) citation += `.${pub.issue}`;
-      if (pub.pages) citation += ` (${pub.pages})`;
+    if (pub.publication_type === 'journal') {
+      return `${authorsStr}, "${pub.title}," ${pub.journal_name || 'Journal'}${pub.volume ? `, vol. ${pub.volume}` : ''}${pub.issue ? `, no. ${pub.issue}` : ''}${pub.pages ? `, pp. ${pub.pages}` : ''}, ${pub.year}.`;
+    } else if (pub.publication_type === 'conference') {
+      return `${authorsStr}, "${pub.title}," in ${pub.conference_name || 'Conference Proceedings'}${pub.location ? `, ${pub.location}` : ''}, ${pub.year}${pub.pages ? `, pp. ${pub.pages}` : ''}.`;
+    } else if (pub.publication_type === 'book_chapter') {
+      return `${authorsStr}, "${pub.title}," in ${pub.book_title || 'Book Title'}${pub.edition ? `, ${pub.edition}` : ''}${pub.editor && pub.editor.length > 0 ? `, ${pub.editor.join(', ')}, ${pub.editor.length === 1 ? 'Ed.' : 'Eds.'}` : ''}${pub.publisher ? `. ${pub.publisher}` : ''}${pub.location ? `, ${pub.location}` : ''}, ${pub.year}${pub.pages ? `, pp. ${pub.pages}` : ''}.`;
     }
-    
-    citation += ` (${pub.year}).`;
-    
-    return citation;
+    return `${authorsStr}, "${pub.title}," ${pub.year}.`;
   };
 
   return (
