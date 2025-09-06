@@ -229,3 +229,30 @@ code {
     @apply text-2xl;
   }
 }
+
+/* About us text justified */
+.text-justified {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* Light theme specific utilities */
+.bg-light {
+  @apply bg-white;
+}
+
+.bg-light-gray {
+  @apply bg-gray-50;
+}
+
+.text-light {
+  @apply text-gray-900;
+}
+
+.text-light-secondary {
+  @apply text-gray-700;
+}
+
+.border-light {
+  @apply border-gray-200;
+}
