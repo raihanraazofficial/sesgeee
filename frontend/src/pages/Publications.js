@@ -386,7 +386,7 @@ Best regards,
               {/* Publications List */}
               <div className="space-y-4 mb-8">
                 {currentPublications.map((publication, index) => (
-                  <div key={publication.id} className="glass rounded-xl p-6 hover:bg-dark-700/50 transition-colors">
+                  <div key={publication.id} className="glass rounded-xl p-6 hover:shadow-lg transition-all duration-300">
                     <div className="flex items-start space-x-4">
                       {/* Auto Number */}
                       <div className={`w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0 border ${getCategoryColor(publication.publication_type)}`}>
@@ -402,14 +402,14 @@ Best regards,
                             {publication.publication_type === 'journal' ? 'Journal Article' : 
                              publication.publication_type === 'conference' ? 'Conference Proceedings' : 'Book Chapter'}
                           </span>
-                          <span className="text-gray-400 text-sm font-medium">{publication.year}</span>
+                          <span className="text-gray-600 text-sm font-medium">{publication.year}</span>
                           {publication.citations > 0 && (
-                            <span className="text-yellow-400 text-sm">Citations: {publication.citations}</span>
+                            <span className="text-yellow-600 text-sm">Citations: {publication.citations}</span>
                           )}
                         </div>
 
                         {/* IEEE Citation */}
-                        <div className="text-gray-300 text-sm leading-relaxed mb-4">
+                        <div className="text-gray-700 text-sm leading-relaxed mb-4">
                           {formatIEEECitation(publication)}
                         </div>
 
@@ -419,7 +419,7 @@ Best regards,
                             {publication.keywords.map((keyword, idx) => (
                               <span
                                 key={idx}
-                                className="px-2 py-1 bg-gray-700/50 text-gray-300 text-xs rounded border border-gray-600"
+                                className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded border border-gray-200"
                               >
                                 {keyword}
                               </span>
@@ -435,13 +435,13 @@ Best regards,
                               href={publication.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center space-x-1 text-primary-400 hover:text-primary-300 text-sm font-medium"
+                              className="flex items-center space-x-1 text-primary-600 hover:text-primary-700 text-sm font-medium"
                             >
                               <ExternalLink className="h-4 w-4" />
                               <span>Publication Link</span>
                             </a>
                           ) : (
-                            <span className="flex items-center space-x-1 text-gray-500 text-sm font-medium cursor-not-allowed">
+                            <span className="flex items-center space-x-1 text-gray-400 text-sm font-medium cursor-not-allowed">
                               <ExternalLink className="h-4 w-4" />
                               <span>Publication Link</span>
                             </span>
@@ -450,7 +450,7 @@ Best regards,
                           {!publication.is_open_access && (
                             <button
                               onClick={() => requestPaper(publication)}
-                              className="flex items-center space-x-1 text-yellow-400 hover:text-yellow-300 text-sm font-medium"
+                              className="flex items-center space-x-1 text-yellow-600 hover:text-yellow-700 text-sm font-medium"
                             >
                               <Mail className="h-4 w-4" />
                               <span>Request Paper</span>
@@ -459,7 +459,7 @@ Best regards,
 
                           <button
                             onClick={() => copyCitation(formatIEEECitation(publication))}
-                            className="flex items-center space-x-1 text-gray-400 hover:text-gray-300 text-sm font-medium"
+                            className="flex items-center space-x-1 text-gray-600 hover:text-gray-700 text-sm font-medium"
                           >
                             <Copy className="h-4 w-4" />
                             <span>Copy Citation</span>
