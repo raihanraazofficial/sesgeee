@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Plus, Edit, Trash2, Save, X, Search } from 'lucide-react';
+import { ArrowLeft, Plus, Edit, Trash2, Save, X, Search, Copy, ExternalLink, Mail } from 'lucide-react';
 import { useData } from '../../contexts/DataContext';
 import { toast } from 'react-toastify';
 
@@ -28,6 +28,7 @@ const AdminPublications = () => {
     location: '',
     editor: [],
     publisher: '',
+    place_of_publication: '',
     edition: '',
     keywords: [],
     link: '',
@@ -36,6 +37,17 @@ const AdminPublications = () => {
     research_areas: []
   });
 
+  // Research areas for dropdown
+  const researchAreaOptions = [
+    'Smart Grid Technologies',
+    'Microgrids & Distributed Energy Systems', 
+    'Renewable Energy Integration',
+    'Grid Optimization & Stability',
+    'Energy Storage Systems',
+    'Power System Automation',
+    'Cybersecurity and AI for Power Infrastructure'
+  ];
+
   useEffect(() => {
     fetchData('publications');
   }, [fetchData]);
@@ -43,12 +55,19 @@ const AdminPublications = () => {
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     
-    if (name === 'authors' || name === 'editor' || name === 'keywords' || name === 'research_areas') {
+    if (name === 'authors' || name === 'editor' || name === 'keywords') {
       // Split by comma and trim whitespace
       const items = value.split(',').map(item => item.trim()).filter(item => item);
       setFormData(prev => ({
         ...prev,
         [name]: items
+      }));
+    } else if (name === 'research_areas') {
+      // Handle multiple select
+      const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+      setFormData(prev => ({
+        ...prev,
+        [name]: selectedOptions
       }));
     } else if (type === 'checkbox') {
       setFormData(prev => ({
@@ -84,6 +103,7 @@ const AdminPublications = () => {
       location: '',
       editor: [],
       publisher: '',
+      place_of_publication: '',
       edition: '',
       keywords: [],
       link: '',
@@ -151,9 +171,37 @@ const AdminPublications = () => {
     } else if (pub.publication_type === 'conference') {
       return `${authors}, "${pub.title}," in ${pub.conference_name || 'Conference Proceedings'}, ${pub.location || 'Location'}, ${pub.year}${pub.pages ? `, pp. ${pub.pages}` : ''}.`;
     } else if (pub.publication_type === 'book_chapter') {
-      return `${authors}, "${pub.title}," in ${pub.book_title || 'Book Title'}${pub.edition ? `, ${pub.edition}` : ''}${pub.editor && pub.editor.length > 0 ? `, ${pub.editor.join(', ')}, ${pub.editor.length === 1 ? 'Ed.' : 'Eds.'}` : ''}${pub.publisher ? `. ${pub.publisher}` : ''}${pub.year ? `, ${pub.year}` : ''}${pub.pages ? `, pp. ${pub.pages}` : ''}.`;
+      return `${authors}, "${pub.title}," in ${pub.book_title || 'Book Title'}${pub.edition ? `, ${pub.edition}` : ''}${pub.editor && pub.editor.length > 0 ? `, ${pub.editor.join(', ')}, ${pub.editor.length === 1 ? 'Ed.' : 'Eds.'}` : ''}${pub.publisher ? `. ${pub.publisher}` : ''}${pub.place_of_publication ? `, ${pub.place_of_publication}` : ''}${pub.year ? `, ${pub.year}` : ''}${pub.pages ? `, pp. ${pub.pages}` : ''}.`;
     }
     return `${authors}, "${pub.title}," ${pub.year}.`;
+  };
+
+  // Copy citation
+  const copyCitation = (citation) => {
+    navigator.clipboard.writeText(citation);
+    toast.success('Citation copied to clipboard!');
+  };
+
+  // Request paper email
+  const requestPaper = (pub) => {
+    const subject = `Request for Paper: ${pub.title}`;
+    const body = `Dear Author,
+
+I would like to request access to your paper titled "${pub.title}" published in ${pub.year}.
+
+Publication Details:
+- Authors: ${Array.isArray(pub.authors) ? pub.authors.join(', ') : pub.authors}
+- Year: ${pub.year}
+${pub.journal_name ? `- Journal: ${pub.journal_name}` : ''}
+${pub.conference_name ? `- Conference: ${pub.conference_name}` : ''}
+${pub.book_title ? `- Book: ${pub.book_title}` : ''}
+
+Thank you for your consideration.
+
+Best regards,
+[Your Name]`;
+    
+    window.open(`mailto:sesg@bracu.ac.bd?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
   };
 
   // Filter and sort publications
@@ -163,7 +211,9 @@ const AdminPublications = () => {
         pub.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (Array.isArray(pub.authors) ? pub.authors.join(' ') : pub.authors || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
         pub.journal_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        pub.conference_name?.toLowerCase().includes(searchTerm.toLowerCase());
+        pub.conference_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        pub.book_title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (pub.keywords && pub.keywords.some(k => k.toLowerCase().includes(searchTerm.toLowerCase())));
       
       const matchesType = filterType === 'all' || pub.publication_type === filterType;
       const matchesYear = filterYear === 'all' || pub.year.toString() === filterYear;
@@ -197,7 +247,8 @@ const AdminPublications = () => {
   const stats = {
     total: publications.length,
     citations: publications.reduce((sum, pub) => sum + (pub.citations || 0), 0),
-    latest_year: Math.max(...publications.map(pub => pub.year), 0)
+    latest_year: publications.length > 0 ? Math.max(...publications.map(pub => pub.year)) : new Date().getFullYear(),
+    research_areas: 7
   };
 
   return (
@@ -231,8 +282,8 @@ const AdminPublications = () => {
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {/* Real-time Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="glass rounded-xl p-6">
             <h3 className="text-lg font-semibold text-white mb-2">Total Publications</h3>
             <p className="text-3xl font-bold text-primary-400">{stats.total}</p>
@@ -245,6 +296,10 @@ const AdminPublications = () => {
             <h3 className="text-lg font-semibold text-white mb-2">Latest Year</h3>
             <p className="text-3xl font-bold text-blue-400">{stats.latest_year}</p>
           </div>
+          <div className="glass rounded-xl p-6">
+            <h3 className="text-lg font-semibold text-white mb-2">Research Areas</h3>
+            <p className="text-3xl font-bold text-purple-400">{stats.research_areas}</p>
+          </div>
         </div>
 
         {/* Search and Filters */}
@@ -256,7 +311,7 @@ const AdminPublications = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <input
                   type="text"
-                  placeholder="Search by title, author, journal..."
+                  placeholder="Search by title, author, journal, keywords..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="form-input pl-10"
@@ -333,6 +388,9 @@ const AdminPublications = () => {
                         {publicationTypes.find(t => t.key === publication.publication_type)?.label || publication.publication_type}
                       </span>
                       <span className="text-gray-400 text-sm">{publication.year}</span>
+                      {publication.citations > 0 && (
+                        <span className="text-yellow-400 text-sm">Citations: {publication.citations}</span>
+                      )}
                       {publication.is_open_access && (
                         <span className="px-2 py-1 bg-green-500/20 text-green-300 text-xs rounded-full">
                           Open Access
@@ -357,36 +415,49 @@ const AdminPublications = () => {
                       </div>
                     )}
                     
-                    <div className="flex items-center space-x-4 text-sm text-gray-400">
-                      {publication.citations > 0 && (
-                        <span>Citations: {publication.citations}</span>
-                      )}
+                    <div className="flex items-center space-x-4 text-sm">
                       {publication.link && (
                         <a
                           href={publication.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-primary-400 hover:text-primary-300"
+                          className="flex items-center space-x-1 text-primary-400 hover:text-primary-300"
                         >
-                          View Paper
+                          <ExternalLink className="h-4 w-4" />
+                          <span>Publication Link</span>
                         </a>
                       )}
+                      
                       {!publication.is_open_access && (
-                        <span className="text-yellow-400">Request Paper</span>
+                        <button
+                          onClick={() => requestPaper(publication)}
+                          className="flex items-center space-x-1 text-yellow-400 hover:text-yellow-300"
+                        >
+                          <Mail className="h-4 w-4" />
+                          <span>Request Paper</span>
+                        </button>
                       )}
+                      
+                      <button
+                        onClick={() => copyCitation(formatIEEECitation(publication))}
+                        className="flex items-center space-x-1 text-gray-400 hover:text-gray-300"
+                      >
+                        <Copy className="h-4 w-4" />
+                        <span>Copy Citation</span>
+                      </button>
                     </div>
                   </div>
                   
                   <div className="flex space-x-2 ml-4">
                     <button
                       onClick={() => handleEdit(publication)}
-                      className="text-gray-400 hover:text-primary-400 transition-colors"
+                      className="text-gray-400 hover:text-primary-400 transition-colors p-2"
                     >
                       <Edit className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => handleDelete(publication.id, publication.title)}
-                      className="text-gray-400 hover:text-red-400 transition-colors"
+                      className="text-gray-400 hover:text-red-400 transition-colors p-2"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -411,10 +482,10 @@ const AdminPublications = () => {
         )}
       </div>
 
-      {/* Modal */}
+      {/* Enhanced Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-dark-800 rounded-xl p-6 w-full max-w-4xl max-h-screen overflow-y-auto">
+          <div className="bg-dark-800 rounded-xl p-6 w-full max-w-5xl max-h-screen overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-white">
                 {editingPublication ? 'Edit Publication' : 'Add New Publication'}
@@ -430,7 +501,7 @@ const AdminPublications = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Basic Information */}
               <div className="space-y-4">
-                <h3 className="text-lg font-medium text-white">Basic Information</h3>
+                <h3 className="text-lg font-medium text-white border-b border-gray-700 pb-2">Basic Information</h3>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -448,7 +519,7 @@ const AdminPublications = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Authors * (comma-separated)
+                    Authors * (comma-separated, e.g., "R. U. Raihan, S. Ahmad")
                   </label>
                   <input
                     type="text"
@@ -456,7 +527,7 @@ const AdminPublications = () => {
                     value={Array.isArray(formData.authors) ? formData.authors.join(', ') : formData.authors}
                     onChange={handleInputChange}
                     className="form-input"
-                    placeholder="Author 1, Author 2, Author 3"
+                    placeholder="R. U. Raihan, S. Ahmad, A. S. N. Huda"
                     required
                   />
                 </div>
@@ -514,11 +585,11 @@ const AdminPublications = () => {
               {/* Publication-Specific Fields */}
               {formData.publication_type === 'journal' && (
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-white">Journal Information</h3>
+                  <h3 className="text-lg font-medium text-white border-b border-gray-700 pb-2">Journal Information</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Journal Name *
+                        Journal Name * (italic)
                       </label>
                       <input
                         type="text"
@@ -526,12 +597,13 @@ const AdminPublications = () => {
                         value={formData.journal_name}
                         onChange={handleInputChange}
                         className="form-input"
+                        placeholder="IEEE Transactions on Smart Grid"
                         required
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Volume
+                        Volume (vol. X)
                       </label>
                       <input
                         type="text"
@@ -539,11 +611,12 @@ const AdminPublications = () => {
                         value={formData.volume}
                         onChange={handleInputChange}
                         className="form-input"
+                        placeholder="15"
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Issue
+                        Issue/Number (no. X)
                       </label>
                       <input
                         type="text"
@@ -551,6 +624,7 @@ const AdminPublications = () => {
                         value={formData.issue}
                         onChange={handleInputChange}
                         className="form-input"
+                        placeholder="3"
                       />
                     </div>
                     <div>
@@ -563,7 +637,7 @@ const AdminPublications = () => {
                         value={formData.month}
                         onChange={handleInputChange}
                         className="form-input"
-                        placeholder="January, Feb, etc."
+                        placeholder="Jan, Feb, Mar..."
                       />
                     </div>
                   </div>
@@ -572,11 +646,11 @@ const AdminPublications = () => {
 
               {formData.publication_type === 'conference' && (
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-white">Conference Information</h3>
+                  <h3 className="text-lg font-medium text-white border-b border-gray-700 pb-2">Conference Information</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Conference Name *
+                        Conference Name * (italic)
                       </label>
                       <input
                         type="text"
@@ -584,12 +658,13 @@ const AdminPublications = () => {
                         value={formData.conference_name}
                         onChange={handleInputChange}
                         className="form-input"
+                        placeholder="IEEE International Conference on Smart Grid"
                         required
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Location
+                        Location (city, country)
                       </label>
                       <input
                         type="text"
@@ -597,7 +672,7 @@ const AdminPublications = () => {
                         value={formData.location}
                         onChange={handleInputChange}
                         className="form-input"
-                        placeholder="City, Country"
+                        placeholder="Dhaka, Bangladesh"
                       />
                     </div>
                   </div>
@@ -606,11 +681,11 @@ const AdminPublications = () => {
 
               {formData.publication_type === 'book_chapter' && (
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-white">Book Information</h3>
+                  <h3 className="text-lg font-medium text-white border-b border-gray-700 pb-2">Book Information</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Book Title *
+                        Book Title * (italic)
                       </label>
                       <input
                         type="text"
@@ -618,32 +693,8 @@ const AdminPublications = () => {
                         value={formData.book_title}
                         onChange={handleInputChange}
                         className="form-input"
+                        placeholder="Handbook of Smart Grid Technologies"
                         required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Publisher
-                      </label>
-                      <input
-                        type="text"
-                        name="publisher"
-                        value={formData.publisher}
-                        onChange={handleInputChange}
-                        className="form-input"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Edition
-                      </label>
-                      <input
-                        type="text"
-                        name="edition"
-                        value={formData.edition}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        placeholder="2nd ed."
                       />
                     </div>
                     <div>
@@ -656,6 +707,33 @@ const AdminPublications = () => {
                         value={Array.isArray(formData.editor) ? formData.editor.join(', ') : formData.editor}
                         onChange={handleInputChange}
                         className="form-input"
+                        placeholder="J. Smith, K. Johnson"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        Publisher
+                      </label>
+                      <input
+                        type="text"
+                        name="publisher"
+                        value={formData.publisher}
+                        onChange={handleInputChange}
+                        className="form-input"
+                        placeholder="Springer"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        Place of Publication (city, country)
+                      </label>
+                      <input
+                        type="text"
+                        name="place_of_publication"
+                        value={formData.place_of_publication}
+                        onChange={handleInputChange}
+                        className="form-input"
+                        placeholder="New York, USA"
                       />
                     </div>
                   </div>
@@ -664,18 +742,35 @@ const AdminPublications = () => {
 
               {/* Common Fields */}
               <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Pages
-                  </label>
-                  <input
-                    type="text"
-                    name="pages"
-                    value={formData.pages}
-                    onChange={handleInputChange}
-                    className="form-input"
-                    placeholder="45-68"
-                  />
+                <h3 className="text-lg font-medium text-white border-b border-gray-700 pb-2">Additional Information</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Page Numbers (pp. XXX–XXX)
+                    </label>
+                    <input
+                      type="text"
+                      name="pages"
+                      value={formData.pages}
+                      onChange={handleInputChange}
+                      className="form-input"
+                      placeholder="45–68"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Link/DOI
+                    </label>
+                    <input
+                      type="url"
+                      name="link"
+                      value={formData.link}
+                      onChange={handleInputChange}
+                      className="form-input"
+                      placeholder="https://doi.org/10.1109/..."
+                    />
+                  </div>
                 </div>
 
                 <div>
@@ -688,53 +783,44 @@ const AdminPublications = () => {
                     value={Array.isArray(formData.keywords) ? formData.keywords.join(', ') : formData.keywords}
                     onChange={handleInputChange}
                     className="form-input"
-                    placeholder="Smart Grid, Renewable Energy, etc."
+                    placeholder="Smart Grid, Renewable Energy, Microgrids, Power Systems"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Research Areas (comma-separated)
+                    Research Areas (select multiple)
                   </label>
-                  <input
-                    type="text"
+                  <select
                     name="research_areas"
-                    value={Array.isArray(formData.research_areas) ? formData.research_areas.join(', ') : formData.research_areas}
+                    multiple
+                    value={formData.research_areas}
                     onChange={handleInputChange}
-                    className="form-input"
-                    placeholder="Smart Grid Technologies, Renewable Energy Integration"
-                  />
+                    className="form-input h-32"
+                    size="7"
+                  >
+                    {researchAreaOptions.map(area => (
+                      <option key={area} value={area}>{area}</option>
+                    ))}
+                  </select>
+                  <p className="text-xs text-gray-400 mt-1">Hold Ctrl/Cmd to select multiple areas</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Link/DOI
-                    </label>
-                    <input
-                      type="url"
-                      name="link"
-                      value={formData.link}
-                      onChange={handleInputChange}
-                      className="form-input"
-                    />
-                  </div>
-                  <div className="flex items-center space-x-3 pt-6">
-                    <input
-                      type="checkbox"
-                      name="is_open_access"
-                      checked={formData.is_open_access}
-                      onChange={handleInputChange}
-                      className="w-4 h-4 text-primary-600 bg-gray-700 border-gray-600 rounded focus:ring-primary-500"
-                    />
-                    <label className="text-sm font-medium text-gray-300">
-                      Open Access
-                    </label>
-                  </div>
+                <div className="flex items-center space-x-3">
+                  <input
+                    type="checkbox"
+                    name="is_open_access"
+                    checked={formData.is_open_access}
+                    onChange={handleInputChange}
+                    className="w-4 h-4 text-primary-600 bg-gray-700 border-gray-600 rounded focus:ring-primary-500"
+                  />
+                  <label className="text-sm font-medium text-gray-300">
+                    Open Access (no "Request Paper" button will be shown)
+                  </label>
                 </div>
               </div>
 
-              <div className="flex justify-end space-x-4 pt-4">
+              <div className="flex justify-end space-x-4 pt-6 border-t border-gray-700">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
@@ -744,7 +830,7 @@ const AdminPublications = () => {
                 </button>
                 <button type="submit" className="btn-primary flex items-center space-x-2">
                   <Save className="h-4 w-4" />
-                  <span>{editingPublication ? 'Update' : 'Create'}</span>
+                  <span>{editingPublication ? 'Update Publication' : 'Create Publication'}</span>
                 </button>
               </div>
             </form>
