@@ -6,7 +6,7 @@ import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const Home = () => {
-  const { researchAreas, news, photoGallery, fetchData, loading } = useData();
+  const { researchAreas, news, fetchData, loading } = useData();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const galleryRef = useRef(null);
   const [featuredNews, setFeaturedNews] = useState([]);
