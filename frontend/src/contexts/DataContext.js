@@ -388,6 +388,7 @@ export function DataProvider({ children }) {
 
   const fetchData = useCallback(async (type, params = {}) => {
     try {
+      console.log(`[DataContext] Fetching ${type}...`);
       dispatch({ type: 'SET_LOADING', payload: { type, loading: true } });
 
       // Map type to Firestore collection name
@@ -396,6 +397,7 @@ export function DataProvider({ children }) {
       if (type === 'photoGallery') collectionName = 'photo_gallery';
 
       try {
+        console.log(`[DataContext] Attempting Firestore query for collection: ${collectionName}`);
         // Get data from Firestore
         const collectionRef = collection(db, collectionName);
         let q = collectionRef;
