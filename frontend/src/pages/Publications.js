@@ -481,7 +481,7 @@ Best regards,
                   <div className="flex items-center space-x-4">
                     {/* Go to page */}
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-400">Go to:</span>
+                      <span className="text-sm text-gray-600">Go to:</span>
                       <input
                         type="number"
                         value={goToPage}
@@ -490,7 +490,7 @@ Best regards,
                         placeholder="Page"
                         min="1"
                         max={totalPages}
-                        className="w-16 px-2 py-1 bg-dark-700 border border-gray-600 rounded text-white text-sm"
+                        className="w-16 px-2 py-1 bg-white border border-gray-300 rounded text-gray-900 text-sm"
                       />
                       <button
                         onClick={handleGoToPage}
