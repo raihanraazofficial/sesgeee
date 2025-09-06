@@ -114,10 +114,10 @@ Best regards,
   // Get category color
   const getCategoryColor = (type) => {
     switch(type) {
-      case 'journal': return 'bg-blue-600/20 text-blue-400 border-blue-500/30';
-      case 'conference': return 'bg-green-600/20 text-green-400 border-green-500/30';
-      case 'book_chapter': return 'bg-purple-600/20 text-purple-400 border-purple-500/30';
-      default: return 'bg-gray-600/20 text-gray-400 border-gray-500/30';
+      case 'journal': return 'bg-blue-50 text-blue-600 border-blue-200';
+      case 'conference': return 'bg-green-50 text-green-600 border-green-200';
+      case 'book_chapter': return 'bg-purple-50 text-purple-600 border-purple-200';
+      default: return 'bg-gray-50 text-gray-600 border-gray-200';
     }
   };
 
