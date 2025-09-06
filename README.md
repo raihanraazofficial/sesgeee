@@ -118,39 +118,53 @@ A comprehensive research website for the Sustainable Energy and Smart Grid Resea
    yarn start
    ```
 
-## Deployment
+## Quick Vercel Deployment (Fixed Network Error Issue)
 
-### Vercel Deployment
+### 🚨 Network Error Fix করা হয়েছে!
 
-1. **Push to GitHub**
+আপনার যে `Network Error` আসছিল, সেটা fix করা হয়েছে। এখন Vercel এ deploy করলে কোনো সমস্যা হবে না।
+
+### Deploy করার পদ্ধতি:
+
+1. **GitHub Repository তৈরি করুন:**
    ```bash
+   git init
    git add .
    git commit -m "Initial commit"
-   git push origin main
+   git branch -M main
+   git remote add origin https://github.com/yourusername/sesgrg-website.git
+   git push -u origin main
    ```
 
-2. **Deploy on Vercel**
-   - Connect your GitHub repository to Vercel
-   - Configure environment variables
-   - Deploy automatically
+2. **Vercel এ Deploy:**
+   - [Vercel.com](https://vercel.com) এ যান
+   - GitHub repository import করুন
+   - Environment variables set করুন (details নিচে দেখুন)
+   - Deploy করুন!
 
-### Environment Variables for Production
-Set these in your Vercel dashboard:
+3. **Environment Variables for Vercel:**
+   ```
+   REACT_APP_BACKEND_URL=/api
+   REACT_APP_FIREBASE_API_KEY=AIzaSyAW4GNtIBtQuT-M8TYyoh_4S6HfZkI0m3s
+   REACT_APP_FIREBASE_AUTH_DOMAIN=sesgrg-website.firebaseapp.com
+   REACT_APP_FIREBASE_PROJECT_ID=sesgrg-website
+   REACT_APP_FIREBASE_STORAGE_BUCKET=sesgrg-website.firebasestorage.app
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=665472144837
+   REACT_APP_FIREBASE_APP_ID=1:665472144837:web:f3432c1363adfaccde27ac
+   REACT_APP_FIREBASE_MEASUREMENT_ID=G-DT31MZ5G0Q
+   ADMIN_USERNAME=admin
+   ADMIN_PASSWORD=@dminsesg705
+   SECRET_KEY=your-production-secret-key
+   ```
 
-```
-REACT_APP_BACKEND_URL=/api
-REACT_APP_FIREBASE_API_KEY=your_api_key
-REACT_APP_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-REACT_APP_FIREBASE_PROJECT_ID=your_project_id
-REACT_APP_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-REACT_APP_FIREBASE_APP_ID=your_app_id
-REACT_APP_FIREBASE_MEASUREMENT_ID=your_measurement_id
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=@dminsesg705
-SECRET_KEY=your-production-secret-key
-FIREBASE_PROJECT_ID=your_project_id
-```
+### ✅ যে সমস্যাগুলো Fix করা হয়েছে:
+
+1. **CORS Configuration** - Production domains allow করা হয়েছে
+2. **Backend URL** - Environment-based URL configuration
+3. **API Routing** - Vercel.json properly configured
+4. **Production Environment** - Separate production environment variables
+
+**Detailed deployment guide দেখুন:** [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
 
 ## Admin Access
 
