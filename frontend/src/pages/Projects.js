@@ -83,9 +83,28 @@ const Projects = () => {
         return 'text-green-600 bg-green-50 border-green-200';
       case 'ongoing':
         return 'text-yellow-600 bg-yellow-50 border-yellow-200';
-      default:
+      case 'planning':
         return 'text-blue-600 bg-blue-50 border-blue-200';
+      default:
+        return 'text-gray-600 bg-gray-50 border-gray-200';
     }
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'Not specified';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      month: 'short', 
+      year: 'numeric' 
+    });
+  };
+
+  const formatTeamMembers = (members) => {
+    if (!members || members.length === 0) return 'Not specified';
+    if (typeof members === 'string') {
+      return members;
+    }
+    return Array.isArray(members) ? members.join(', ') : 'Not specified';
   };
 
   return (
