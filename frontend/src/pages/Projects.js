@@ -311,25 +311,24 @@ const Projects = () => {
                             {/* Duration */}
                             <div className="flex items-center space-x-2 text-sm text-gray-600">
                               <Calendar className="h-4 w-4 text-primary-500 flex-shrink-0" />
-                              <span className="font-medium">Duration:</span>
                               <span>{formatDate(project.start_date)} - {formatDate(project.end_date)}</span>
                             </div>
                             
                             {/* Team Leader */}
                             {project.team_leader && (
-                              <div className="flex items-center space-x-2 text-sm text-gray-600">
-                                <Users className="h-4 w-4 text-primary-500 flex-shrink-0" />
-                                <span className="font-medium">Team Leader:</span>
-                                <span>{project.team_leader}</span>
+                              <div className="text-sm text-gray-600">
+                                <span className="font-medium">Team Leader:</span> {project.team_leader}
                               </div>
                             )}
                             
-                            {/* Research Area */}
-                            {project.research_area && (
-                              <div className="flex items-center space-x-2 text-sm text-gray-600">
-                                <Building className="h-4 w-4 text-primary-500 flex-shrink-0" />
-                                <span className="font-medium">Research Area:</span>
-                                <span>{project.research_area}</span>
+                            {/* Team Members */}
+                            {project.team_members && project.team_members.length > 0 && (
+                              <div className="text-sm text-gray-600">
+                                <span className="font-medium">Team Members:</span> {
+                                  Array.isArray(project.team_members) 
+                                    ? project.team_members.join(', ')
+                                    : project.team_members
+                                }
                               </div>
                             )}
                           </div>
@@ -339,16 +338,14 @@ const Projects = () => {
                           
                           {/* Bottom Section */}
                           <div className="flex items-center justify-between">
-                            <div className="flex flex-col space-y-1">
+                            <div className="text-sm text-gray-600">
                               {project.funded_by && (
-                                <div className="text-xs text-gray-500">
-                                  <span className="font-medium">Funded by:</span> {project.funded_by}
-                                </div>
+                                <span><span className="font-medium">Funded By:</span> {project.funded_by}</span>
                               )}
                             </div>
                             <div className="flex items-center space-x-1 text-sm">
                               <Users className="h-4 w-4 text-primary-500" />
-                              <span className="text-xs text-gray-600 font-medium">
+                              <span className="text-gray-600 font-medium">
                                 {project.total_members || project.team_members?.length || 0} Members
                               </span>
                             </div>
