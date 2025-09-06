@@ -28,7 +28,7 @@ app.add_middleware(
         "https://localhost:3000", 
         "https://*.vercel.app",
         "https://*.emergentagent.com",
-        "https://ui-refresh-39.preview.emergentagent.com",
+        "https://footer-links.preview.emergentagent.com",
         "*"  # Allow all origins for development
     ],
     allow_credentials=True,
