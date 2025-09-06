@@ -71,8 +71,8 @@ export function AuthProvider({ children }) {
       dispatch({ type: 'SET_LOADING', payload: true });
       
       // Use environment variable or fallback to relative URL for production
-      const baseURL = process.env.REACT_APP_BACKEND_URL || '/api';
-      const loginURL = baseURL.startsWith('http') ? `${baseURL}/auth/login` : '/api/auth/login';
+      const baseURL = process.env.REACT_APP_BACKEND_URL || '';
+      const loginURL = baseURL ? `${baseURL}/api/auth/login` : '/api/auth/login';
       
       const response = await axios.post(loginURL, credentials);
       const { access_token, user_role } = response.data;
