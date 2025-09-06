@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { auth, db } from '../firebase';
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 const AuthContext = createContext();
 
@@ -44,87 +43,106 @@ export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        try {
-          // Get user document from Firestore to check role
-          const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            if (userData.role === 'admin') {
-              const token = await firebaseUser.getIdToken();
-              dispatch({
-                type: 'LOGIN_SUCCESS',
-                payload: {
-                  user: {
-                    uid: firebaseUser.uid,
-                    email: firebaseUser.email,
-                    role: userData.role,
-                    username: userData.username || firebaseUser.email
-                  },
-                  token
-                }
-              });
-            } else {
-              // User is not admin, logout
-              await signOut(auth);
-              dispatch({ type: 'LOGOUT' });
-            }
-          } else {
-            // User document doesn't exist, logout
-            await signOut(auth);
-            dispatch({ type: 'LOGOUT' });
-          }
-        } catch (error) {
-          console.error('Error checking user role:', error);
-          dispatch({ type: 'LOGOUT' });
-        }
-      } else {
-        dispatch({ type: 'LOGOUT' });
+    // Check for existing session on app load
+    const userData = localStorage.getItem('admin_user');
+    const sessionToken = localStorage.getItem('admin_session');
+    
+    if (userData && sessionToken) {
+      try {
+        const user = JSON.parse(userData);
+        dispatch({
+          type: 'LOGIN_SUCCESS',
+          payload: { user, token: sessionToken }
+        });
+      } catch (error) {
+        console.error('Error parsing stored user data:', error);
+        localStorage.removeItem('admin_user');
+        localStorage.removeItem('admin_session');
       }
-      dispatch({ type: 'SET_LOADING', payload: false });
-    });
-
-    return () => unsubscribe();
+    }
+    
+    dispatch({ type: 'SET_LOADING', payload: false });
   }, []);
 
   const login = async (credentials) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       
-      // Use Firebase Authentication
-      const userCredential = await signInWithEmailAndPassword(
-        auth, 
-        credentials.username.includes('@') ? credentials.username : `${credentials.username}@sesgrg.com`, 
-        credentials.password
+      // Check credentials in Firestore
+      const usersRef = collection(db, 'users');
+      const q = query(
+        usersRef, 
+        where('username', '==', credentials.username),
+        where('role', '==', 'admin')
       );
       
-      // Check if user is admin
-      const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
-      if (!userDoc.exists()) {
-        await signOut(auth);
-        throw new Error('User not found');
+      const querySnapshot = await getDocs(q);
+      
+      if (querySnapshot.empty) {
+        // If no user found in Firestore, check hardcoded admin credentials
+        if (credentials.username === 'admin' && credentials.password === '@dminsesg705') {
+          const user = {
+            uid: 'hardcoded-admin',
+            username: 'admin',
+            email: 'admin@sesgrg.com',
+            role: 'admin'
+          };
+          
+          const sessionToken = `session-${Date.now()}`;
+          
+          // Store in localStorage
+          localStorage.setItem('admin_user', JSON.stringify(user));
+          localStorage.setItem('admin_session', sessionToken);
+          
+          dispatch({
+            type: 'LOGIN_SUCCESS',
+            payload: { user, token: sessionToken }
+          });
+          
+          return { success: true };
+        } else {
+          throw new Error('Invalid credentials');
+        }
       }
       
+      // If user found in Firestore, validate password
+      const userDoc = querySnapshot.docs[0];
       const userData = userDoc.data();
-      if (userData.role !== 'admin') {
-        await signOut(auth);
-        throw new Error('Access denied. Admin privileges required.');
+      
+      // Simple password check (in production, passwords should be hashed)
+      if (userData.password !== credentials.password) {
+        throw new Error('Invalid password');
       }
+      
+      const user = {
+        uid: userDoc.id,
+        username: userData.username,
+        email: userData.email || `${userData.username}@sesgrg.com`,
+        role: userData.role
+      };
+      
+      const sessionToken = `session-${Date.now()}`;
+      
+      // Store in localStorage
+      localStorage.setItem('admin_user', JSON.stringify(user));
+      localStorage.setItem('admin_session', sessionToken);
+      
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: { user, token: sessionToken }
+      });
       
       return { success: true };
     } catch (error) {
       dispatch({ type: 'SET_LOADING', payload: false });
       let errorMessage = 'Login failed';
       
-      if (error.code === 'auth/user-not-found') {
-        errorMessage = 'User not found';
-      } else if (error.code === 'auth/wrong-password') {
-        errorMessage = 'Incorrect password';
-      } else if (error.code === 'auth/invalid-email') {
-        errorMessage = 'Invalid email format';
-      } else if (error.message) {
+      if (error.message.includes('Invalid')) {
         errorMessage = error.message;
+      } else if (error.code === 'permission-denied') {
+        errorMessage = 'Access denied. Please check your credentials.';
+      } else {
+        errorMessage = 'Unable to connect to database. Please try again.';
       }
       
       return {
@@ -134,14 +152,10 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      dispatch({ type: 'LOGOUT' });
-    } catch (error) {
-      console.error('Logout error:', error);
-      dispatch({ type: 'LOGOUT' });
-    }
+  const logout = () => {
+    localStorage.removeItem('admin_user');
+    localStorage.removeItem('admin_session');
+    dispatch({ type: 'LOGOUT' });
   };
 
   const value = {
