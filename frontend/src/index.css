@@ -158,7 +158,7 @@ code {
 
 /* Research area cards */
 .research-card {
-  @apply bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl overflow-hidden shadow-lg card-hover;
+  @apply bg-gradient-to-br from-white to-gray-50 rounded-xl overflow-hidden shadow-lg card-hover border border-gray-200;
 }
 
 /* Publication IEEE style */
