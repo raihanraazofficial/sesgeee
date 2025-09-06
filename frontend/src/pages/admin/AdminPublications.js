@@ -777,14 +777,15 @@ Best regards,
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Keywords (comma-separated)
                   </label>
-                  <input
-                    type="text"
+                  <textarea
                     name="keywords"
                     value={Array.isArray(formData.keywords) ? formData.keywords.join(', ') : formData.keywords}
                     onChange={handleInputChange}
-                    className="form-input"
+                    className="form-input h-20 resize-none"
                     placeholder="Smart Grid, Renewable Energy, Microgrids, Power Systems"
+                    rows="3"
                   />
+                  <p className="text-xs text-gray-400 mt-1">Press comma (,) to separate keywords</p>
                 </div>
 
                 <div>
