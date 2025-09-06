@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Users, FileText, FolderOpen, Award, Calendar, Settings, LogOut } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import axios from 'axios';
+import { useData } from '../../contexts/DataContext';
 
 const AdminDashboard = () => {
   const { logout, user } = useAuth();
+  const { people, publications, projects, achievements, fetchData } = useData();
   const [stats, setStats] = useState([
     { name: 'Total People', value: '0', icon: Users, color: 'text-blue-400' },
     { name: 'Publications', value: '0', icon: FileText, color: 'text-green-400' },
@@ -14,29 +15,33 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchDashboardStats();
+    fetchDashboardData();
   }, []);
 
-  const fetchDashboardStats = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
-      
-      const response = await axios.get(`${backendUrl}/api/dashboard/stats`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+  useEffect(() => {
+    // Update stats when data changes
+    setStats([
+      { name: 'Total People', value: people.length.toString(), icon: Users, color: 'text-blue-400' },
+      { name: 'Publications', value: publications.length.toString(), icon: FileText, color: 'text-green-400' },
+      { name: 'Projects', value: projects.length.toString(), icon: FolderOpen, color: 'text-purple-400' },
+      { name: 'Achievements', value: achievements.length.toString(), icon: Award, color: 'text-yellow-400' },
+    ]);
+    setLoading(false);
+  }, [people, publications, projects, achievements]);
 
-      const data = response.data;
-      setStats([
-        { name: 'Total People', value: data.total_people.toString(), icon: Users, color: 'text-blue-400' },
-        { name: 'Publications', value: data.total_publications.toString(), icon: FileText, color: 'text-green-400' },
-        { name: 'Projects', value: data.total_projects.toString(), icon: FolderOpen, color: 'text-purple-400' },
-        { name: 'Achievements', value: data.total_achievements.toString(), icon: Award, color: 'text-yellow-400' },
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      // Fetch all data from Firestore
+      await Promise.all([
+        fetchData('people'),
+        fetchData('publications'),
+        fetchData('projects'),
+        fetchData('achievements'),
+        fetchData('news')
       ]);
     } catch (error) {
-      console.error('Error fetching dashboard stats:', error);
+      console.error('Error fetching dashboard data:', error);
     } finally {
       setLoading(false);
     }
