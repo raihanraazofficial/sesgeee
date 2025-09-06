@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Plus, Edit, Trash2, Newspaper, Calendar, Search, Filter, Star, Eye } from 'lucide-react';
+import { ArrowLeft, Plus, Edit, Trash2, Newspaper, Calendar, Search, Filter, Star } from 'lucide-react';
 import { useData } from '../../contexts/DataContext';
 
 const AdminNews = () => {
