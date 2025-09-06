@@ -117,28 +117,75 @@ const Projects = () => {
         height="h-96"
       />
 
-      {/* Filter Tabs */}
+      {/* Search and Filter Section */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center">
-            <div className="flex bg-white rounded-lg p-2 border border-gray-200 shadow-sm">
-              {[
-                { id: 'all', name: 'All Projects' },
-                { id: 'ongoing', name: 'Ongoing' },
-                { id: 'completed', name: 'Completed' }
-              ].map((tab) => (
+          <div className="space-y-6">
+            {/* Search Bar */}
+            <div className="flex justify-center">
+              <div className="relative w-full max-w-2xl">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <input
+                  type="text"
+                  placeholder="Search projects by name, description, or research area..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white shadow-sm"
+                />
+              </div>
+            </div>
+
+            {/* Filter Controls */}
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+              {/* Category Tabs */}
+              <div className="flex bg-white rounded-lg p-2 border border-gray-200 shadow-sm">
+                {[
+                  { id: 'all', name: 'All Projects' },
+                  { id: 'ongoing', name: 'Ongoing' },
+                  { id: 'completed', name: 'Completed' },
+                  { id: 'planning', name: 'Planning' }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`px-4 py-2 rounded-md font-medium transition-all text-sm ${
+                      activeTab === tab.id
+                        ? 'bg-primary-600 text-white shadow-md'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    }`}
+                  >
+                    {tab.name}
+                  </button>
+                ))}
+              </div>
+
+              {/* Sort Controls */}
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <Filter className="h-4 w-4 text-gray-500" />
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="border border-gray-300 rounded-md px-3 py-2 bg-white focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+                  >
+                    <option value="latest">Latest First</option>
+                    <option value="name">Project Name</option>
+                    <option value="category">Category</option>
+                    <option value="research_area">Research Area</option>
+                  </select>
+                </div>
                 <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`px-6 py-3 rounded-md font-medium transition-all ${
-                    activeTab === tab.id
-                      ? 'bg-primary-600 text-white shadow-md'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                  }`}
+                  onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                  className="px-3 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors text-sm"
                 >
-                  {tab.name}
+                  {sortOrder === 'asc' ? '↑ Ascending' : '↓ Descending'}
                 </button>
-              ))}
+              </div>
+            </div>
+
+            {/* Results Count */}
+            <div className="text-center text-gray-600">
+              {filteredProjects.length} {filteredProjects.length === 1 ? 'project' : 'projects'} found
             </div>
           </div>
         </div>
