@@ -303,6 +303,14 @@ const Projects = () => {
                         </div>
 
                         <div className="p-6">
+                          {/* Status Bar - Prominent at top of card body */}
+                          <div className="mb-4">
+                            <span className={`inline-flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold ${getStatusColor(project.status)} shadow-sm`}>
+                              <StatusIcon className="h-5 w-5" />
+                              <span className="capitalize">{project.status || 'Unknown'}</span>
+                            </span>
+                          </div>
+
                           {/* Project Title */}
                           <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-primary-600 transition-colors">
                             {project.name || 'Untitled Project'}
