@@ -320,7 +320,7 @@ export function DataProvider({ children }) {
       dispatch({ type: 'SET_LOADING', payload: { type, loading: false } });
       return mockData;
     }
-  };
+  }, []);
 
   const createItem = async (type, data) => {
     try {
