@@ -232,11 +232,6 @@ const AdminPublications = () => {
               <div key={publication.id} className="glass rounded-xl p-6 border border-gray-200 shadow-lg">
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">
-                    {publication.is_featured && (
-                      <span className="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full mb-2 border border-yellow-200">
-                        Featured
-                      </span>
-                    )}
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">{publication.title}</h3>
                     <p className="text-gray-600 text-sm mb-3">{formatCitation(publication)}</p>
                     
