@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Plus, Edit, Trash2, Newspaper, Calendar, Search, Filter, Star } from 'lucide-react';
+import { ArrowLeft, Plus, Edit, Trash2, Newspaper, Calendar, Search, Filter, Star, X } from 'lucide-react';
 import { useData } from '../../contexts/DataContext';
+import { toast } from 'react-toastify';
 
 const AdminNews = () => {
   const { news, fetchData, createItem, updateItem, deleteItem, loading } = useData();
@@ -63,8 +64,10 @@ const AdminNews = () => {
 
       if (editingNews) {
         await updateItem('news', editingNews.id, newsData);
+        toast.success('News article updated successfully!');
       } else {
         await createItem('news', newsData);
+        toast.success('News article created successfully!');
       }
 
       // Reset form
@@ -86,7 +89,7 @@ const AdminNews = () => {
       await fetchData('news');
     } catch (error) {
       console.error('Error saving news:', error);
-      alert('Error saving news article. Please try again.');
+      toast.error('Error saving news article. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -112,10 +115,11 @@ const AdminNews = () => {
     if (window.confirm('Are you sure you want to delete this news article?')) {
       try {
         await deleteItem('news', id);
+        toast.success('News article deleted successfully!');
         await fetchData('news');
       } catch (error) {
         console.error('Error deleting news:', error);
-        alert('Error deleting news article. Please try again.');
+        toast.error('Error deleting news article. Please try again.');
       }
     }
   };
@@ -134,21 +138,21 @@ const AdminNews = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-dark-800 border-b border-gray-700">
+      <div className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-4">
               <Link
                 to="/admin/dashboard"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-500 hover:text-gray-700 transition-colors"
               >
                 <ArrowLeft className="h-6 w-6" />
               </Link>
               <div>
-                <h1 className="text-3xl font-bold font-heading text-white">Manage News & Events</h1>
-                <p className="text-gray-400 mt-1">Add, edit, and manage news articles and events</p>
+                <h1 className="text-3xl font-bold text-gray-900">Manage News & Events</h1>
+                <p className="text-gray-600 mt-1">Add, edit, and manage news articles and events</p>
               </div>
             </div>
             <button 
@@ -179,49 +183,51 @@ const AdminNews = () => {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search and Filter */}
-        <div className="mb-8 flex flex-col sm:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-            <input
-              type="text"
-              placeholder="Search news articles..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="form-input pl-10 w-full"
-            />
-          </div>
-          <div className="flex items-center space-x-2">
-            <Filter className="text-gray-400 h-5 w-5" />
-            <select
-              value={selectedFilter}
-              onChange={(e) => setSelectedFilter(e.target.value)}
-              className="form-select min-w-[150px]"
-            >
-              {filters.map(filter => (
-                <option key={filter.value} value={filter.value}>
-                  {filter.label}
-                </option>
-              ))}
-            </select>
+        <div className="mb-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <input
+                type="text"
+                placeholder="Search news articles..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white"
+              />
+            </div>
+            <div className="flex items-center space-x-2">
+              <Filter className="text-gray-400 h-5 w-5" />
+              <select
+                value={selectedFilter}
+                onChange={(e) => setSelectedFilter(e.target.value)}
+                className="border border-gray-300 rounded-md px-3 py-2 bg-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 min-w-[150px]"
+              >
+                {filters.map(filter => (
+                  <option key={filter.value} value={filter.value}>
+                    {filter.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 
         {/* News List */}
         <div className="space-y-6">
           {loading.news ? (
-            <div className="glass rounded-xl p-8 text-center">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
               <div className="animate-pulse">
-                <div className="h-8 bg-gray-700 rounded w-1/4 mx-auto mb-4"></div>
-                <div className="h-4 bg-gray-700 rounded w-1/2 mx-auto"></div>
+                <div className="h-8 bg-gray-200 rounded w-1/4 mx-auto mb-4"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
               </div>
             </div>
           ) : filteredNews.length === 0 ? (
-            <div className="glass rounded-xl p-8 text-center">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
               <Newspaper className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 {searchTerm || selectedFilter !== 'all' ? 'No news articles found' : 'No news articles yet'}
               </h3>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-600 mb-6">
                 {searchTerm || selectedFilter !== 'all' 
                   ? 'Try adjusting your search criteria' 
                   : 'Start by adding your first news article'}
@@ -237,7 +243,7 @@ const AdminNews = () => {
             </div>
           ) : (
             filteredNews.map((newsItem) => (
-              <div key={newsItem.id} className="glass rounded-xl overflow-hidden">
+              <div key={newsItem.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
                 <div className="flex flex-col lg:flex-row">
                   {newsItem.image && (
                     <div className="lg:w-1/4 h-48 lg:h-auto">
@@ -252,21 +258,21 @@ const AdminNews = () => {
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
-                          <h3 className="text-xl font-semibold text-white">{newsItem.title}</h3>
+                          <h3 className="text-xl font-semibold text-gray-900">{newsItem.title}</h3>
                           {newsItem.is_featured && (
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-yellow-400 bg-yellow-400/20">
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-yellow-800 bg-yellow-100 border border-yellow-200">
                               <Star className="h-3 w-3 mr-1" />
                               Featured
                             </span>
                           )}
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            newsItem.status === 'published' ? 'text-green-400 bg-green-400/20' : 'text-gray-400 bg-gray-400/20'
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                            newsItem.status === 'published' ? 'text-green-800 bg-green-100 border-green-200' : 'text-gray-800 bg-gray-100 border-gray-200'
                           }`}>
                             {newsItem.status || 'published'}
                           </span>
                         </div>
-                        <p className="text-gray-300 mb-3">{newsItem.excerpt}</p>
-                        <div className="flex flex-wrap gap-4 text-sm text-gray-400">
+                        <p className="text-gray-600 mb-3">{newsItem.excerpt}</p>
+                        <div className="flex flex-wrap gap-4 text-sm text-gray-500">
                           <span className="flex items-center">
                             <Calendar className="h-4 w-4 mr-1" />
                             {formatDate(newsItem.published_date)}
@@ -282,14 +288,14 @@ const AdminNews = () => {
                       <div className="flex items-center space-x-2 ml-4">
                         <button
                           onClick={() => handleEdit(newsItem)}
-                          className="p-2 text-gray-400 hover:text-primary-400 transition-colors"
+                          className="p-2 text-gray-500 hover:text-blue-600 transition-colors"
                           title="Edit news article"
                         >
                           <Edit className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => handleDelete(newsItem.id)}
-                          className="p-2 text-gray-400 hover:text-red-400 transition-colors"
+                          className="p-2 text-gray-500 hover:text-red-600 transition-colors"
                           title="Delete news article"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -307,25 +313,22 @@ const AdminNews = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-dark-800 rounded-xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto border border-gray-200 shadow-xl">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-2xl font-bold text-gray-900">
                 {editingNews ? 'Edit News Article' : 'Add News Article'}
               </h2>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-gray-400 hover:text-white"
+                className="text-gray-500 hover:text-gray-700"
               >
-                <span className="sr-only">Close</span>
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <X className="h-6 w-6" />
               </button>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Title *
                 </label>
                 <input
@@ -333,13 +336,13 @@ const AdminNews = () => {
                   required
                   value={formData.title}
                   onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                  className="form-input w-full"
+                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   placeholder="Enter news article title"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Excerpt *
                 </label>
                 <textarea
@@ -347,27 +350,27 @@ const AdminNews = () => {
                   rows="3"
                   value={formData.excerpt}
                   onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
-                  className="form-textarea w-full"
+                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   placeholder="Brief summary of the news article"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Content
                 </label>
                 <textarea
                   rows="8"
                   value={formData.content}
                   onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                  className="form-textarea w-full"
+                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   placeholder="Full content of the news article"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Published Date *
                   </label>
                   <input
@@ -375,18 +378,18 @@ const AdminNews = () => {
                     required
                     value={formData.published_date}
                     onChange={(e) => setFormData(prev => ({ ...prev, published_date: e.target.value }))}
-                    className="form-input w-full"
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Status
                   </label>
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value }))}
-                    className="form-select w-full"
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   >
                     <option value="published">Published</option>
                     <option value="draft">Draft</option>
@@ -395,41 +398,41 @@ const AdminNews = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Image URL
                 </label>
                 <input
                   type="url"
                   value={formData.image}
                   onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
-                  className="form-input w-full"
+                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   placeholder="https://example.com/image.jpg"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Author
                   </label>
                   <input
                     type="text"
                     value={formData.author}
                     onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
-                    className="form-input w-full"
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     placeholder="Article author"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Tags (comma-separated)
                   </label>
                   <input
                     type="text"
                     value={formData.tags}
                     onChange={(e) => setFormData(prev => ({ ...prev, tags: e.target.value }))}
-                    className="form-input w-full"
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     placeholder="research, innovation, technology"
                   />
                 </div>
@@ -441,9 +444,9 @@ const AdminNews = () => {
                   id="is_featured"
                   checked={formData.is_featured}
                   onChange={(e) => setFormData(prev => ({ ...prev, is_featured: e.target.checked }))}
-                  className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                  className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                 />
-                <label htmlFor="is_featured" className="ml-2 text-sm text-gray-300">
+                <label htmlFor="is_featured" className="ml-2 text-sm text-gray-700">
                   Featured article (appears prominently on the website)
                 </label>
               </div>
@@ -464,7 +467,7 @@ const AdminNews = () => {
                 >
                   {isSubmitting ? (
                     <div className="flex items-center space-x-2">
-                      <div className="spinner" />
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                       <span>{editingNews ? 'Updating...' : 'Creating...'}</span>
                     </div>
                   ) : (
