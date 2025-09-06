@@ -264,3 +264,78 @@ The routing configuration has been fixed and the application is ready for Vercel
 - `/admin/news` - Manage news & events
 
 **Fix Summary**: The 404 "DEPLOYMENT_NOT_FOUND" errors were caused by missing SPA routing configuration in Vercel. With the updated `vercel.json` and additional routing files, all admin panel sections will now be accessible on the live deployment.
+
+---
+
+## People Page Enhancement with Social Icons & Admin Form Update (January 6, 2025)
+
+### New Features Implemented
+
+#### 1. Enhanced People Cards Design
+- **Fixed Card Height**: All cards now have consistent `minHeight: 580px` with flex layout
+- **Social/Research Icons**: Added 7 social platform icons to every card:
+  - Google Scholar
+  - ResearchGate  
+  - ORCID
+  - LinkedIn
+  - GitHub
+  - IEEE Profile
+  - Email (mailto link)
+- **Description Limit**: Bio description limited to 2 lines with proper ellipsis
+- **Fixed Button Position**: "Know More" button positioned at bottom of card regardless of content
+- **Website Navigation**: Know More button opens person's website in new tab
+
+#### 2. Updated Admin Panel Form
+- **Website Field**: Added personal website URL field for "Know More" functionality
+- **Enhanced Social Links**: Extended social links to include:
+  - GitHub profile
+  - IEEE profile  
+  - All existing platforms (Google Scholar, ResearchGate, ORCID, LinkedIn)
+- **Improved Form Layout**: Social & Research Links section with organized grid layout
+- **Real-time Updates**: Form changes reflect immediately on People page
+
+#### 3. Data Structure Enhancements
+- **Sorting**: Newly created people appear first (latest first order)
+- **Website Integration**: Added `website` field to person data model
+- **Social Links Extended**: Extended social_links object with GitHub and IEEE fields
+- **Research Interests**: Comma-separated input creates individual interest tags
+
+### Technical Implementation Details
+
+#### Frontend Changes
+**Files Modified:**
+- `/app/frontend/src/pages/People.js` - Enhanced card layout and social icons
+- `/app/frontend/src/pages/admin/AdminPeople.js` - Extended form with new fields
+
+**Key Features:**
+- Flexbox layout for consistent card heights
+- SVG icons from Simple Icons CDN with hover effects
+- CSS line-clamp for description truncation
+- Website field integration with click handlers
+
+#### Admin Form Enhancements
+- **Website URL Field**: For "Know More" button functionality
+- **Extended Social Links**: 6 social/research platform fields
+- **Better Organization**: Grouped fields in "Social & Research Links" section
+- **Input Validation**: URL validation for all link fields
+
+### Visual Improvements
+- **Consistent Card Layout**: All cards same height with proper content flow
+- **Social Icons Design**: White inverted icons with opacity hover effects  
+- **Research Interest Tags**: Color-coded tags for visual appeal
+- **Fixed Button Positioning**: Know More button always at card bottom
+
+### Backend Integration
+- **Data Persistence**: All new fields save to database with timestamps
+- **Sorting Logic**: Created_at timestamp for latest-first ordering
+- **Field Validation**: Proper handling of optional website and social fields
+
+### Production Ready Features
+✅ **All People Cards**: Uniform design with social icons
+✅ **Admin Panel**: Complete CRUD with enhanced form
+✅ **Real-time Updates**: Changes reflect immediately
+✅ **Website Integration**: Know More functionality working
+✅ **Responsive Design**: Cards work on all screen sizes
+✅ **Data Validation**: Proper error handling and validation
+
+The People page now provides a professional, comprehensive view of team members with direct access to their research profiles and social presence, while the admin panel allows easy management of all team information including social links and personal websites.
