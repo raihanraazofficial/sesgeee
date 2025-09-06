@@ -6,6 +6,23 @@ import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const News = () => {
+  const { news, fetchData, loading } = useData();
+  const [featuredNews, setFeaturedNews] = useState([]);
+  const [recentNews, setRecentNews] = useState([]);
+
+  useEffect(() => {
+    fetchData('news');
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (news.length > 0) {
+      const featured = news.filter(item => item.is_featured);
+      const recent = news.filter(item => !item.is_featured);
+      setFeaturedNews(featured);
+      setRecentNews(recent);
+    }
+  }, [news]);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
