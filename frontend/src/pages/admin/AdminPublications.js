@@ -275,12 +275,13 @@ const AdminPublications = () => {
                   </div>
                   
                   <div className="flex space-x-2 ml-4">
-                    {publication.url && (
+                    {publication.link && (
                       <a
-                        href={publication.url}
+                        href={publication.link}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-gray-600 hover:text-blue-600 transition-colors"
+                        title="View Publication"
                       >
                         <ExternalLink className="h-4 w-4" />
                       </a>
