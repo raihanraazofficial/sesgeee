@@ -8,6 +8,9 @@ const Projects = () => {
   const { projects, fetchData, loading } = useData();
   const [activeTab, setActiveTab] = useState('all');
   const [filteredProjects, setFilteredProjects] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('latest');
+  const [sortOrder, setSortOrder] = useState('desc');
 
   useEffect(() => {
     fetchData('projects');
@@ -16,12 +19,48 @@ const Projects = () => {
   useEffect(() => {
     if (projects.length > 0) {
       let filtered = projects;
+      
+      // Filter by category
       if (activeTab !== 'all') {
-        filtered = projects.filter(project => project.status === activeTab);
+        filtered = filtered.filter(project => project.status === activeTab);
       }
+      
+      // Filter by search term
+      if (searchTerm) {
+        filtered = filtered.filter(project => 
+          project.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          project.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          project.research_area?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
+      
+      // Sort projects
+      filtered = [...filtered].sort((a, b) => {
+        let comparison = 0;
+        
+        switch (sortBy) {
+          case 'latest':
+            comparison = new Date(b.created_at || b.start_date) - new Date(a.created_at || a.start_date);
+            break;
+          case 'category':
+            comparison = (a.status || '').localeCompare(b.status || '');
+            break;
+          case 'research_area':
+            comparison = (a.research_area || '').localeCompare(b.research_area || '');
+            break;
+          case 'name':
+            comparison = (a.name || '').localeCompare(b.name || '');
+            break;
+          default:
+            comparison = 0;
+        }
+        
+        return sortOrder === 'desc' ? -comparison : comparison;
+      });
+      
       setFilteredProjects(filtered);
     }
-  }, [projects, activeTab]);
+  }, [projects, activeTab, searchTerm, sortBy, sortOrder]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
