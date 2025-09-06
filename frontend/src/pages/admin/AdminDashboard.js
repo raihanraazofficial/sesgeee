@@ -29,7 +29,7 @@ const AdminDashboard = () => {
     setLoading(false);
   }, [people, publications, projects, achievements]);
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       setLoading(true);
       // Fetch all data from Firestore
@@ -45,7 +45,7 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [fetchData]);
 
   const quickActions = [
     { name: 'Manage People', href: '/admin/people', icon: Users },
