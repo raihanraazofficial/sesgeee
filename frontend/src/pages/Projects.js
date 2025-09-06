@@ -384,28 +384,35 @@ const Projects = () => {
                 </div>
               ) : (
                 <div className="text-center py-16">
-                  <ClipboardList className="h-16 w-16 text-gray-400 mx-auto mb-6" />
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-                    No Projects Available
-                  </h3>
-                  <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-                    {activeTab === 'all' 
-                      ? 'We are currently working on exciting new research projects. Please check back soon for updates on our latest initiatives.'
-                      : `No ${activeTab} projects are currently available. Please try exploring other categories or check back later for updates.`
-                    }
-                  </p>
-                  <div className="space-x-4">
-                    {activeTab !== 'all' && (
-                      <button 
-                        onClick={() => setActiveTab('all')}
-                        className="btn-secondary"
-                      >
-                        View All Projects
-                      </button>
-                    )}
-                    <button className="btn-primary">
-                      Explore Research Areas
-                    </button>
+                  <div className="max-w-md mx-auto">
+                    <ClipboardList className="h-20 w-20 text-gray-300 mx-auto mb-6" />
+                    <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                      No Projects Available
+                    </h3>
+                    <p className="text-gray-500 mb-8 text-lg leading-relaxed">
+                      {activeTab === 'all' 
+                        ? 'We are currently working on exciting new research projects. Our team is developing innovative solutions in sustainable energy and smart grid technologies. Check back soon for updates on our latest initiatives.'
+                        : `No ${activeTab} projects are currently available. Our research portfolio includes various stages of development. Please explore other categories or visit our research areas page to learn more about our ongoing work.`
+                      }
+                    </p>
+                    <div className="space-y-4">
+                      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        {activeTab !== 'all' && (
+                          <button 
+                            onClick={() => setActiveTab('all')}
+                            className="btn-secondary"
+                          >
+                            View All Projects
+                          </button>
+                        )}
+                        <a href="/research" className="btn-primary">
+                          Explore Research Areas
+                        </a>
+                      </div>
+                      <p className="text-sm text-gray-400 mt-4">
+                        For collaboration opportunities, please <a href="/contact" className="text-primary-600 hover:text-primary-700 underline">contact us</a>
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}
