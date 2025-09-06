@@ -14,6 +14,24 @@ const AdminDashboard = () => {
   ]);
   const [loading, setLoading] = useState(true);
 
+  const fetchDashboardData = useCallback(async () => {
+    try {
+      setLoading(true);
+      // Fetch all data from Firestore
+      await Promise.all([
+        fetchData('people'),
+        fetchData('publications'),
+        fetchData('projects'),
+        fetchData('achievements'),
+        fetchData('news')
+      ]);
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [fetchData]);
+
   useEffect(() => {
     fetchDashboardData();
   }, [fetchDashboardData]);
