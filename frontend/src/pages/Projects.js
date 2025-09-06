@@ -190,7 +190,7 @@ const Projects = () => {
       {/* Search and Filter Section */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* Search Bar */}
             <div className="flex justify-center">
               <div className="relative w-full max-w-2xl">
@@ -205,40 +205,40 @@ const Projects = () => {
               </div>
             </div>
 
-            {/* Filter Controls */}
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
-              {/* Category Tabs - Centered */}
-              <div className="flex-1 flex justify-center">
-                <div className="flex bg-white rounded-lg p-2 border border-gray-200 shadow-sm">
-                  {[
-                    { id: 'all', name: 'All Projects' },
-                    { id: 'ongoing', name: 'Ongoing' },
-                    { id: 'completed', name: 'Completed' },
-                    { id: 'planning', name: 'Planning' }
-                  ].map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      className={`px-4 py-2 rounded-md font-medium transition-all text-sm ${
-                        activeTab === tab.id
-                          ? 'bg-primary-600 text-white shadow-md'
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                      }`}
-                    >
-                      {tab.name}
-                    </button>
-                  ))}
-                </div>
+            {/* Category Tabs - Centered */}
+            <div className="flex justify-center">
+              <div className="flex bg-white rounded-lg p-2 border border-gray-200 shadow-sm">
+                {[
+                  { id: 'all', name: 'All Projects' },
+                  { id: 'ongoing', name: 'Ongoing' },
+                  { id: 'completed', name: 'Completed' },
+                  { id: 'planning', name: 'Planning' }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`px-4 py-2 rounded-md font-medium transition-all text-sm ${
+                      activeTab === tab.id
+                        ? 'bg-primary-600 text-white shadow-md'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    }`}
+                  >
+                    {tab.name}
+                  </button>
+                ))}
               </div>
+            </div>
 
-              {/* Sort Controls */}
-              <div className="flex items-center space-x-4">
+            {/* Sort Controls - Moved to separate row, centered */}
+            <div className="flex justify-center">
+              <div className="flex items-center space-x-4 bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
                 <div className="flex items-center space-x-2">
                   <Filter className="h-4 w-4 text-gray-500" />
+                  <span className="text-sm text-gray-600 font-medium">Sort by:</span>
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="border border-gray-300 rounded-md px-3 py-2 bg-white focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+                    className="border border-gray-300 rounded-md px-3 py-1.5 bg-white focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                   >
                     <option value="latest">Latest First</option>
                     <option value="name">Project Name</option>
@@ -248,7 +248,7 @@ const Projects = () => {
                 </div>
                 <button
                   onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                  className="px-3 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors text-sm"
+                  className="px-3 py-1.5 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors text-sm font-medium"
                 >
                   {sortOrder === 'asc' ? '↑ Ascending' : '↓ Descending'}
                 </button>
