@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Save, Database, CheckCircle, AlertCircle, Settings, Trash2, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Database, CheckCircle, AlertCircle, Settings, RefreshCw } from 'lucide-react';
 import { initializeFirestore } from '../../utils/initFirestore';
 import { useData } from '../../contexts/DataContext';
 
