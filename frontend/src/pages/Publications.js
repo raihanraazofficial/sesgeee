@@ -18,7 +18,6 @@ const Publications = () => {
 
   useEffect(() => {
     fetchData('publications');
-    fetchData('researchAreas');
   }, [fetchData]);
 
   // Research areas for filter
