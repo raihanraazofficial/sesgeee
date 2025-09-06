@@ -275,7 +275,7 @@ function dataReducer(state, action) {
 export function DataProvider({ children }) {
   const [state, dispatch] = useReducer(dataReducer, initialState);
 
-  const fetchData = async (type, params = {}) => {
+  const fetchData = useCallback(async (type, params = {}) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: { type, loading: true } });
 
