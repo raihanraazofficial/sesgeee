@@ -1,5 +1,18 @@
 import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import { db } from '../firebase';
+import { 
+  collection, 
+  doc, 
+  getDocs, 
+  addDoc, 
+  updateDoc, 
+  deleteDoc, 
+  query, 
+  where, 
+  orderBy,
+  limit as firestoreLimit,
+  serverTimestamp 
+} from 'firebase/firestore';
 
 const DataContext = createContext();
 
