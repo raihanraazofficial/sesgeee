@@ -231,14 +231,14 @@ const Projects = () => {
 
             {/* Sort Controls - Moved to separate row, centered */}
             <div className="flex justify-center">
-              <div className="flex items-center space-x-4 bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
-                <div className="flex items-center space-x-2">
-                  <Filter className="h-4 w-4 text-gray-500" />
-                  <span className="text-sm text-gray-600 font-medium">Sort by:</span>
+              <div className="flex items-center space-x-4 bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                <div className="flex items-center space-x-3">
+                  <Filter className="h-5 w-5 text-gray-500" />
+                  <span className="text-sm text-gray-700 font-medium">Sort by:</span>
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="border border-gray-300 rounded-md px-3 py-1.5 bg-white focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+                    className="border border-gray-300 rounded-md px-3 py-2 bg-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm text-gray-700 min-w-[140px]"
                   >
                     <option value="latest">Latest First</option>
                     <option value="name">Project Name</option>
@@ -246,12 +246,19 @@ const Projects = () => {
                     <option value="research_area">Research Area</option>
                   </select>
                 </div>
-                <button
-                  onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                  className="px-3 py-1.5 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors text-sm font-medium"
-                >
-                  {sortOrder === 'asc' ? '↑ Ascending' : '↓ Descending'}
-                </button>
+                <div className="flex items-center space-x-3">
+                  <span className="text-sm text-gray-700 font-medium">Order:</span>
+                  <button
+                    onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                    className={`px-4 py-2 border rounded-md transition-colors text-sm font-medium min-w-[120px] ${
+                      sortOrder === 'desc' 
+                        ? 'bg-primary-600 text-white border-primary-600 hover:bg-primary-700' 
+                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    {sortOrder === 'asc' ? '↑ Ascending' : '↓ Descending'}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
