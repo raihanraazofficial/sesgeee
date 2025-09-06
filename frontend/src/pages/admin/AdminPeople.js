@@ -18,11 +18,14 @@ const AdminPeople = () => {
     research_interests: [],
     image: '',
     email: '',
+    website: '',
     social_links: {
       google_scholar: '',
       researchgate: '',
       orcid: '',
-      linkedin: ''
+      linkedin: '',
+      github: '',
+      ieee: ''
     }
   });
 
