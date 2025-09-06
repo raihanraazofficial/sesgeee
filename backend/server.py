@@ -612,7 +612,10 @@ async def delete_achievement(achievement_id: str, current_user: dict = Depends(g
 @app.get("/api/news")
 async def get_news(featured: Optional[bool] = None, limit: Optional[int] = None):
     filters = [("is_featured", "==", featured)] if featured is not None else None
-    order_by = ("published_date", firestore.Query.DESCENDING) if db else None
+    if db:
+        order_by = ("published_date", firestore.Query.DESCENDING)
+    else:
+        order_by = None
     
     news = get_collection_data("news", filters=filters, order_by=order_by, limit=limit)
     return news
