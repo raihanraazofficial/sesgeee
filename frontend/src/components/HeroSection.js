@@ -35,7 +35,7 @@ const HeroSection = ({
             </p>
           )}
           
-          <h1 className="hero-title text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold font-heading mb-4 leading-tight animate-scale-in">
+          <h1 className="hero-title text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold font-heading mb-3 leading-tight animate-scale-in">
             <span className="bg-gradient-to-r from-white via-gray-100 to-cyan-200 bg-clip-text text-transparent drop-shadow-lg">
               Sustainable Energy &
             </span>
