@@ -5,13 +5,13 @@ import { getStorage } from 'firebase/storage';
 import { getAnalytics } from 'firebase/analytics';
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY || "AIzaSyAW4GNtIBtQuT-M8TYyoh_4S6HfZkI0m3s",
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || "sesgrg-website.firebaseapp.com",
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID || "sesgrg-website",
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET || "sesgrg-website.firebasestorage.app",
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID || "665472144837",
+  appId: process.env.REACT_APP_FIREBASE_APP_ID || "1:665472144837:web:f3432c1363adfaccde27ac",
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID || "G-DT31MZ5G0Q"
 };
 
 // Initialize Firebase
