@@ -473,8 +473,8 @@ Best regards,
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-between bg-dark-800 p-4 rounded-lg">
-                  <div className="text-sm text-gray-400">
+                <div className="flex items-center justify-between bg-white p-4 rounded-lg border border-gray-200">
+                  <div className="text-sm text-gray-600">
                     Showing {startIndex + 1}-{Math.min(endIndex, filteredPublications.length)} of {filteredPublications.length} publications
                   </div>
 
