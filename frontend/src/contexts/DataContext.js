@@ -460,9 +460,10 @@ export function DataProvider({ children }) {
         return mockData;
       }
     } catch (error) {
-      console.error(`Error fetching ${type}:`, error);
+      console.error(`[DataContext] Error fetching ${type}:`, error);
 
       const mockData = getMockData(type);
+      console.log(`[DataContext] Fallback to mock data for ${type}:`, mockData.length, 'items');
 
       dispatch({
         type: 'SET_DATA',
