@@ -75,116 +75,122 @@ const People = () => {
           </div>
 
           {/* People Grid */}
-          <>
-            {currentData.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {currentData.map((person) => (
-                  <div key={person.id} className="research-card flex flex-col"
-                       style={{ minHeight: '580px' }}>
-                    <div className="relative h-64">
-                      <img
-                        src={person.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(person.name)}&size=400&background=1e293b&color=ffffff`}
-                        alt={person.name}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                    </div>
+          {loading.people ? (
+            <LoadingSpinner text="Loading team members..." />
+          ) : (
+            <>
+              {currentData.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {currentData.map((person) => (
+                    <div key={person.id} className="research-card flex flex-col"
+                         style={{ minHeight: '580px' }}>
                       
-                    <div className="p-6 flex flex-col h-full">
-                      <div className="flex-grow">
+                      {/* Header with Name, Title, Department */}
+                      <div className="p-6 pb-4">
                         <h3 className="text-xl font-semibold text-white mb-2">{person.name}</h3>
                         <p className="text-primary-400 font-medium mb-1">{person.title}</p>
                         <p className="text-gray-400 text-sm mb-4">{person.department}</p>
-                        
-                        <p className="text-gray-300 text-sm leading-relaxed mb-4" style={{
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden'
-                        }}>
-                          {person.bio}
-                        </p>
-                        
-                        {person.research_interests && person.research_interests.length > 0 && (
-                          <div className="mb-4">
-                            <h4 className="text-white font-medium text-sm mb-2">Research Interest:</h4>
-                            <div className="flex flex-wrap gap-2">
-                              {person.research_interests.map((interest, index) => (
-                                <span
-                                  key={index}
-                                  className="bg-primary-600/20 text-primary-400 px-2 py-1 rounded text-xs"
-                                >
-                                  {interest}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                        
-                        {/* Social/Research Links */}
-                        <div className="flex flex-wrap gap-3 mb-4">
-                          <a href={person.social_links?.google_scholar || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlescholar.svg" alt="Scholar" className="w-full h-full filter invert" />
-                          </a>
-                          <a href={person.social_links?.researchgate || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/researchgate.svg" alt="RG" className="w-full h-full filter invert" />
-                          </a>
-                          <a href={person.social_links?.orcid || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/orcid.svg" alt="ORCID" className="w-full h-full filter invert" />
-                          </a>
-                          <a href={person.social_links?.linkedin || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" className="w-full h-full filter invert" />
-                          </a>
-                          <a href={person.social_links?.github || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" className="w-full h-full filter invert" />
-                          </a>
-                          <a href={person.social_links?.ieee || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ieee.svg" alt="IEEE" className="w-full h-full filter invert" />
-                          </a>
-                          <a href={`mailto:${person.email || 'example@email.com'}`} className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/maildotru.svg" alt="Email" className="w-full h-full filter invert" />
-                          </a>
-                        </div>
                       </div>
                       
-                      {/* Fixed Know More Button at Bottom */}
-                      <div className="mt-auto">
-                        <button 
-                          onClick={() => person.website && window.open(person.website, '_blank')}
-                          className="w-full bg-dark-700 hover:bg-dark-600 text-white py-2 px-4 rounded-lg transition-colors"
-                        >
-                          Know More
-                        </button>
+                      {/* Photo */}
+                      <div className="relative h-48 mx-6 mb-4">
+                        <img
+                          src={person.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(person.name)}&size=400&background=1e293b&color=ffffff`}
+                          alt={person.name}
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent rounded-lg" />
+                      </div>
+                      
+                      {/* Content */}
+                      <div className="px-6 pb-6 flex flex-col flex-grow">
+                        <div className="flex-grow">
+                          {/* Bio - Now with more space */}
+                          <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                            {person.bio}
+                          </p>
+                          
+                          {person.research_interests && person.research_interests.length > 0 && (
+                            <div className="mb-4">
+                              <h4 className="text-white font-medium text-sm mb-2">Research Interest:</h4>
+                              <div className="flex flex-wrap gap-2">
+                                {person.research_interests.map((interest, index) => (
+                                  <span
+                                    key={index}
+                                    className="bg-primary-600/20 text-primary-400 px-2 py-1 rounded text-xs"
+                                  >
+                                    {interest}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {/* Social/Research Links */}
+                          <div className="flex flex-wrap gap-3 mb-4">
+                            <a href={person.social_links?.google_scholar || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlescholar.svg" alt="Scholar" className="w-full h-full filter invert" />
+                            </a>
+                            <a href={person.social_links?.researchgate || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/researchgate.svg" alt="RG" className="w-full h-full filter invert" />
+                            </a>
+                            <a href={person.social_links?.orcid || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/orcid.svg" alt="ORCID" className="w-full h-full filter invert" />
+                            </a>
+                            <a href={person.social_links?.linkedin || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" className="w-full h-full filter invert" />
+                            </a>
+                            <a href={person.social_links?.github || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" className="w-full h-full filter invert" />
+                            </a>
+                            <a href={person.social_links?.ieee || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ieee.svg" alt="IEEE" className="w-full h-full filter invert" />
+                            </a>
+                            <a href={`mailto:${person.email || 'example@email.com'}`} className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/maildotru.svg" alt="Email" className="w-full h-full filter invert" />
+                            </a>
+                          </div>
+                        </div>
+                        
+                        {/* Fixed Know More Button at Bottom */}
+                        <div className="mt-auto">
+                          <button 
+                            onClick={() => person.website && window.open(person.website, '_blank')}
+                            className="w-full bg-dark-700 hover:bg-dark-600 text-white py-2 px-4 rounded-lg transition-colors"
+                          >
+                            Know More
+                          </button>
+                        </div>
                       </div>
                     </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-16">
+                  <div className="w-24 h-24 bg-dark-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                    {categories.find(c => c.id === activeCategory)?.icon && 
+                      React.createElement(categories.find(c => c.id === activeCategory).icon, {
+                        className: "h-12 w-12 text-gray-400"
+                      })
+                    }
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-16">
-                <div className="w-24 h-24 bg-dark-800 rounded-full flex items-center justify-center mx-auto mb-6">
-                  {categories.find(c => c.id === activeCategory)?.icon && 
-                    React.createElement(categories.find(c => c.id === activeCategory).icon, {
-                      className: "h-12 w-12 text-gray-400"
-                    })
-                  }
+                  <h3 className="text-2xl font-semibold text-white mb-4">
+                    No Members Found in this Category
+                  </h3>
+                  <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+                    We are seeking members for our {categories.find(c => c.id === activeCategory)?.name.toLowerCase()} team. 
+                    Join us to contribute to cutting-edge research in sustainable energy and smart grid technologies.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <button className="btn-primary">
+                      Express Interest
+                    </button>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-semibold text-white mb-4">
-                  No Members Found in this Category
-                </h3>
-                <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-                  We are seeking members for our {categories.find(c => c.id === activeCategory)?.name.toLowerCase()} team. 
-                  Join us to contribute to cutting-edge research in sustainable energy and smart grid technologies.
-                </p>
-                
-                <div className="space-y-4">
-                  <button className="btn-primary">
-                    Express Interest
-                  </button>
-                </div>
-              </div>
-            )}
-          </>)
+              )}
+            </>
+          )}
 
           {/* Join Our Team Section */}
           <div className="mt-20 text-center glass rounded-xl p-12">
