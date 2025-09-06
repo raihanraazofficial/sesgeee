@@ -43,13 +43,13 @@ const Achievements = () => {
   const getCategoryColor = (category) => {
     switch (category) {
       case 'award':
-        return 'text-yellow-400 bg-yellow-400/20';
+        return 'text-yellow-600 bg-yellow-50 border-yellow-200';
       case 'funding':
-        return 'text-green-400 bg-green-400/20';
+        return 'text-green-600 bg-green-50 border-green-200';
       case 'recognition':
-        return 'text-blue-400 bg-blue-400/20';
+        return 'text-blue-600 bg-blue-50 border-blue-200';
       default:
-        return 'text-yellow-400 bg-yellow-400/20';
+        return 'text-yellow-600 bg-yellow-50 border-yellow-200';
     }
   };
 
@@ -64,10 +64,10 @@ const Achievements = () => {
       />
 
       {/* Filter Tabs */}
-      <section className="py-12 bg-dark-800">
+      <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center">
-            <div className="flex bg-dark-700 rounded-lg p-2">
+            <div className="flex bg-white rounded-lg p-2 border border-gray-200 shadow-sm">
               {[
                 { id: 'all', name: 'All Achievements' },
                 { id: 'award', name: 'Awards' },
@@ -79,8 +79,8 @@ const Achievements = () => {
                   onClick={() => setActiveCategory(tab.id)}
                   className={`px-4 py-3 rounded-md font-medium transition-all text-sm ${
                     activeCategory === tab.id
-                      ? 'bg-primary-600 text-white'
-                      : 'text-gray-300 hover:text-white hover:bg-dark-600'
+                      ? 'bg-primary-600 text-white shadow-md'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                 >
                   {tab.name}
@@ -92,7 +92,7 @@ const Achievements = () => {
       </section>
 
       {/* Achievements Section */}
-      <section className="py-20 bg-dark-900">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading.achievements ? (
             <LoadingSpinner text="Loading achievements..." />
@@ -103,22 +103,22 @@ const Achievements = () => {
                   {filteredAchievements.map((achievement) => {
                     const CategoryIcon = getCategoryIcon(achievement.category);
                     return (
-                      <div key={achievement.id} className="glass rounded-xl p-6 card-hover">
+                      <div key={achievement.id} className="glass rounded-xl p-6 card-hover border border-gray-200 shadow-lg">
                         <div className="flex items-start space-x-4">
-                          <div className={`w-12 h-12 rounded-full flex items-center justify-center ${getCategoryColor(achievement.category)}`}>
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center border ${getCategoryColor(achievement.category)}`}>
                             <CategoryIcon className="h-6 w-6" />
                           </div>
                           <div className="flex-1">
-                            <h3 className="text-lg font-semibold text-white mb-2">{achievement.name}</h3>
-                            <p className="text-gray-300 text-sm mb-3 leading-relaxed">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-2">{achievement.name}</h3>
+                            <p className="text-gray-600 text-sm mb-3 leading-relaxed">
                               {achievement.description}
                             </p>
-                            <div className="flex items-center space-x-4 text-sm text-gray-400">
+                            <div className="flex items-center space-x-4 text-sm text-gray-500">
                               <div className="flex items-center space-x-1">
                                 <Calendar className="h-4 w-4" />
                                 <span>{achievement.year}</span>
                               </div>
-                              <span className={`px-2 py-1 rounded text-xs capitalize ${getCategoryColor(achievement.category)}`}>
+                              <span className={`px-2 py-1 rounded text-xs capitalize border ${getCategoryColor(achievement.category)}`}>
                                 {achievement.category}
                               </span>
                             </div>
@@ -131,10 +131,10 @@ const Achievements = () => {
               ) : (
                 <div className="text-center py-16">
                   <Award className="h-16 w-16 text-gray-400 mx-auto mb-6" />
-                  <h3 className="text-2xl font-semibold text-white mb-4">
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">
                     No Achievements Found
                   </h3>
-                  <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+                  <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
                     {activeCategory === 'all' 
                       ? 'Our achievements database is being updated. Stay tuned as we prepare to showcase our significant achievements and milestones.'
                       : `No ${activeCategory} achievements available at the moment. Try switching to a different category.`
@@ -162,7 +162,7 @@ const Achievements = () => {
           <div className="mt-12 text-center">
             <button
               onClick={scrollToTop}
-              className="flex items-center space-x-2 text-gray-300 hover:text-primary-400 transition-colors mx-auto"
+              className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors mx-auto"
             >
               <span>Back to Top</span>
               <ArrowUp className="h-4 w-4" />
