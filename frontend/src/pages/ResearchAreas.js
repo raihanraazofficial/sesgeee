@@ -147,7 +147,7 @@ const ResearchAreas = () => {
       </section>
 
       {/* Interdisciplinary Approach */}
-      <section className="py-20 bg-dark-900">
+      <section className="py-20 bg-gradient-to-r from-dark-900 via-primary-900 to-dark-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold font-heading text-white mb-4">
@@ -161,11 +161,11 @@ const ResearchAreas = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {disciplines.map((discipline, index) => (
-              <div key={index} className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-lg">{discipline.split(' ')[0][0]}</span>
+              <div key={index} className="text-center transform hover:scale-105 transition-transform duration-300">
+                <div className="w-24 h-24 bg-gradient-to-br from-blue-600 via-green-600 to-yellow-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-2xl">
+                  <span className="text-white font-bold text-xl">{discipline.split(' ')[0][0]}</span>
                 </div>
-                <h3 className="text-white font-semibold">{discipline}</h3>
+                <h3 className="text-white font-semibold text-lg">{discipline}</h3>
               </div>
             ))}
           </div>
