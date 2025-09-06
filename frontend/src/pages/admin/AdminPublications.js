@@ -263,10 +263,13 @@ const AdminPublications = () => {
                     )}
 
                     <div className="flex items-center space-x-4 text-sm text-gray-500">
-                      <span>Type: {publication.type}</span>
+                      <span>Type: {publication.publication_type === 'journal' ? 'Journal' : publication.publication_type === 'conference' ? 'Conference' : 'Book Chapter'}</span>
                       <span>Year: {publication.year}</span>
-                      {publication.doi && (
-                        <span>DOI: {publication.doi}</span>
+                      {publication.citations > 0 && (
+                        <span>Citations: {publication.citations}</span>
+                      )}
+                      {publication.is_open_access && (
+                        <span className="text-green-600 font-medium">Open Access</span>
                       )}
                     </div>
                   </div>
