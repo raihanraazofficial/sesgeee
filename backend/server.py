@@ -28,7 +28,7 @@ app.add_middleware(
         "https://localhost:3000", 
         "https://*.vercel.app",
         "https://*.emergentagent.com",
-        "https://fix-admin-panel.preview.emergentagent.com",
+        "https://vercel-repair.preview.emergentagent.com",
         "*"  # Allow all origins for development
     ],
     allow_credentials=True,
