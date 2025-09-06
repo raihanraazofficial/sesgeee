@@ -592,7 +592,7 @@ Best regards,
           <div className="mt-12 text-center">
             <button
               onClick={scrollToTop}
-              className="flex items-center space-x-2 text-gray-300 hover:text-primary-400 transition-colors mx-auto"
+              className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors mx-auto"
             >
               <span>Back to Top</span>
               <ArrowUp className="h-4 w-4" />
