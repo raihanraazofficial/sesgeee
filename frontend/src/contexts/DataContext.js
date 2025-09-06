@@ -292,24 +292,61 @@ export function DataProvider({ children }) {
     try {
       dispatch({ type: 'SET_LOADING', payload: { type, loading: true } });
 
-      let endpoint = `/api/${type.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
-      if (type === 'researchAreas') endpoint = '/api/research-areas';
-      if (type === 'photoGallery') endpoint = '/api/photo-gallery';
-
-      const baseURL = process.env.REACT_APP_BACKEND_URL || '/api';
-      const fullURL = baseURL.startsWith('http') ? `${baseURL}${endpoint}` : endpoint;
+      // Map type to Firestore collection name
+      let collectionName = type;
+      if (type === 'researchAreas') collectionName = 'research_areas';
+      if (type === 'photoGallery') collectionName = 'photo_gallery';
 
       try {
-        const response = await axios.get(fullURL, { params });
+        // Get data from Firestore
+        const collectionRef = collection(db, collectionName);
+        let q = collectionRef;
+        
+        // Apply filters from params
+        if (params.category) {
+          q = query(q, where('category', '==', params.category));
+        }
+        if (params.status) {
+          q = query(q, where('status', '==', params.status));
+        }
+        if (params.featured !== undefined) {
+          q = query(q, where('is_featured', '==', params.featured));
+        }
+        
+        // Apply ordering
+        if (params.sort_by) {
+          const direction = params.sort_order === 'asc' ? 'asc' : 'desc';
+          q = query(q, orderBy(params.sort_by, direction));
+        } else if (type === 'news' || type === 'events') {
+          q = query(q, orderBy('published_date', 'desc'));
+        }
+        
+        // Apply limit
+        if (params.limit) {
+          q = query(q, firestoreLimit(params.limit));
+        }
+
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          // Convert Firestore timestamps to ISO strings
+          created_at: doc.data().created_at?.toDate?.()?.toISOString(),
+          updated_at: doc.data().updated_at?.toDate?.()?.toISOString(),
+          published_date: doc.data().published_date?.toDate?.()?.toISOString(),
+          date: doc.data().date?.toDate?.()?.toISOString(),
+          start_date: doc.data().start_date?.toDate?.()?.toISOString(),
+          end_date: doc.data().end_date?.toDate?.()?.toISOString(),
+        }));
 
         dispatch({
           type: 'SET_DATA',
-          payload: { type, data: response.data },
+          payload: { type, data },
         });
 
-        return response.data;
-      } catch (apiError) {
-        console.warn(`API call failed for ${type}, using mock data:`, apiError.message);
+        return data;
+      } catch (firestoreError) {
+        console.warn(`Firestore call failed for ${type}, using mock data:`, firestoreError.message);
 
         const mockData = getMockData(type);
 
@@ -337,16 +374,32 @@ export function DataProvider({ children }) {
 
   const createItem = async (type, data) => {
     try {
-      let endpoint = `/api/${type.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+      let collectionName = type;
+      if (type === 'researchAreas') collectionName = 'research_areas';
+      if (type === 'photoGallery') collectionName = 'photo_gallery';
 
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL || ''}${endpoint}`, data);
+      // Add timestamps
+      const itemData = {
+        ...data,
+        created_at: serverTimestamp(),
+        updated_at: serverTimestamp(),
+      };
+
+      const docRef = await addDoc(collection(db, collectionName), itemData);
+      
+      const newItem = {
+        id: docRef.id,
+        ...data,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
 
       dispatch({
         type: 'ADD_ITEM',
-        payload: { type, item: response.data },
+        payload: { type, item: newItem },
       });
 
-      return response.data;
+      return newItem;
     } catch (error) {
       console.error(`Error creating ${type}:`, error);
       throw error;
@@ -355,16 +408,29 @@ export function DataProvider({ children }) {
 
   const updateItem = async (type, id, data) => {
     try {
-      let endpoint = `/api/${type.replace(/([A-Z])/g, '-$1').toLowerCase()}/${id}`;
+      let collectionName = type;
+      if (type === 'researchAreas') collectionName = 'research_areas';
+      if (type === 'photoGallery') collectionName = 'photo_gallery';
 
-      const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL || ''}${endpoint}`, data);
+      const itemData = {
+        ...data,
+        updated_at: serverTimestamp(),
+      };
+
+      await updateDoc(doc(db, collectionName, id), itemData);
+      
+      const updatedItem = {
+        id,
+        ...data,
+        updated_at: new Date().toISOString(),
+      };
 
       dispatch({
         type: 'UPDATE_ITEM',
-        payload: { type, item: response.data },
+        payload: { type, item: updatedItem },
       });
 
-      return response.data;
+      return updatedItem;
     } catch (error) {
       console.error(`Error updating ${type}:`, error);
       throw error;
@@ -373,9 +439,11 @@ export function DataProvider({ children }) {
 
   const deleteItem = async (type, id) => {
     try {
-      let endpoint = `/api/${type.replace(/([A-Z])/g, '-$1').toLowerCase()}/${id}`;
+      let collectionName = type;
+      if (type === 'researchAreas') collectionName = 'research_areas';
+      if (type === 'photoGallery') collectionName = 'photo_gallery';
 
-      await axios.delete(`${process.env.REACT_APP_BACKEND_URL || ''}${endpoint}`);
+      await deleteDoc(doc(db, collectionName, id));
 
       dispatch({
         type: 'DELETE_ITEM',
