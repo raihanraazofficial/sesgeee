@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ExternalLink, ChevronLeft, ChevronRight, Zap, Target, Users, Globe } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
