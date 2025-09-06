@@ -46,7 +46,7 @@ const HeroSection = ({
           </h1>
           
           {description && (
-            <p className="hero-subtitle text-xl md:text-2xl text-gray-200 mb-10 max-w-4xl mx-auto leading-relaxed animate-fade-up delay-300">
+            <p className="hero-subtitle text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-up delay-300 animate-pulse-light">
               {description}
             </p>
           )}
