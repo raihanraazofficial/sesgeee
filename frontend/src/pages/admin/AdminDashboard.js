@@ -88,7 +88,13 @@ const AdminDashboard = () => {
                     </dt>
                     <dd className="flex items-baseline">
                       <div className="text-2xl font-semibold text-white">
-                        {stat.value}
+                        {loading ? (
+                          <div className="animate-pulse">
+                            <div className="h-8 bg-gray-700 rounded w-12"></div>
+                          </div>
+                        ) : (
+                          stat.value
+                        )}
                       </div>
                     </dd>
                   </dl>
