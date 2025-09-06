@@ -104,7 +104,7 @@ const People = () => {
     collaborators: []
   };
 
-  const currentData = filteredPeople.length > 0 ? filteredPeople : mockPeople[activeCategory] || [];
+  const currentData = mockPeople[activeCategory] || [];
 
   return (
     <div className="min-h-screen">
