@@ -149,61 +149,72 @@ const People = () => {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                       </div>
                       
-                      <div className="p-6">
-                        <h3 className="text-xl font-semibold text-white mb-2">{person.name}</h3>
-                        <p className="text-primary-400 font-medium mb-1">{person.title}</p>
-                        <p className="text-gray-400 text-sm mb-4">{person.department}</p>
-                        
-                        <p className="text-gray-300 text-sm leading-relaxed mb-4 line-clamp-3">
-                          {person.bio}
-                        </p>
-                        
-                        {person.research_interests && person.research_interests.length > 0 && (
-                          <div className="mb-4">
-                            <h4 className="text-white font-medium text-sm mb-2">Research Interest:</h4>
-                            <div className="flex flex-wrap gap-2">
-                              {person.research_interests.map((interest, index) => (
-                                <span
-                                  key={index}
-                                  className="bg-primary-600/20 text-primary-400 px-2 py-1 rounded text-xs"
-                                >
-                                  {interest}
-                                </span>
-                              ))}
+                      <div className="p-6 flex flex-col h-full">
+                        <div className="flex-grow">
+                          <h3 className="text-xl font-semibold text-white mb-2">{person.name}</h3>
+                          <p className="text-primary-400 font-medium mb-1">{person.title}</p>
+                          <p className="text-gray-400 text-sm mb-4">{person.department}</p>
+                          
+                          <p className="text-gray-300 text-sm leading-relaxed mb-4" style={{
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden'
+                          }}>
+                            {person.bio}
+                          </p>
+                          
+                          {person.research_interests && person.research_interests.length > 0 && (
+                            <div className="mb-4">
+                              <h4 className="text-white font-medium text-sm mb-2">Research Interest:</h4>
+                              <div className="flex flex-wrap gap-2">
+                                {person.research_interests.map((interest, index) => (
+                                  <span
+                                    key={index}
+                                    className="bg-primary-600/20 text-primary-400 px-2 py-1 rounded text-xs"
+                                  >
+                                    {interest}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
+                          )}
+                          
+                          {/* Social/Research Links */}
+                          <div className="flex flex-wrap gap-3 mb-4">
+                            <a href={person.social_links?.google_scholar || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlescholar.svg" alt="Scholar" className="w-full h-full filter invert" />
+                            </a>
+                            <a href={person.social_links?.researchgate || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/researchgate.svg" alt="RG" className="w-full h-full filter invert" />
+                            </a>
+                            <a href={person.social_links?.orcid || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/orcid.svg" alt="ORCID" className="w-full h-full filter invert" />
+                            </a>
+                            <a href={person.social_links?.linkedin || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" className="w-full h-full filter invert" />
+                            </a>
+                            <a href={person.social_links?.github || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" className="w-full h-full filter invert" />
+                            </a>
+                            <a href={person.social_links?.ieee || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ieee.svg" alt="IEEE" className="w-full h-full filter invert" />
+                            </a>
+                            <a href={`mailto:${person.email || 'example@email.com'}`} className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/maildotru.svg" alt="Email" className="w-full h-full filter invert" />
+                            </a>
                           </div>
-                        )}
+                        </div>
                         
-                        {/* Social Links */}
-                        {person.social_links && Object.keys(person.social_links).length > 0 && (
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {person.email && (
-                              <a
-                                href={`mailto:${person.email}`}
-                                className="text-gray-400 hover:text-primary-400 transition-colors"
-                                title="Email"
-                              >
-                                <Mail className="h-4 w-4" />
-                              </a>
-                            )}
-                            {Object.entries(person.social_links).map(([platform, url]) => (
-                              <a
-                                key={platform}
-                                href={url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-400 hover:text-primary-400 transition-colors"
-                                title={platform.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                              >
-                                <ExternalLink className="h-4 w-4" />
-                              </a>
-                            ))}
-                          </div>
-                        )}
-                        
-                        <button className="w-full bg-dark-700 hover:bg-dark-600 text-white py-2 px-4 rounded-lg transition-colors">
-                          Know More
-                        </button>
+                        {/* Fixed Know More Button at Bottom */}
+                        <div className="mt-auto">
+                          <button 
+                            onClick={() => person.website && window.open(person.website, '_blank')}
+                            className="w-full bg-dark-700 hover:bg-dark-600 text-white py-2 px-4 rounded-lg transition-colors"
+                          >
+                            Know More
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
