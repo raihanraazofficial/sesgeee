@@ -229,6 +229,68 @@ Best regards,
         </div>
       </section>
 
+      {/* Category Filter Buttons */}
+      <section className="py-6 bg-dark-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
+            <div className="inline-flex bg-dark-800 rounded-lg p-1 border border-gray-700">
+              <button
+                onClick={() => {
+                  setCategoryFilter('all');
+                  setCurrentPage(1);
+                }}
+                className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
+                  categoryFilter === 'all'
+                    ? 'bg-primary-600 text-white shadow-lg'
+                    : 'text-gray-300 hover:text-white hover:bg-dark-700'
+                }`}
+              >
+                All Categories
+              </button>
+              <button
+                onClick={() => {
+                  setCategoryFilter('journal');
+                  setCurrentPage(1);
+                }}
+                className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
+                  categoryFilter === 'journal'
+                    ? 'bg-blue-600 text-white shadow-lg'
+                    : 'text-gray-300 hover:text-white hover:bg-dark-700'
+                }`}
+              >
+                Journal
+              </button>
+              <button
+                onClick={() => {
+                  setCategoryFilter('conference');
+                  setCurrentPage(1);
+                }}
+                className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
+                  categoryFilter === 'conference'
+                    ? 'bg-green-600 text-white shadow-lg'
+                    : 'text-gray-300 hover:text-white hover:bg-dark-700'
+                }`}
+              >
+                Conference Proceedings
+              </button>
+              <button
+                onClick={() => {
+                  setCategoryFilter('book_chapter');
+                  setCurrentPage(1);
+                }}
+                className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
+                  categoryFilter === 'book_chapter'
+                    ? 'bg-purple-600 text-white shadow-lg'
+                    : 'text-gray-300 hover:text-white hover:bg-dark-700'
+                }`}
+              >
+                Book Chapter
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Search and Filters Section */}
       <section className="py-8 bg-dark-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
