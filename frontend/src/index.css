@@ -124,19 +124,19 @@ code {
 
 /* Rich text editor styles */
 .ql-toolbar {
-  @apply border-gray-600 bg-gray-800;
+  @apply border-gray-300 bg-white;
 }
 
 .ql-container {
-  @apply border-gray-600 bg-gray-900 text-white;
+  @apply border-gray-300 bg-white text-gray-900;
 }
 
 .ql-editor {
-  @apply text-white;
+  @apply text-gray-900;
 }
 
 .ql-editor.ql-blank::before {
-  @apply text-gray-400;
+  @apply text-gray-500;
 }
 
 /* Custom glassmorphism */
