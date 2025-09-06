@@ -7,8 +7,15 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 const ResearchAreaDetail = () => {
   const { areaId } = useParams();
-  const { researchAreas, loading } = useData();
+  const { researchAreas, fetchData, loading } = useData();
   const [area, setArea] = useState(null);
+
+  useEffect(() => {
+    // Fetch research areas if not already loaded
+    if (researchAreas.length === 0) {
+      fetchData('researchAreas');
+    }
+  }, [fetchData, researchAreas.length]);
 
   useEffect(() => {
     if (researchAreas.length > 0) {
