@@ -57,10 +57,10 @@ const ResearchAreas = () => {
       />
 
       {/* Research Areas Grid */}
-      <section className="py-20 bg-dark-900">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
               Our multidisciplinary research spans across smart grid technologies, renewable energy systems, 
               and AI-driven energy solutions to create a sustainable future.
             </p>
@@ -71,7 +71,7 @@ const ResearchAreas = () => {
           ) : (
             <div className="space-y-12">
               {researchAreas.map((area, index) => (
-                <div key={area.id} className="glass rounded-xl overflow-hidden">
+                <div key={area.id} className="glass rounded-xl overflow-hidden shadow-lg border border-gray-200">
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
                     {/* Image Section */}
                     <div className="lg:col-span-1">
@@ -88,8 +88,8 @@ const ResearchAreas = () => {
                     {/* Content Section */}
                     <div className="lg:col-span-2 flex flex-col justify-between">
                       <div>
-                        <h3 className="text-2xl font-bold text-white mb-4">{area.title}</h3>
-                        <p className="text-gray-300 text-lg mb-6 leading-relaxed">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-4">{area.title}</h3>
+                        <p className="text-gray-600 text-lg mb-6 leading-relaxed">
                           {area.detailed_description || area.description}
                         </p>
                         
@@ -97,25 +97,25 @@ const ResearchAreas = () => {
                         <div className="flex items-center space-x-6 mb-6 text-sm">
                           <div className="flex items-center space-x-2">
                             <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-                            <span className="text-gray-400">0 Projects</span>
+                            <span className="text-gray-500">0 Projects</span>
                           </div>
                           <div className="flex items-center space-x-2">
                             <div className="w-2 h-2 bg-secondary-500 rounded-full"></div>
-                            <span className="text-gray-400">0 Papers</span>
+                            <span className="text-gray-500">0 Papers</span>
                           </div>
                           <div className="flex items-center space-x-2">
                             <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                            <span className="text-gray-400">Multiple Researchers</span>
+                            <span className="text-gray-500">Multiple Researchers</span>
                           </div>
                           <div className="flex items-center space-x-2">
                             <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
-                            <span className="text-gray-400 text-xs">Real-time data</span>
+                            <span className="text-gray-500 text-xs">Real-time data</span>
                           </div>
                         </div>
 
                         {/* Research Team Preview */}
                         <div className="mb-6">
-                          <h4 className="text-white font-medium mb-3">Research Team:</h4>
+                          <h4 className="text-gray-900 font-medium mb-3">Research Team:</h4>
                           <div className="flex items-center space-x-2">
                             {/* Mock team member images */}
                             <img 
@@ -134,7 +134,7 @@ const ResearchAreas = () => {
                               className="w-10 h-10 rounded-full border-2 border-green-500"
                             />
                             {index % 2 === 0 && (
-                              <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-white text-xs font-medium">
+                              <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-medium border border-gray-300">
                                 +{Math.floor(Math.random() * 3) + 1}
                               </div>
                             )}
@@ -146,7 +146,7 @@ const ResearchAreas = () => {
                       <div className="flex justify-end">
                         <Link
                           to={`/research/${area.id}`}
-                          className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
+                          className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 shadow-md"
                         >
                           <span>Learn More</span>
                           <ArrowRight className="h-4 w-4" />
@@ -162,25 +162,25 @@ const ResearchAreas = () => {
       </section>
 
       {/* Research Impact & Applications */}
-      <section className="py-20 bg-dark-800">
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-heading text-white mb-4">
+            <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">
               Research Impact & Applications
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Our research drives innovation across multiple domains, creating real-world impact in sustainable energy systems.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {impactAreas.map((area, index) => (
-              <div key={index} className="glass rounded-xl p-6 text-center card-hover">
+              <div key={index} className="glass rounded-xl p-6 text-center card-hover border border-gray-200 shadow-lg">
                 <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <area.icon className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-3">{area.title}</h3>
-                <p className="text-gray-300">{area.description}</p>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{area.title}</h3>
+                <p className="text-gray-600">{area.description}</p>
               </div>
             ))}
           </div>
@@ -188,13 +188,13 @@ const ResearchAreas = () => {
       </section>
 
       {/* Interdisciplinary Approach */}
-      <section className="py-20 bg-gradient-to-r from-dark-900 via-primary-900 to-dark-900">
+      <section className="py-20 bg-gradient-to-r from-blue-50 via-green-50 to-purple-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-heading text-white mb-4">
+            <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">
               Interdisciplinary Approach
             </h2>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
               Our research combines expertise from multiple disciplines to tackle complex energy challenges 
               through innovative, holistic solutions.
             </p>
@@ -203,10 +203,10 @@ const ResearchAreas = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {disciplines.map((discipline, index) => (
               <div key={index} className="text-center transform hover:scale-105 transition-transform duration-300">
-                <div className="w-24 h-24 bg-gradient-to-br from-blue-600 via-green-600 to-yellow-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-2xl">
+                <div className="w-24 h-24 bg-gradient-to-br from-blue-500 via-green-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                   <span className="text-white font-bold text-xl">{discipline.split(' ')[0][0]}</span>
                 </div>
-                <h3 className="text-white font-semibold text-lg">{discipline}</h3>
+                <h3 className="text-gray-900 font-semibold text-lg">{discipline}</h3>
               </div>
             ))}
           </div>
@@ -214,11 +214,11 @@ const ResearchAreas = () => {
       </section>
 
       {/* Back to Top */}
-      <section className="py-12 bg-dark-800">
+      <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <button
             onClick={scrollToTop}
-            className="flex items-center space-x-2 text-gray-300 hover:text-primary-400 transition-colors mx-auto"
+            className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors mx-auto"
           >
             <span>Back to Top</span>
             <ArrowUp className="h-4 w-4" />

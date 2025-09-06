@@ -52,19 +52,19 @@ const People = () => {
       />
 
       {/* Main Content */}
-      <section className="py-20 bg-dark-900">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Category Tabs */}
           <div className="flex justify-center mb-12">
-            <div className="flex bg-dark-800 rounded-lg p-2">
+            <div className="flex bg-gray-100 rounded-lg p-2 border border-gray-200">
               {categories.map((category) => (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
                   className={`flex items-center space-x-2 px-6 py-3 rounded-md font-medium transition-all ${
                     activeCategory === category.id
-                      ? 'bg-primary-600 text-white'
-                      : 'text-gray-300 hover:text-white hover:bg-dark-700'
+                      ? 'bg-primary-600 text-white shadow-md'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
                   }`}
                 >
                   <category.icon className="h-5 w-5" />
@@ -82,7 +82,7 @@ const People = () => {
               {currentData.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {currentData.map((person) => (
-                    <div key={person.id} className="research-card flex flex-col"
+                    <div key={person.id} className="glass rounded-xl flex flex-col shadow-lg border border-gray-200"
                          style={{ minHeight: '580px' }}>
                       
                       {/* Photo with Overlay Text */}
@@ -90,10 +90,10 @@ const People = () => {
                         <img
                           src={person.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(person.name)}&size=400&background=1e293b&color=ffffff`}
                           alt={person.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover rounded-t-xl"
                         />
                         {/* Dark overlay for better text readability */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent rounded-t-xl" />
                         
                         {/* Text overlay on photo */}
                         <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
@@ -107,18 +107,18 @@ const People = () => {
                       <div className="p-6 flex flex-col flex-grow">
                         <div className="flex-grow">
                           {/* Bio - Now with more space */}
-                          <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                          <p className="text-gray-600 text-sm leading-relaxed mb-4">
                             {person.bio}
                           </p>
                           
                           {person.research_interests && person.research_interests.length > 0 && (
                             <div className="mb-4">
-                              <h4 className="text-white font-medium text-sm mb-2">Research Interest:</h4>
+                              <h4 className="text-gray-900 font-medium text-sm mb-2">Research Interest:</h4>
                               <div className="flex flex-wrap gap-2">
                                 {person.research_interests.map((interest, index) => (
                                   <span
                                     key={index}
-                                    className="bg-primary-600/20 text-primary-400 px-2 py-1 rounded text-xs"
+                                    className="bg-primary-100 text-primary-700 px-2 py-1 rounded text-xs border border-primary-200"
                                   >
                                     {interest}
                                   </span>
@@ -130,25 +130,25 @@ const People = () => {
                           {/* Social/Research Links */}
                           <div className="flex flex-wrap gap-3 mb-4">
                             <a href={person.social_links?.google_scholar || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlescholar.svg" alt="Scholar" className="w-full h-full filter invert" />
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlescholar.svg" alt="Scholar" className="w-full h-full" />
                             </a>
                             <a href={person.social_links?.researchgate || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/researchgate.svg" alt="RG" className="w-full h-full filter invert" />
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/researchgate.svg" alt="RG" className="w-full h-full" />
                             </a>
                             <a href={person.social_links?.orcid || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/orcid.svg" alt="ORCID" className="w-full h-full filter invert" />
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/orcid.svg" alt="ORCID" className="w-full h-full" />
                             </a>
                             <a href={person.social_links?.linkedin || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" className="w-full h-full filter invert" />
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" className="w-full h-full" />
                             </a>
                             <a href={person.social_links?.github || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" className="w-full h-full filter invert" />
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" className="w-full h-full" />
                             </a>
                             <a href={person.social_links?.ieee || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ieee.svg" alt="IEEE" className="w-full h-full filter invert" />
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ieee.svg" alt="IEEE" className="w-full h-full" />
                             </a>
                             <a href={`mailto:${person.email || 'example@email.com'}`} className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/maildotru.svg" alt="Email" className="w-full h-full filter invert" />
+                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/maildotru.svg" alt="Email" className="w-full h-full" />
                             </a>
                           </div>
                         </div>
@@ -157,7 +157,7 @@ const People = () => {
                         <div className="mt-auto">
                           <button 
                             onClick={() => person.website && window.open(person.website, '_blank')}
-                            className="w-full bg-dark-700 hover:bg-dark-600 text-white py-2 px-4 rounded-lg transition-colors"
+                            className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-lg transition-colors border border-gray-300"
                           >
                             Know More
                           </button>
@@ -168,17 +168,17 @@ const People = () => {
                 </div>
               ) : (
                 <div className="text-center py-16">
-                  <div className="w-24 h-24 bg-dark-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 border border-gray-200">
                     {categories.find(c => c.id === activeCategory)?.icon && 
                       React.createElement(categories.find(c => c.id === activeCategory).icon, {
                         className: "h-12 w-12 text-gray-400"
                       })
                     }
                   </div>
-                  <h3 className="text-2xl font-semibold text-white mb-4">
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">
                     No Members Found in this Category
                   </h3>
-                  <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+                  <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
                     We are seeking members for our {categories.find(c => c.id === activeCategory)?.name.toLowerCase()} team. 
                     Join us to contribute to cutting-edge research in sustainable energy and smart grid technologies.
                   </p>
@@ -194,11 +194,11 @@ const People = () => {
           )}
 
           {/* Join Our Team Section */}
-          <div className="mt-20 text-center glass rounded-xl p-12">
-            <h3 className="text-3xl font-bold font-heading text-white mb-4">
+          <div className="mt-20 text-center glass rounded-xl p-12 border border-gray-200">
+            <h3 className="text-3xl font-bold font-heading text-gray-900 mb-4">
               Join Our Research Team
             </h3>
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               Interested in contributing to sustainable energy and smart grid research? 
               We welcome collaborations with researchers, students, and industry partners.
             </p>
@@ -212,7 +212,7 @@ const People = () => {
           <div className="mt-12 text-center">
             <button
               onClick={scrollToTop}
-              className="flex items-center space-x-2 text-gray-300 hover:text-primary-400 transition-colors mx-auto"
+              className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors mx-auto"
             >
               <span>Back to Top</span>
               <ArrowUp className="h-4 w-4" />
