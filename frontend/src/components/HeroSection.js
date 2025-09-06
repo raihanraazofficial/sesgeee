@@ -35,12 +35,12 @@ const HeroSection = ({
             </p>
           )}
           
-          <h1 className="hero-title text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold font-heading mb-6 leading-tight animate-scale-in">
+          <h1 className="hero-title text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold font-heading mb-6 leading-tight animate-scale-in">
             <span className="bg-gradient-to-r from-white via-gray-100 to-cyan-200 bg-clip-text text-transparent drop-shadow-lg">
               Sustainable Energy &
             </span>
             <br />
-            <span className="bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-400 bg-clip-text text-transparent animate-gradient-x">
+            <span className="bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-400 bg-clip-text text-transparent animate-gradient-x glow-text">
               Smart Grid Research
             </span>
           </h1>
