@@ -5,6 +5,24 @@ import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const Publications = () => {
+  const { publications, fetchData, loading } = useData();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredPublications, setFilteredPublications] = useState([]);
+
+  useEffect(() => {
+    fetchData('publications');
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (publications.length > 0) {
+      const filtered = publications.filter(pub =>
+        pub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        pub.authors.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredPublications(filtered);
+    }
+  }, [publications, searchTerm]);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
