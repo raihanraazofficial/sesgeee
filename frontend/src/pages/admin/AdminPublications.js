@@ -11,17 +11,24 @@ const AdminPublications = () => {
   const [formData, setFormData] = useState({
     title: '',
     authors: [],
-    journal: '',
-    year: new Date().getFullYear(),
+    publication_type: 'journal',
+    journal_name: '',
+    conference_name: '',
+    book_title: '',
     volume: '',
     issue: '',
     pages: '',
-    doi: '',
-    abstract: '',
+    year: new Date().getFullYear(),
+    month: '',
+    location: '',
+    editor: [],
+    publisher: '',
+    edition: '',
     keywords: [],
-    type: 'journal',
-    url: '',
-    is_featured: false
+    link: '',
+    is_open_access: false,
+    citations: 0,
+    research_areas: []
   });
 
   useEffect(() => {
