@@ -60,6 +60,7 @@ function App() {
             <Routes>
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/init" element={<FirestoreInit />} />
               <Route path="/admin/*" element={
                 <ProtectedRoute>
                   <Routes>
