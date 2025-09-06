@@ -59,44 +59,106 @@ const Projects = () => {
         height="h-96"
       />
 
-      {/* Coming Soon */}
-      <section className="py-20 bg-dark-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="glass rounded-xl p-12">
-            <h2 className="text-4xl font-bold font-heading text-white mb-6">
-              Projects Portal
-            </h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-              Our comprehensive projects management system is currently under development. 
-              This will feature project categorization, search functionality, and detailed project information.
-            </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              <div className="bg-dark-700 rounded-lg p-6">
-                <h3 className="text-white font-semibold mb-2">Current Projects</h3>
-                <p className="text-gray-400 text-sm">Ongoing research and development initiatives</p>
-              </div>
-              <div className="bg-dark-700 rounded-lg p-6">
-                <h3 className="text-white font-semibold mb-2">Completed Projects</h3>
-                <p className="text-gray-400 text-sm">Successfully finished research projects</p>
-              </div>
-              <div className="bg-dark-700 rounded-lg p-6">
-                <h3 className="text-white font-semibold mb-2">Future Projects</h3>
-                <p className="text-gray-400 text-sm">Planned research initiatives</p>
-              </div>
+      {/* Filter Tabs */}
+      <section className="py-12 bg-dark-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
+            <div className="flex bg-dark-700 rounded-lg p-2">
+              {[
+                { id: 'all', name: 'All Projects' },
+                { id: 'ongoing', name: 'Ongoing' },
+                { id: 'completed', name: 'Completed' }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-6 py-3 rounded-md font-medium transition-all ${
+                    activeTab === tab.id
+                      ? 'bg-primary-600 text-white'
+                      : 'text-gray-300 hover:text-white hover:bg-dark-600'
+                  }`}
+                >
+                  {tab.name}
+                </button>
+              ))}
             </div>
-
-            <p className="text-gray-400 mb-8">
-              Contact us to learn more about our current research projects and collaboration opportunities.
-            </p>
-
-            <button className="btn-primary">
-              Explore Collaboration Opportunities
-            </button>
           </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section className="py-20 bg-dark-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {loading.projects ? (
+            <LoadingSpinner text="Loading projects..." />
+          ) : (
+            <>
+              {filteredProjects.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {filteredProjects.map((project) => {
+                    const StatusIcon = getStatusIcon(project.status);
+                    return (
+                      <div key={project.id} className="research-card">
+                        <div className="p-6">
+                          <div className="flex items-start justify-between mb-4">
+                            <h3 className="text-xl font-semibold text-white mb-2">{project.name}</h3>
+                            <span className={`flex items-center space-x-1 px-3 py-1 rounded-full text-sm ${getStatusColor(project.status)}`}>
+                              <StatusIcon className="h-4 w-4" />
+                              <span className="capitalize">{project.status}</span>
+                            </span>
+                          </div>
+                          
+                          <p className="text-gray-300 mb-4 leading-relaxed">
+                            {project.description}
+                          </p>
+                          
+                          <div className="flex items-center space-x-4 text-sm text-gray-400 mb-6">
+                            <div className="flex items-center space-x-1">
+                              <Calendar className="h-4 w-4" />
+                              <span>{project.year}</span>
+                            </div>
+                          </div>
+                          
+                          <button className="btn-secondary w-full">
+                            View Project Details
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="text-center py-16">
+                  <FolderOpen className="h-16 w-16 text-gray-400 mx-auto mb-6" />
+                  <h3 className="text-2xl font-semibold text-white mb-4">
+                    No Projects Found
+                  </h3>
+                  <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+                    {activeTab === 'all' 
+                      ? 'Our projects database is being updated. Please check back soon or contact us for more information.'
+                      : `No ${activeTab} projects available at the moment. Try switching to a different category.`
+                    }
+                  </p>
+                  <div className="space-x-4">
+                    {activeTab !== 'all' && (
+                      <button 
+                        onClick={() => setActiveTab('all')}
+                        className="btn-secondary"
+                      >
+                        View All Projects
+                      </button>
+                    )}
+                    <button className="btn-primary">
+                      Explore Collaboration Opportunities
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
 
           {/* Back to Top */}
-          <div className="mt-12">
+          <div className="mt-12 text-center">
             <button
               onClick={scrollToTop}
               className="flex items-center space-x-2 text-gray-300 hover:text-primary-400 transition-colors mx-auto"
