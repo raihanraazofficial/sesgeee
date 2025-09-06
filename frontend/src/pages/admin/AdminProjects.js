@@ -47,8 +47,8 @@ const AdminProjects = () => {
         ...formData,
         total_members: formData.total_members ? parseInt(formData.total_members) : 0,
         team_members: formData.team_members ? formData.team_members.split(',').map(member => member.trim()).filter(member => member) : [],
-        start_date: formData.start_date || null,
-        end_date: formData.end_date || null,
+        start_date: formData.start_date ? new Date(formData.start_date).toISOString() : null,
+        end_date: formData.end_date ? new Date(formData.end_date).toISOString() : null,
       };
 
       if (editingProject) {
