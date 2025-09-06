@@ -335,15 +335,17 @@ class PublicationCreate(BaseModel):
     research_areas: List[str] = []
 
 class ProjectCreate(BaseModel):
-    title: str
+    name: str
     description: str
-    category: str
-    status: str
-    start_date: datetime
-    end_date: Optional[datetime] = None
-    team_members: List[str] = []
-    research_areas: List[str] = []
-    funding: Optional[str] = None
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+    team_leader: Optional[str] = None
+    team_members: Optional[str] = None  # Comma separated string
+    funded_by: Optional[str] = None
+    total_members: Optional[int] = None
+    status: str = "planning"  # planning, ongoing, completed
+    research_area: Optional[str] = None
+    project_link: Optional[str] = None
     image: Optional[str] = None
 
 class AchievementCreate(BaseModel):
