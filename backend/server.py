@@ -23,7 +23,14 @@ app = FastAPI(title="SESGRG API", version="1.0.0")
 # CORS Configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with specific origins
+    allow_origins=[
+        "http://localhost:3000",
+        "https://localhost:3000", 
+        "https://*.vercel.app",
+        "https://*.emergentagent.com",
+        "https://sesgrg-dashboard.preview.emergentagent.com",
+        "*"  # Allow all origins for development
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
