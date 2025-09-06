@@ -439,6 +439,7 @@ export function DataProvider({ children }) {
           end_date: doc.data().end_date?.toDate?.()?.toISOString(),
         }));
 
+        console.log(`[DataContext] Firestore data loaded for ${type}:`, data.length, 'items');
         dispatch({
           type: 'SET_DATA',
           payload: { type, data },
@@ -446,9 +447,10 @@ export function DataProvider({ children }) {
 
         return data;
       } catch (firestoreError) {
-        console.warn(`Firestore call failed for ${type}, using mock data:`, firestoreError.message);
+        console.warn(`[DataContext] Firestore call failed for ${type}, using mock data:`, firestoreError.message);
 
         const mockData = getMockData(type);
+        console.log(`[DataContext] Using mock data for ${type}:`, mockData.length, 'items');
 
         dispatch({
           type: 'SET_DATA',
