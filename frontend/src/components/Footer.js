@@ -103,7 +103,9 @@ const Footer = () => {
             <div className="flex space-x-3 mb-6">
               {/* Facebook */}
               <a 
-                href="#" 
+                href="https://facebook.com/bracuniversity" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-700 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg group"
                 title="Facebook"
               >
