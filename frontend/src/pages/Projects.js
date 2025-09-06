@@ -343,12 +343,10 @@ const Projects = () => {
                           {/* Divider */}
                           <hr className="border-gray-200 my-4" />
                           
-                          {/* Bottom Section */}
+                          {/* Bottom Section - Always Fixed */}
                           <div className="flex items-center justify-between">
                             <div className="text-sm text-gray-600">
-                              {project.funded_by && (
-                                <span><span className="font-medium">Funded By:</span> {project.funded_by}</span>
-                              )}
+                              <span className="font-medium">Funded By:</span> {project.funded_by || 'Not specified'}
                             </div>
                             <div className="flex items-center space-x-1 text-sm">
                               <Users className="h-4 w-4 text-primary-500" />
