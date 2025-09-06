@@ -12,7 +12,7 @@ const People = () => {
 
   useEffect(() => {
     fetchData('people');
-  }, []);
+  }, [fetchData]);
 
   useEffect(() => {
     if (people.length > 0) {
