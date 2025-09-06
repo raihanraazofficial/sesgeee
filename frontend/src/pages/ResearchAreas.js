@@ -59,63 +59,104 @@ const ResearchAreas = () => {
       {/* Research Areas Grid */}
       <section className="py-20 bg-dark-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+              Our multidisciplinary research spans across smart grid technologies, renewable energy systems, 
+              and AI-driven energy solutions to create a sustainable future.
+            </p>
+          </div>
+
           {loading.researchAreas ? (
             <LoadingSpinner text="Loading research areas..." />
           ) : (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {researchAreas.slice(0, 6).map((area) => (
-                  <div key={area.id} className="research-card">
-                    <div className="relative h-48">
-                      <img
-                        src={area.image}
-                        alt={area.title}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            <div className="space-y-12">
+              {researchAreas.map((area, index) => (
+                <div key={area.id} className="glass rounded-xl overflow-hidden">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
+                    {/* Image Section */}
+                    <div className="lg:col-span-1">
+                      <div className="relative h-64 lg:h-full rounded-lg overflow-hidden">
+                        <img
+                          src={area.image}
+                          alt={area.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      </div>
                     </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-semibold text-white mb-3">{area.title}</h3>
-                      <p className="text-gray-300 mb-4 line-clamp-3">{area.description}</p>
-                      <Link
-                        to={`/research/${area.id}`}
-                        className="inline-flex items-center space-x-2 text-primary-400 hover:text-primary-300 font-medium transition-colors"
-                      >
-                        <span>Learn More</span>
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              {/* Center the 7th research area if it exists */}
-              {researchAreas.length === 7 && (
-                <div className="flex justify-center mt-8">
-                  <div className="research-card max-w-md">
-                    <div className="relative h-48">
-                      <img
-                        src={researchAreas[6].image}
-                        alt={researchAreas[6].title}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-semibold text-white mb-3">{researchAreas[6].title}</h3>
-                      <p className="text-gray-300 mb-4 line-clamp-3">{researchAreas[6].description}</p>
-                      <Link
-                        to={`/research/${researchAreas[6].id}`}
-                        className="inline-flex items-center space-x-2 text-primary-400 hover:text-primary-300 font-medium transition-colors"
-                      >
-                        <span>Learn More</span>
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
+                    
+                    {/* Content Section */}
+                    <div className="lg:col-span-2 flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-2xl font-bold text-white mb-4">{area.title}</h3>
+                        <p className="text-gray-300 text-lg mb-6 leading-relaxed">
+                          {area.detailed_description || area.description}
+                        </p>
+                        
+                        {/* Stats Row */}
+                        <div className="flex items-center space-x-6 mb-6 text-sm">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                            <span className="text-gray-400">0 Projects</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-secondary-500 rounded-full"></div>
+                            <span className="text-gray-400">0 Papers</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span className="text-gray-400">Multiple Researchers</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+                            <span className="text-gray-400 text-xs">Real-time data</span>
+                          </div>
+                        </div>
+
+                        {/* Research Team Preview */}
+                        <div className="mb-6">
+                          <h4 className="text-white font-medium mb-3">Research Team:</h4>
+                          <div className="flex items-center space-x-2">
+                            {/* Mock team member images */}
+                            <img 
+                              src="https://raw.githubusercontent.com/raihanraazofficial/SESGRG_v2/refs/heads/main/imgdirectory/Shameem%20Ahmad.jpg"
+                              alt="Team member"
+                              className="w-10 h-10 rounded-full border-2 border-primary-500"
+                            />
+                            <img 
+                              src="https://i.ibb.co.com/mVjdfL22/Nazmul-sir.jpg"
+                              alt="Team member"
+                              className="w-10 h-10 rounded-full border-2 border-secondary-500"
+                            />
+                            <img 
+                              src="https://raw.githubusercontent.com/raihanraazofficial/SESGRG_v2/refs/heads/main/imgdirectory/Amirul%20Islam.jpg"
+                              alt="Team member"
+                              className="w-10 h-10 rounded-full border-2 border-green-500"
+                            />
+                            {index % 2 === 0 && (
+                              <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-white text-xs font-medium">
+                                +{Math.floor(Math.random() * 3) + 1}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Action Button */}
+                      <div className="flex justify-end">
+                        <Link
+                          to={`/research/${area.id}`}
+                          className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
+                        >
+                          <span>Learn More</span>
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
-              )}
-            </>
+              ))}
+            </div>
           )}
         </div>
       </section>
