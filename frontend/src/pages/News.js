@@ -35,6 +35,7 @@ const News = () => {
         description="Stay updated with our latest research developments, achievements, events, and announcements from the world of sustainable energy and smart grid research."
         backgroundImage="https://images.unsplash.com/photo-1504711434969-e33886168f5c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwyfHxuZXdzJTIwZXZlbnRzfGVufDB8fHx8MTc1NjY1NDE0OXww&ixlib=rb-4.1.0&q=85"
         height="h-96"
+        enableAnimations={false}
       />
 
       {/* News & Events Section */}
