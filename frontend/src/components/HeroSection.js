@@ -12,8 +12,7 @@ const HeroSection = ({
   showScrollIndicator = false,
   onScrollClick,
   enableAnimations = false
-}) => {
-  const defaultBg = "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwxfHxzbWFydCUyMGdyaWR8ZW58MHx8fHwxNzU2NTM1MTU3fDA&ixlib=rb-4.1.0&q=85";
+) => {
   
   return (
     <section className={`relative ${height} flex items-center justify-center overflow-hidden`}>
