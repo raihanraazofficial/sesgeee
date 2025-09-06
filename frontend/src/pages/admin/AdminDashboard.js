@@ -1,16 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Users, FileText, FolderOpen, Award, Calendar, Settings, LogOut } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import axios from 'axios';
 
 const AdminDashboard = () => {
   const { logout, user } = useAuth();
+  const [stats, setStats] = useState([
+    { name: 'Total People', value: '0', icon: Users, color: 'text-blue-400' },
+    { name: 'Publications', value: '0', icon: FileText, color: 'text-green-400' },
+    { name: 'Projects', value: '0', icon: FolderOpen, color: 'text-purple-400' },
+    { name: 'Achievements', value: '0', icon: Award, color: 'text-yellow-400' },
+  ]);
+  const [loading, setLoading] = useState(true);
 
-  const stats = [
-    { name: 'Total People', value: '15', icon: Users, color: 'text-blue-400' },
-    { name: 'Publications', value: '42', icon: FileText, color: 'text-green-400' },
-    { name: 'Projects', value: '8', icon: FolderOpen, color: 'text-purple-400' },
-    { name: 'Achievements', value: '12', icon: Award, color: 'text-yellow-400' },
-  ];
+  useEffect(() => {
+    fetchDashboardStats();
+  }, []);
+
+  const fetchDashboardStats = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+      
+      const response = await axios.get(`${backendUrl}/api/dashboard/stats`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data = response.data;
+      setStats([
+        { name: 'Total People', value: data.total_people.toString(), icon: Users, color: 'text-blue-400' },
+        { name: 'Publications', value: data.total_publications.toString(), icon: FileText, color: 'text-green-400' },
+        { name: 'Projects', value: data.total_projects.toString(), icon: FolderOpen, color: 'text-purple-400' },
+        { name: 'Achievements', value: data.total_achievements.toString(), icon: Award, color: 'text-yellow-400' },
+      ]);
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const quickActions = [
     { name: 'Manage People', href: '/admin/people', icon: Users },
