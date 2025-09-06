@@ -24,26 +24,26 @@ const HeroSection = ({
         }}
       />
       
-      {/* Gradient Overlay */}
+      {/* Light theme gradient overlay */}
       {gradient && (
-        <div className="absolute inset-0 hero-gradient-overlay" />
+        <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-gray-50/70 to-blue-50/60 backdrop-blur-sm" />
       )}
       
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="animate-fade-in">
           {subtitle && (
-            <p className="text-primary-400 font-medium text-lg mb-4 tracking-wide uppercase">
+            <p className="text-primary-600 font-medium text-lg mb-4 tracking-wide uppercase">
               {subtitle}
             </p>
           )}
           
-          <h1 className="hero-title text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-heading text-white mb-6 leading-tight">
+          <h1 className="hero-title text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-heading text-gray-900 mb-6 leading-tight">
             {title}
           </h1>
           
           {description && (
-            <p className="hero-subtitle text-xl md:text-2xl text-gray-200 mb-8 max-w-4xl mx-auto leading-relaxed">
+            <p className="hero-subtitle text-xl md:text-2xl text-gray-700 mb-8 max-w-4xl mx-auto leading-relaxed">
               {description}
             </p>
           )}
@@ -70,9 +70,9 @@ const HeroSection = ({
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <button
             onClick={onScrollClick}
-            className="flex flex-col items-center space-y-2 text-white/70 hover:text-white transition-colors"
+            className="flex flex-col items-center space-y-2 text-gray-600/80 hover:text-gray-900 transition-colors"
           >
-            <span className="text-sm">Scroll to explore</span>
+            <span className="text-sm font-medium">Scroll to explore</span>
             <ChevronDown className="h-6 w-6" />
           </button>
         </div>
