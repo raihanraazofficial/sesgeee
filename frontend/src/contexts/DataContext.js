@@ -545,14 +545,34 @@ export function DataProvider({ children }) {
     }
   };
 
+  const cleanData = (data) => {
+    const cleaned = {};
+    Object.keys(data).forEach(key => {
+      if (data[key] !== undefined && data[key] !== null && data[key] !== '') {
+        // Handle arrays - only include if not empty
+        if (Array.isArray(data[key])) {
+          if (data[key].length > 0) {
+            cleaned[key] = data[key];
+          }
+        } else {
+          cleaned[key] = data[key];
+        }
+      }
+    });
+    return cleaned;
+  };
+
   const updateItem = async (type, id, data) => {
     try {
       let collectionName = type;
       if (type === 'researchAreas') collectionName = 'research_areas';
       if (type === 'photoGallery') collectionName = 'photo_gallery';
 
+      // Clean data to remove undefined values
+      const cleanedData = cleanData(data);
+      
       const itemData = {
-        ...data,
+        ...cleanedData,
         updated_at: serverTimestamp(),
       };
 
