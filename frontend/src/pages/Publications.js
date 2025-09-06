@@ -315,23 +315,6 @@ Best regards,
             {/* Filters */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Category</label>
-                <select
-                  value={categoryFilter}
-                  onChange={(e) => {
-                    setCategoryFilter(e.target.value);
-                    setCurrentPage(1);
-                  }}
-                  className="form-input text-sm"
-                >
-                  <option value="all">All Categories</option>
-                  <option value="journal">Journal Articles</option>
-                  <option value="conference">Conference Proceedings</option>
-                  <option value="book_chapter">Book Chapters</option>
-                </select>
-              </div>
-
-              <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1">Year</label>
                 <select
                   value={yearFilter}
