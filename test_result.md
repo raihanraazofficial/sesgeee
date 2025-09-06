@@ -394,3 +394,43 @@ The People page now provides a professional, comprehensive view of team members 
 ✅ **Loading States**: Proper UX for data fetching
 
 The People page is now completely database-driven with an improved layout that prioritizes showing complete member information and professional credentials prominently.
+
+---
+
+## ESLint Unused Imports Error Fix (January 6, 2025) 
+
+### Issue Resolved
+**Problem**: Vercel deployment failing with ESLint compilation errors
+```
+Failed to compile.
+[eslint] 
+src/pages/People.js
+  Line 3:10:  'Mail' is defined but never used          no-unused-vars
+  Line 3:16:  'ExternalLink' is defined but never used  no-unused-vars
+error Command failed with exit code 1.
+```
+
+### Fix Applied
+- **File**: `/app/frontend/src/pages/People.js`
+- **Issue**: Unused imports `Mail` and `ExternalLink` from lucide-react
+- **Solution**: Removed unused imports from line 3
+- **Before**: `import { Mail, ExternalLink, ArrowUp, Users, UserCheck, Handshake } from 'lucide-react';`
+- **After**: `import { ArrowUp, Users, UserCheck, Handshake } from 'lucide-react';`
+
+### Verification Results
+- ✅ **Build Success**: `yarn run vercel-build` completed successfully
+- ✅ **File Sizes**: Optimized production build generated
+  - 214.02 kB main.js (gzipped)
+  - 9.27 kB main.css (gzipped) 
+  - 1.77 kB chunk files
+- ✅ **ESLint Clean**: No unused variable warnings
+- ✅ **People Page Functional**: All functionality preserved after import cleanup
+- ✅ **Ready for Vercel Deploy**: Build folder ready for deployment
+
+### Production Status
+The ESLint compilation error has been resolved. The application can now be successfully deployed to Vercel without build failures. All existing functionality remains intact including:
+- People page with category tabs (Advisors, Team Members, Collaborators)
+- Admin panel CRUD operations
+- Database integration with Firestore
+- Social icons and research profile links
+- Responsive design and loading states
