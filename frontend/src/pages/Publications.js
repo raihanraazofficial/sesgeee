@@ -291,7 +291,7 @@ Best regards,
       </section>
 
       {/* Search and Filters Section */}
-      <section className="py-8 bg-dark-900">
+      <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="glass rounded-xl p-6">
             {/* Search Bar */}
