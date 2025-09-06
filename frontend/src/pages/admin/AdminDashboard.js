@@ -16,7 +16,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     fetchDashboardData();
-  }, []);
+  }, [fetchDashboardData]);
 
   useEffect(() => {
     // Update stats when data changes
