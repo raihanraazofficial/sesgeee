@@ -327,13 +327,7 @@ const Home = () => {
                     <div className="p-6">
                       <h3 className="text-xl font-semibold text-white mb-3">{researchAreas[6].title}</h3>
                       <p className="text-gray-300 mb-4 line-clamp-3">{researchAreas[6].description}</p>
-                      <Link
-                        to={`/research/${researchAreas[6].id}`}
-                        className="inline-flex items-center space-x-2 text-primary-400 hover:text-primary-300 font-medium transition-colors"
-                      >
-                        <span>Learn More</span>
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
+
                     </div>
                   </div>
                 </div>
