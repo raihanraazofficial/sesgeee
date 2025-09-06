@@ -430,13 +430,13 @@ export function DataProvider({ children }) {
         const data = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
-          // Convert Firestore timestamps to ISO strings
-          created_at: doc.data().created_at?.toDate?.()?.toISOString(),
-          updated_at: doc.data().updated_at?.toDate?.()?.toISOString(),
-          published_date: doc.data().published_date?.toDate?.()?.toISOString(),
-          date: doc.data().date?.toDate?.()?.toISOString(),
-          start_date: doc.data().start_date?.toDate?.()?.toISOString(),
-          end_date: doc.data().end_date?.toDate?.()?.toISOString(),
+          // Convert Firestore timestamps to ISO strings, also handle string dates
+          created_at: doc.data().created_at?.toDate?.()?.toISOString() || doc.data().created_at,
+          updated_at: doc.data().updated_at?.toDate?.()?.toISOString() || doc.data().updated_at,
+          published_date: doc.data().published_date?.toDate?.()?.toISOString() || doc.data().published_date,
+          date: doc.data().date?.toDate?.()?.toISOString() || doc.data().date,
+          start_date: doc.data().start_date?.toDate?.()?.toISOString() || doc.data().start_date,
+          end_date: doc.data().end_date?.toDate?.()?.toISOString() || doc.data().end_date,
         }));
 
         console.log(`[DataContext] Firestore data loaded for ${type}:`, data.length, 'items');
