@@ -92,6 +92,13 @@ For future changes to this codebase:
 1. **Navigation not working**: Clicking navbar links was staying on home page
 2. **Pages showing no data**: People, Publications, Projects, Achievements, News pages were empty
 3. **Mock data was incomplete**: DataContext had minimal mock data
+4. **Data blinking**: Loading states causing flickering due to infinite re-renders
+
+### Root Cause:
+The main issue was in the DataContext where the `fetchData` function was not wrapped in `useCallback`, causing infinite re-renders and blocking navigation. This led to:
+- Navigation links not responding to clicks
+- Continuous loading states
+- Data flickering/blinking
 
 ### Fixes Applied:
 
