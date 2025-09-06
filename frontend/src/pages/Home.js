@@ -93,9 +93,9 @@ const Home = () => {
     aboutSection?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     setCurrentImageIndex((prev) => (prev + 1) % carouselImages.length);
-  };
+  }, [carouselImages.length]);
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + carouselImages.length) % carouselImages.length);
