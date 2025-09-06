@@ -37,64 +37,111 @@ const Publications = () => {
         height="h-96"
       />
 
-      {/* Coming Soon */}
+      {/* Search Section */}
+      <section className="py-12 bg-dark-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative max-w-md mx-auto">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search publications by title or author..."
+              className="form-input pl-10"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Publications Section */}
       <section className="py-20 bg-dark-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="glass rounded-xl p-12">
-            <h2 className="text-4xl font-bold font-heading text-white mb-6">
-              Publications Portal
-            </h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-              Our comprehensive publications system is currently under development. 
-              This will feature IEEE-styled citations, advanced search and filtering, 
-              and real-time statistics.
-            </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              <div className="bg-dark-700 rounded-lg p-6">
-                <h3 className="text-white font-semibold mb-2">IEEE Style Citations</h3>
-                <p className="text-gray-400 text-sm">Journal articles, conference proceedings, and book chapters</p>
-              </div>
-              <div className="bg-dark-700 rounded-lg p-6">
-                <h3 className="text-white font-semibold mb-2">Advanced Search</h3>
-                <p className="text-gray-400 text-sm">Filter by author, year, research area, and keywords</p>
-              </div>
-              <div className="bg-dark-700 rounded-lg p-6">
-                <h3 className="text-white font-semibold mb-2">Real-time Stats</h3>
-                <p className="text-gray-400 text-sm">Live publication counts and citation metrics</p>
-              </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Statistics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div className="bg-primary-600/20 rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-primary-400 mb-1">{publications.length}</div>
+              <div className="text-sm text-gray-400">Total Publications</div>
             </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-primary-600/20 rounded-lg p-4">
-                <div className="text-2xl font-bold text-primary-400 mb-1">16</div>
-                <div className="text-sm text-gray-400">Total Publications</div>
-              </div>
-              <div className="bg-secondary-600/20 rounded-lg p-4">
-                <div className="text-2xl font-bold text-secondary-400 mb-1">182</div>
-                <div className="text-sm text-gray-400">Total Citations</div>
-              </div>
-              <div className="bg-primary-600/20 rounded-lg p-4">
-                <div className="text-2xl font-bold text-primary-400 mb-1">2025</div>
-                <div className="text-sm text-gray-400">Latest Year</div>
-              </div>
-              <div className="bg-secondary-600/20 rounded-lg p-4">
-                <div className="text-2xl font-bold text-secondary-400 mb-1">8</div>
-                <div className="text-sm text-gray-400">Research Areas</div>
-              </div>
+            <div className="bg-secondary-600/20 rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-secondary-400 mb-1">182</div>
+              <div className="text-sm text-gray-400">Total Citations</div>
             </div>
-
-            <p className="text-gray-400 mb-8">
-              Meanwhile, please contact us for specific publication requests or academic collaborations.
-            </p>
-
-            <button className="btn-primary">
-              Request Publication Access
-            </button>
+            <div className="bg-primary-600/20 rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-primary-400 mb-1">2024</div>
+              <div className="text-sm text-gray-400">Latest Year</div>
+            </div>
+            <div className="bg-secondary-600/20 rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-secondary-400 mb-1">7</div>
+              <div className="text-sm text-gray-400">Research Areas</div>
+            </div>
           </div>
 
+          {loading.publications ? (
+            <LoadingSpinner text="Loading publications..." />
+          ) : (
+            <>
+              {filteredPublications.length > 0 ? (
+                <div className="space-y-6">
+                  {filteredPublications.map((publication) => (
+                    <div key={publication.id} className="glass rounded-xl p-6">
+                      <div className="flex items-start space-x-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center flex-shrink-0">
+                          <BookOpen className="h-6 w-6 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-semibold text-white mb-2">{publication.title}</h3>
+                          <p className="text-gray-300 mb-2">{publication.authors}</p>
+                          <div className="flex items-center space-x-4 text-sm text-gray-400 mb-4">
+                            <span className="bg-primary-600/20 text-primary-400 px-2 py-1 rounded">
+                              {publication.category === 'journal' ? 'Journal' : 'Conference'}
+                            </span>
+                            <span>{publication.journal}</span>
+                            <span>{publication.year}</span>
+                          </div>
+                          <div className="flex items-center space-x-4">
+                            <button className="text-primary-400 hover:text-primary-300 transition-colors flex items-center space-x-1">
+                              <ExternalLink className="h-4 w-4" />
+                              <span>View Publication</span>
+                            </button>
+                            <button className="text-gray-400 hover:text-gray-300 transition-colors">
+                              Download PDF
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-16">
+                  <BookOpen className="h-16 w-16 text-gray-400 mx-auto mb-6" />
+                  <h3 className="text-2xl font-semibold text-white mb-4">
+                    {searchTerm ? 'No publications found' : 'Publications Coming Soon'}
+                  </h3>
+                  <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+                    {searchTerm 
+                      ? 'Try adjusting your search terms or browse all publications.'
+                      : 'Our publication database is being updated. Meanwhile, please contact us for specific publication requests.'
+                    }
+                  </p>
+                  {searchTerm && (
+                    <button 
+                      onClick={() => setSearchTerm('')}
+                      className="btn-secondary mr-4"
+                    >
+                      Clear Search
+                    </button>
+                  )}
+                  <button className="btn-primary">
+                    Contact for Publications
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
           {/* Back to Top */}
-          <div className="mt-12">
+          <div className="mt-12 text-center">
             <button
               onClick={scrollToTop}
               className="flex items-center space-x-2 text-gray-300 hover:text-primary-400 transition-colors mx-auto"
