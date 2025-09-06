@@ -85,25 +85,26 @@ const People = () => {
                     <div key={person.id} className="research-card flex flex-col"
                          style={{ minHeight: '580px' }}>
                       
-                      {/* Header with Name, Title, Department */}
-                      <div className="p-6 pb-4">
-                        <h3 className="text-xl font-semibold text-white mb-2">{person.name}</h3>
-                        <p className="text-primary-400 font-medium mb-1">{person.title}</p>
-                        <p className="text-gray-400 text-sm mb-4">{person.department}</p>
-                      </div>
-                      
-                      {/* Photo */}
-                      <div className="relative h-48 mx-6 mb-4">
+                      {/* Photo with Overlay Text */}
+                      <div className="relative h-64">
                         <img
                           src={person.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(person.name)}&size=400&background=1e293b&color=ffffff`}
                           alt={person.name}
-                          className="w-full h-full object-cover rounded-lg"
+                          className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent rounded-lg" />
+                        {/* Dark overlay for better text readability */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                        
+                        {/* Text overlay on photo */}
+                        <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                          <h3 className="text-xl font-bold text-white mb-2 drop-shadow-lg">{person.name}</h3>
+                          <p className="text-primary-300 font-semibold mb-1 drop-shadow-md">{person.title}</p>
+                          <p className="text-gray-200 text-sm drop-shadow-md">{person.department}</p>
+                        </div>
                       </div>
                       
-                      {/* Content */}
-                      <div className="px-6 pb-6 flex flex-col flex-grow">
+                      {/* Content Below Photo */}
+                      <div className="p-6 flex flex-col flex-grow">
                         <div className="flex-grow">
                           {/* Bio - Now with more space */}
                           <p className="text-gray-300 text-sm leading-relaxed mb-4">
