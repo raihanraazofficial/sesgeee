@@ -28,7 +28,7 @@ app.add_middleware(
         "https://localhost:3000", 
         "https://*.vercel.app",
         "https://*.emergentagent.com",
-        "https://footer-links.preview.emergentagent.com",
+        "https://firestore-sync.preview.emergentagent.com",
         "*"  # Allow all origins for development
     ],
     allow_credentials=True,
