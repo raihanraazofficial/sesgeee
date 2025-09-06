@@ -14,6 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     // Load data
+    fetchData('researchAreas');
     fetchData('news', { limit: 6 });
     fetchData('photoGallery');
   }, [fetchData]);
