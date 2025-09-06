@@ -553,15 +553,15 @@ Best regards,
             </>
           ) : (
             <div className="text-center py-16">
-              <div className="w-24 h-24 bg-dark-800 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Search className="h-12 w-12 text-gray-400" />
               </div>
-              <h3 className="text-2xl font-semibold text-white mb-4">
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">
                 {searchTerm || categoryFilter !== 'all' || yearFilter !== 'all' || areaFilter !== 'all' 
                   ? 'No Publications Found' 
                   : 'No Publications Available'}
               </h3>
-              <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+              <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
                 {searchTerm || categoryFilter !== 'all' || yearFilter !== 'all' || areaFilter !== 'all'
                   ? 'Try adjusting your search criteria or filters to find more publications.'
                   : 'Our publication database is being updated. Meanwhile, please contact us for specific publication requests.'
