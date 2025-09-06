@@ -116,13 +116,7 @@ const Projects = () => {
     }
   };
 
-  const formatTeamMembers = (members) => {
-    if (!members || members.length === 0) return 'Not specified';
-    if (typeof members === 'string') {
-      return members;
-    }
-    return Array.isArray(members) ? members.join(', ') : 'Not specified';
-  };
+
 
   return (
     <div className="min-h-screen">
