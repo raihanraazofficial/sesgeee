@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ExternalLink, ChevronLeft, ChevronRight, Zap, Target, Users, Globe } from 'lucide-react';
+import { ArrowRight, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -31,38 +31,31 @@ const Home = () => {
   const objectives = [
     {
       number: "1",
-      text: "Bridge the gap between research and real-world applications.",
-      icon: Target
+      text: "Bridge the gap between research and real-world applications."
     },
     {
       number: "2", 
-      text: "Optimize power network efficiency and reliability.",
-      icon: Zap
+      text: "Optimize power network efficiency and reliability."
     },
     {
       number: "3",
-      text: "Advance renewable energy integration technologies.",
-      icon: Globe
+      text: "Advance renewable energy integration technologies."
     },
     {
       number: "4",
-      text: "Create sustainable microgrids for distributed energy systems.",
-      icon: Users
+      text: "Create sustainable microgrids for distributed energy systems."
     },
     {
       number: "5",
-      text: "Develop Energy Storage and EV Integration Systems.",
-      icon: Zap
+      text: "Develop Energy Storage and EV Integration Systems."
     },
     {
       number: "6",
-      text: "Enhance Cybersecurity and AI Measures for Power Grid Protection.",
-      icon: Users
+      text: "Enhance Cybersecurity and AI Measures for Power Grid Protection."
     },
     {
       number: "7",
-      text: "Promote Sustainable Energy Policy and Economics.",
-      icon: Globe
+      text: "Promote Sustainable Energy Policy and Economics."
     }
   ];
 
@@ -184,19 +177,19 @@ const Home = () => {
       />
 
       {/* About Us Section */}
-      <section id="about" className="py-20 bg-dark-800">
+      <section id="about" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Content */}
             <div className="animate-fade-in">
-              <h2 className="text-4xl font-bold font-heading text-white mb-6">About Us</h2>
-              <p className="text-gray-300 text-lg leading-relaxed mb-8">
+              <h2 className="text-4xl font-bold font-heading text-gray-900 mb-6">About Us</h2>
+              <p className="text-gray-700 text-lg leading-relaxed mb-8 text-justified">
                 The Sustainable Energy and Smart Grid Research Group (SESGRG) is an independent research group established in 2025, 
                 affiliated with the BSRM School of Engineering, BRAC University. We specialize in sustainable energy systems, 
                 smart grid technologies, and advanced power network optimization, taking a comprehensive approach that spans 
                 generation, transmission, distribution, and microgrids.
               </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
+              <p className="text-gray-700 text-lg leading-relaxed text-justified">
                 Committed to developing innovative and resilient energy solutions, we address modern power system challenges 
                 while promoting environmental stewardship through cutting-edge research and collaboration. Guided by principles 
                 of excellence, integrity, and sustainability, our vision is to revolutionize global power systems by advancing 
@@ -240,7 +233,7 @@ const Home = () => {
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
                     className={`w-3 h-3 rounded-full transition-colors ${
-                      index === currentImageIndex ? 'bg-primary-500' : 'bg-gray-600'
+                      index === currentImageIndex ? 'bg-primary-500' : 'bg-gray-400'
                     }`}
                   />
                 ))}
@@ -251,11 +244,11 @@ const Home = () => {
       </section>
 
       {/* Our Objectives Section */}
-      <section className="py-20 bg-dark-900">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-heading text-white mb-4">Our Objectives</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">Our Objectives</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Our research objectives guide our mission to advance sustainable energy and smart grid technologies
             </p>
           </div>
@@ -270,8 +263,7 @@ const Home = () => {
                     </div>
                   </div>
                   <div className="flex-1">
-                    <objective.icon className="h-8 w-8 text-primary-400 mb-3" />
-                    <p className="text-gray-300 leading-relaxed">{objective.text}</p>
+                    <p className="text-gray-700 leading-relaxed">{objective.text}</p>
                   </div>
                 </div>
               </div>
@@ -281,11 +273,11 @@ const Home = () => {
       </section>
 
       {/* Research Areas Section */}
-      <section id="research" className="py-20 bg-dark-800">
+      <section id="research" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-heading text-white mb-4">Research Areas</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">Research Areas</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Explore our comprehensive research domains that are driving innovation in sustainable energy and smart grid technologies.
             </p>
           </div>
@@ -305,9 +297,8 @@ const Home = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold text-white mb-3">{area.title}</h3>
-                    <p className="text-gray-300 mb-4 line-clamp-3">{area.description}</p>
-
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3">{area.title}</h3>
+                    <p className="text-gray-600 mb-4 line-clamp-3">{area.description}</p>
                   </div>
                 </div>
               ))}
@@ -325,9 +316,8 @@ const Home = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     </div>
                     <div className="p-6">
-                      <h3 className="text-xl font-semibold text-white mb-3">{researchAreas[6].title}</h3>
-                      <p className="text-gray-300 mb-4 line-clamp-3">{researchAreas[6].description}</p>
-
+                      <h3 className="text-xl font-semibold text-gray-900 mb-3">{researchAreas[6].title}</h3>
+                      <p className="text-gray-600 mb-4 line-clamp-3">{researchAreas[6].description}</p>
                     </div>
                   </div>
                 </div>
@@ -344,20 +334,20 @@ const Home = () => {
       </section>
 
       {/* Latest News & Events */}
-      <section className="py-20 bg-dark-900">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-12">
             <div>
-              <h2 className="text-4xl font-bold font-heading text-white mb-4">Latest News & Events</h2>
-              <p className="text-xl text-gray-300">
+              <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">Latest News & Events</h2>
+              <p className="text-xl text-gray-600">
                 Stay updated with our recent achievements, news, events, and upcoming activities.
               </p>
             </div>
             <div className="flex space-x-4">
-              <button className="text-primary-400 hover:text-primary-300 font-medium">
+              <button className="text-primary-600 hover:text-primary-700 font-medium">
                 Refresh
               </button>
-              <Link to="/news" className="text-primary-400 hover:text-primary-300 font-medium flex items-center space-x-1">
+              <Link to="/news" className="text-primary-600 hover:text-primary-700 font-medium flex items-center space-x-1">
                 <span>View All</span>
                 <ExternalLink className="h-4 w-4" />
               </Link>
@@ -368,8 +358,8 @@ const Home = () => {
             <LoadingSpinner text="Loading news..." />
           ) : news.length === 0 ? (
             <div className="text-center py-16">
-              <h3 className="text-2xl font-semibold text-white mb-4">No Recent News</h3>
-              <p className="text-gray-400 mb-8">No recent news or events are available at the moment. Please check back later.</p>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">No Recent News</h3>
+              <p className="text-gray-600 mb-8">No recent news or events are available at the moment. Please check back later.</p>
               <div className="space-x-4">
                 <button className="btn-secondary">Try Again</button>
                 <Link to="/news" className="btn-primary">
@@ -397,15 +387,15 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="p-6">
-                      <h3 className="text-2xl font-semibold text-white mb-3">{featuredNews[0].title}</h3>
-                      <p className="text-gray-300 mb-4 line-clamp-3">{featuredNews[0].excerpt}</p>
+                      <h3 className="text-2xl font-semibold text-gray-900 mb-3">{featuredNews[0].title}</h3>
+                      <p className="text-gray-600 mb-4 line-clamp-3">{featuredNews[0].excerpt}</p>
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-400">
+                        <span className="text-sm text-gray-500">
                           {new Date(featuredNews[0].published_date).toLocaleDateString()}
                         </span>
                         <Link
                           to={`/news/${featuredNews[0].id}`}
-                          className="text-primary-400 hover:text-primary-300 font-medium"
+                          className="text-primary-600 hover:text-primary-700 font-medium"
                         >
                           Read More
                         </Link>
@@ -426,15 +416,15 @@ const Home = () => {
                         className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
                       />
                       <div className="flex-1">
-                        <h4 className="text-white font-medium mb-2 line-clamp-2">{item.title}</h4>
-                        <p className="text-gray-400 text-sm mb-2 line-clamp-1">{item.excerpt}</p>
+                        <h4 className="text-gray-900 font-medium mb-2 line-clamp-2">{item.title}</h4>
+                        <p className="text-gray-600 text-sm mb-2 line-clamp-1">{item.excerpt}</p>
                         <div className="flex justify-between items-center">
                           <span className="text-xs text-gray-500">
                             {new Date(item.published_date).toLocaleDateString()}
                           </span>
                           <Link
                             to={`/news/${item.id}`}
-                            className="text-primary-400 hover:text-primary-300 text-sm"
+                            className="text-primary-600 hover:text-primary-700 text-sm"
                           >
                             Read
                           </Link>
@@ -450,11 +440,11 @@ const Home = () => {
       </section>
 
       {/* Photo Gallery Section */}
-      <section className="py-20 bg-dark-800 overflow-hidden">
+      <section className="py-20 bg-gray-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
           <div className="text-center">
-            <h2 className="text-4xl font-bold font-heading text-white mb-4">Photo Gallery</h2>
-            <p className="text-xl text-gray-300">
+            <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">Photo Gallery</h2>
+            <p className="text-xl text-gray-600">
               Glimpses of our research activities, laboratory work, and sustainable energy installations.
             </p>
           </div>
@@ -465,7 +455,7 @@ const Home = () => {
           <div className="flex space-x-6 animate-scroll-x" ref={galleryRef}>
             {/* Duplicate images for seamless loop */}
             {[...galleryImages, ...galleryImages].map((image, index) => (
-              <div key={index} className="flex-shrink-0 w-80 h-64 relative rounded-xl overflow-hidden">
+              <div key={index} className="flex-shrink-0 w-80 h-64 relative rounded-xl overflow-hidden shadow-lg">
                 <img
                   src={image.url}
                   alt={image.title}
