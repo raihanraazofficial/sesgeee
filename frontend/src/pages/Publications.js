@@ -52,11 +52,6 @@ const Publications = () => {
           <strong>{authors}</strong>, "<em>{pub.title}</em>," in <em>{pub.conference_name || 'Conference Proceedings'}</em>, 
           {pub.location && ` ${pub.location},`} {pub.year}
           {pub.pages && `, pp. ${pub.pages}`}.
-          {pub.link && (
-            <>
-              {' '}DOI: <a href={pub.link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">{pub.link}</a>
-            </>
-          )}
         </>
       );
     } else if (pub.publication_type === 'book_chapter') {
