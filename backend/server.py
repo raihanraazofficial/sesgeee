@@ -28,7 +28,7 @@ app.add_middleware(
         "https://localhost:3000", 
         "https://*.vercel.app",
         "https://*.emergentagent.com",
-        "https://lint-solver.preview.emergentagent.com",
+        "https://site-refinement-1.preview.emergentagent.com",
         "*"  # Allow all origins for development
     ],
     allow_credentials=True,
