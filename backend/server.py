@@ -507,7 +507,10 @@ async def get_publications(
     
     # For Firebase, we'll get all data and filter search/research_area in Python
     # since Firestore has limitations on complex queries
-    order_by = (sort_by, firestore.Query.DESCENDING if sort_order == "desc" else firestore.Query.ASCENDING) if db else None
+    if db:
+        order_by = (sort_by, firestore.Query.DESCENDING if sort_order == "desc" else firestore.Query.ASCENDING)
+    else:
+        order_by = None
     
     publications = get_collection_data("publications", filters=filters, order_by=order_by)
     
