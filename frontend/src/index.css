@@ -163,23 +163,23 @@ code {
 
 /* Publication IEEE style */
 .ieee-citation {
-  @apply text-sm text-gray-300 leading-relaxed;
+  @apply text-sm text-gray-700 leading-relaxed;
 }
 
 .ieee-citation .authors {
-  @apply font-medium text-white;
+  @apply font-medium text-gray-900;
 }
 
 .ieee-citation .title {
-  @apply text-primary-400 font-medium;
+  @apply text-primary-600 font-medium;
 }
 
 .ieee-citation .journal {
-  @apply italic text-secondary-400;
+  @apply italic text-secondary-600;
 }
 
 .ieee-citation .details {
-  @apply text-gray-400;
+  @apply text-gray-600;
 }
 
 /* Form styles */
