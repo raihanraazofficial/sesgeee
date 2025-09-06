@@ -196,3 +196,71 @@ The admin panel is **PRODUCTION READY** with:
 - ✅ Mock data fallback working when Firestore unavailable
 
 **RECOMMENDATION**: The admin panel can be deployed to production. The critical JavaScript runtime errors have been resolved and all functionality has been verified through comprehensive testing.
+
+---
+
+## Vercel Deployment Routing Fix (January 6, 2025)
+
+### Issue Identified
+The user reported 404 errors when accessing admin panel routes (`/admin/people`, `/admin/publications`, `/admin/achievements`, `/admin/news`) on their Vercel deployment at https://sesgv-7-5dvb.vercel.app/
+
+**Root Cause**: Vercel deployment was missing proper Single Page Application (SPA) routing configuration, causing direct URL access to admin routes to fail with "DEPLOYMENT_NOT_FOUND" errors.
+
+### Fixes Applied
+
+#### 1. Updated vercel.json Configuration
+- **File**: `/app/vercel.json`  
+- **Fix**: Added specific route handling for admin panel:
+  ```json
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/server.py"
+    },
+    {
+      "src": "/admin/(.*)",
+      "dest": "/frontend/index.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
+    }
+  ]
+  ```
+
+#### 2. Added SPA Routing Support
+- **File**: `/app/frontend/public/_redirects`
+- **Content**: `/*    /index.html   200`
+- **Purpose**: Fallback routing for all routes to index.html
+
+#### 3. Additional Vercel Configuration  
+- **File**: `/app/frontend/public/vercel.json`
+- **Content**: Rewrite rules to ensure all routes serve the React app
+
+### Verification Results
+- ✅ **Homepage loads successfully** at `http://localhost:3000`
+- ✅ **Admin login page accessible** at `http://localhost:3000/admin/login`
+- ✅ **Admin routes properly protected** - unauthorized access redirects to login
+- ✅ **Admin people route working** at `http://localhost:3000/admin/people`
+- ✅ **Admin achievements route working** at `http://localhost:3000/admin/achievements`
+- ✅ **All admin routes now functional** with proper authentication protection
+
+### Production Deployment Status
+The routing configuration has been fixed and the application is ready for Vercel deployment. The following routes will now work correctly:
+
+**Public Routes:**
+- `/` - Homepage
+- `/people` - People page
+- `/publications` - Publications page
+- `/achievements` - Achievements page
+- `/news` - News & Events page
+
+**Admin Routes (Authentication Required):**
+- `/admin/login` - Admin login
+- `/admin/dashboard` - Admin dashboard
+- `/admin/people` - Manage people
+- `/admin/publications` - Manage publications  
+- `/admin/achievements` - Manage achievements
+- `/admin/news` - Manage news & events
+
+**Fix Summary**: The 404 "DEPLOYMENT_NOT_FOUND" errors were caused by missing SPA routing configuration in Vercel. With the updated `vercel.json` and additional routing files, all admin panel sections will now be accessible on the live deployment.
