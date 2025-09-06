@@ -35,6 +35,17 @@ const AdminPublications = () => {
     fetchData('publications');
   }, [fetchData]);
 
+  // Research areas for the form
+  const researchAreasList = [
+    'Smart Grid Technologies',
+    'Microgrids & Distributed Energy Systems',
+    'Renewable Energy Integration',
+    'Grid Optimization & Stability',
+    'Energy Storage Systems',
+    'Power System Automation',
+    'Cybersecurity and AI for Power Infrastructure'
+  ];
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     
@@ -43,17 +54,24 @@ const AdminPublications = () => {
         ...prev,
         [name]: checked
       }));
-    } else if (name === 'authors' || name === 'keywords') {
+    } else if (name === 'authors' || name === 'keywords' || name === 'editor') {
       // Split by comma and trim whitespace
       const items = value.split(',').map(item => item.trim()).filter(item => item);
       setFormData(prev => ({
         ...prev,
         [name]: items
       }));
-    } else if (name === 'year') {
+    } else if (name === 'research_areas') {
+      // Handle multi-select for research areas
+      const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
       setFormData(prev => ({
         ...prev,
-        [name]: parseInt(value) || new Date().getFullYear()
+        [name]: selectedOptions
+      }));
+    } else if (name === 'year' || name === 'citations') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: parseInt(value) || (name === 'year' ? new Date().getFullYear() : 0)
       }));
     } else {
       setFormData(prev => ({
@@ -67,17 +85,24 @@ const AdminPublications = () => {
     setFormData({
       title: '',
       authors: [],
-      journal: '',
-      year: new Date().getFullYear(),
+      publication_type: 'journal',
+      journal_name: '',
+      conference_name: '',
+      book_title: '',
       volume: '',
       issue: '',
       pages: '',
-      doi: '',
-      abstract: '',
+      year: new Date().getFullYear(),
+      month: '',
+      location: '',
+      editor: [],
+      publisher: '',
+      edition: '',
       keywords: [],
-      type: 'journal',
-      url: '',
-      is_featured: false
+      link: '',
+      is_open_access: false,
+      citations: 0,
+      research_areas: []
     });
     setEditingPublication(null);
   };
