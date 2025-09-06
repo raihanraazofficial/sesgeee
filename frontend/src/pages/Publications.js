@@ -5,7 +5,7 @@ import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const Publications = () => {
-  const { publications, researchAreas, fetchData, loading } = useData();
+  const { publications, fetchData, loading } = useData();
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [yearFilter, setYearFilter] = useState('all');
