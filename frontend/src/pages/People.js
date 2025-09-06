@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, ExternalLink, ArrowUp, Users, UserCheck, Handshake } from 'lucide-react';
+import { ArrowUp, Users, UserCheck, Handshake } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
