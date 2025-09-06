@@ -441,7 +441,7 @@ const AdminPeople = () => {
               </div>
 
               <div>
-                <h3 className="text-lg font-medium text-white mb-3">Social Links</h3>
+                <h3 className="text-lg font-medium text-white mb-3">Social & Research Links</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -490,6 +490,32 @@ const AdminPeople = () => {
                       type="url"
                       name="social_links.linkedin"
                       value={formData.social_links.linkedin}
+                      onChange={handleInputChange}
+                      className="form-input"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      GitHub
+                    </label>
+                    <input
+                      type="url"
+                      name="social_links.github"
+                      value={formData.social_links.github}
+                      onChange={handleInputChange}
+                      className="form-input"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      IEEE Profile
+                    </label>
+                    <input
+                      type="url"
+                      name="social_links.ieee"
+                      value={formData.social_links.ieee}
                       onChange={handleInputChange}
                       className="form-input"
                     />
