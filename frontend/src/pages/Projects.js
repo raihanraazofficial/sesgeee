@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ArrowUp, FolderOpen, Calendar, CheckCircle, Clock, Users, Search, Filter, ExternalLink, Building } from 'lucide-react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { ArrowUp, FolderOpen, Calendar, CheckCircle, Clock, Users, Search, Filter, ExternalLink, Building, ClipboardList, BarChart3, Target } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -62,6 +62,16 @@ const Projects = () => {
     }
   }, [projects, activeTab, searchTerm, sortBy, sortOrder]);
 
+  // Calculate project statistics
+  const projectStats = useMemo(() => {
+    const total = projects.length;
+    const ongoing = projects.filter(p => p.status === 'ongoing').length;
+    const completed = projects.filter(p => p.status === 'completed').length;
+    const planning = projects.filter(p => p.status === 'planning').length;
+    
+    return { total, ongoing, completed, planning };
+  }, [projects]);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -72,6 +82,8 @@ const Projects = () => {
         return CheckCircle;
       case 'ongoing':
         return Clock;
+      case 'planning':
+        return Target;
       default:
         return FolderOpen;
     }
@@ -117,6 +129,65 @@ const Projects = () => {
         height="h-96"
       />
 
+      {/* Summary Cards Section */}
+      <section className="py-12 bg-gradient-to-br from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {/* Total Projects Card */}
+            <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600 mb-1">Total Projects</p>
+                  <p className="text-3xl font-bold text-gray-900">{projectStats.total}</p>
+                </div>
+                <div className="p-3 bg-blue-100 rounded-lg">
+                  <BarChart3 className="h-8 w-8 text-blue-600" />
+                </div>
+              </div>
+            </div>
+
+            {/* Ongoing Projects Card */}
+            <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600 mb-1">Ongoing Projects</p>
+                  <p className="text-3xl font-bold text-yellow-600">{projectStats.ongoing}</p>
+                </div>
+                <div className="p-3 bg-yellow-100 rounded-lg">
+                  <Clock className="h-8 w-8 text-yellow-600" />
+                </div>
+              </div>
+            </div>
+
+            {/* Completed Projects Card */}
+            <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600 mb-1">Completed Projects</p>
+                  <p className="text-3xl font-bold text-green-600">{projectStats.completed}</p>
+                </div>
+                <div className="p-3 bg-green-100 rounded-lg">
+                  <CheckCircle className="h-8 w-8 text-green-600" />
+                </div>
+              </div>
+            </div>
+
+            {/* Planning Projects Card */}
+            <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600 mb-1">Planning Projects</p>
+                  <p className="text-3xl font-bold text-blue-600">{projectStats.planning}</p>
+                </div>
+                <div className="p-3 bg-blue-100 rounded-lg">
+                  <Target className="h-8 w-8 text-blue-600" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Search and Filter Section */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -137,26 +208,28 @@ const Projects = () => {
 
             {/* Filter Controls */}
             <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
-              {/* Category Tabs */}
-              <div className="flex bg-white rounded-lg p-2 border border-gray-200 shadow-sm">
-                {[
-                  { id: 'all', name: 'All Projects' },
-                  { id: 'ongoing', name: 'Ongoing' },
-                  { id: 'completed', name: 'Completed' },
-                  { id: 'planning', name: 'Planning' }
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`px-4 py-2 rounded-md font-medium transition-all text-sm ${
-                      activeTab === tab.id
-                        ? 'bg-primary-600 text-white shadow-md'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                    }`}
-                  >
-                    {tab.name}
-                  </button>
-                ))}
+              {/* Category Tabs - Centered */}
+              <div className="flex-1 flex justify-center">
+                <div className="flex bg-white rounded-lg p-2 border border-gray-200 shadow-sm">
+                  {[
+                    { id: 'all', name: 'All Projects' },
+                    { id: 'ongoing', name: 'Ongoing' },
+                    { id: 'completed', name: 'Completed' },
+                    { id: 'planning', name: 'Planning' }
+                  ].map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`px-4 py-2 rounded-md font-medium transition-all text-sm ${
+                        activeTab === tab.id
+                          ? 'bg-primary-600 text-white shadow-md'
+                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                      }`}
+                    >
+                      {tab.name}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Sort Controls */}
@@ -181,11 +254,6 @@ const Projects = () => {
                   {sortOrder === 'asc' ? '↑ Ascending' : '↓ Descending'}
                 </button>
               </div>
-            </div>
-
-            {/* Results Count */}
-            <div className="text-center text-gray-600">
-              {filteredProjects.length} {filteredProjects.length === 1 ? 'project' : 'projects'} found
             </div>
           </div>
         </div>
@@ -231,12 +299,12 @@ const Projects = () => {
                         <div className="p-6">
                           {/* Project Title */}
                           <h3 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
-                            {project.name}
+                            {project.name || 'Untitled Project'}
                           </h3>
                           
                           {/* Short Description */}
                           <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3">
-                            {project.description}
+                            {project.description || 'No description available'}
                           </p>
                           
                           {/* Duration */}
@@ -248,20 +316,24 @@ const Projects = () => {
                           </div>
                           
                           {/* Team Leader */}
-                          <div className="mb-2">
-                            <span className="text-sm font-medium text-gray-700">Team Leader: </span>
-                            <span className="text-sm text-gray-600">
-                              {project.team_leader || 'Not specified'}
-                            </span>
-                          </div>
+                          {project.team_leader && (
+                            <div className="mb-2">
+                              <span className="text-sm font-medium text-gray-700">Team Leader: </span>
+                              <span className="text-sm text-gray-600">
+                                {project.team_leader}
+                              </span>
+                            </div>
+                          )}
                           
                           {/* Team Members */}
-                          <div className="mb-4">
-                            <span className="text-sm font-medium text-gray-700">Team Members: </span>
-                            <p className="text-sm text-gray-600 line-clamp-2">
-                              {formatTeamMembers(project.team_members)}
-                            </p>
-                          </div>
+                          {project.team_members && (
+                            <div className="mb-4">
+                              <span className="text-sm font-medium text-gray-700">Team Members: </span>
+                              <p className="text-sm text-gray-600 line-clamp-2">
+                                {formatTeamMembers(project.team_members)}
+                              </p>
+                            </div>
+                          )}
                           
                           {/* Divider */}
                           <hr className="border-gray-200 my-4" />
@@ -269,17 +341,19 @@ const Projects = () => {
                           {/* Bottom Section */}
                           <div className="flex items-center justify-between">
                             <div className="flex flex-col space-y-1">
-                              <div className="flex items-center space-x-2 text-sm text-gray-600">
-                                <Building className="h-4 w-4 text-primary-500" />
-                                <span className="text-xs">
-                                  <span className="font-medium">Funded By:</span> {project.funded_by || 'Not specified'}
-                                </span>
-                              </div>
+                              {project.funded_by && (
+                                <div className="flex items-center space-x-2 text-sm text-gray-600">
+                                  <Building className="h-4 w-4 text-primary-500" />
+                                  <span className="text-xs">
+                                    <span className="font-medium">Funded By:</span> {project.funded_by}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                             <div className="flex items-center space-x-1 text-sm text-gray-600">
                               <Users className="h-4 w-4 text-primary-500" />
                               <span className="text-xs">
-                                {project.total_members || project.team_members?.length || 'N/A'} {project.total_members === 1 ? 'Member' : 'Members'}
+                                {project.total_members || project.team_members?.length || 'N/A'} {(project.total_members === 1 || project.team_members?.length === 1) ? 'Member' : 'Members'}
                               </span>
                             </div>
                           </div>
@@ -305,14 +379,14 @@ const Projects = () => {
                 </div>
               ) : (
                 <div className="text-center py-16">
-                  <FolderOpen className="h-16 w-16 text-gray-400 mx-auto mb-6" />
+                  <ClipboardList className="h-16 w-16 text-gray-400 mx-auto mb-6" />
                   <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-                    No Projects Found
+                    No Projects Available
                   </h3>
                   <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
                     {activeTab === 'all' 
-                      ? 'Our projects database is being updated. Please check back soon or contact us for more information.'
-                      : `No ${activeTab} projects available at the moment. Try switching to a different category.`
+                      ? 'We are currently working on exciting new research projects. Please check back soon for updates on our latest initiatives.'
+                      : `No ${activeTab} projects are currently available. Please try exploring other categories or check back later for updates.`
                     }
                   </p>
                   <div className="space-x-4">
@@ -325,7 +399,7 @@ const Projects = () => {
                       </button>
                     )}
                     <button className="btn-primary">
-                      Explore Collaboration Opportunities
+                      Explore Research Areas
                     </button>
                   </div>
                 </div>
