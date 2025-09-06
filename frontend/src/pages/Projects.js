@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowUp, FolderOpen, Calendar, CheckCircle, Clock } from 'lucide-react';
+import { ArrowUp, FolderOpen, Calendar, CheckCircle, Clock, Users, Search, Filter, ExternalLink, Building } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
