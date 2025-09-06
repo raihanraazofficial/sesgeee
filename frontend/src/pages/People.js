@@ -139,7 +139,8 @@ const People = () => {
               {currentData.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {currentData.map((person) => (
-                    <div key={person.id} className="research-card">
+                    <div key={person.id} className="research-card flex flex-col"
+                         style={{ minHeight: '580px' }}>
                       <div className="relative h-64">
                         <img
                           src={person.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(person.name)}&size=400&background=1e293b&color=ffffff`}
