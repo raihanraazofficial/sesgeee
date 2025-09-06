@@ -517,9 +517,12 @@ export function DataProvider({ children }) {
       if (type === 'researchAreas') collectionName = 'research_areas';
       if (type === 'photoGallery') collectionName = 'photo_gallery';
 
+      // Clean data to remove undefined values
+      const cleanedData = cleanData(data);
+
       // Add timestamps
       const itemData = {
-        ...data,
+        ...cleanedData,
         created_at: serverTimestamp(),
         updated_at: serverTimestamp(),
       };
