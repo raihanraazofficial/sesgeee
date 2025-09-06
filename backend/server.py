@@ -84,7 +84,146 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
 
-# In-memory data storage (replace with Firebase later)
+# Helper functions for Firebase operations
+def get_collection_data(collection_name, filters=None, order_by=None, limit=None):
+    """Get data from Firestore collection with optional filtering"""
+    try:
+        if db is None:
+            return get_mock_data(collection_name)
+        
+        ref = db.collection(collection_name)
+        
+        # Apply filters
+        if filters:
+            for field, operator, value in filters:
+                ref = ref.where(field, operator, value)
+        
+        # Apply ordering
+        if order_by:
+            field, direction = order_by
+            ref = ref.order_by(field, direction=direction)
+        
+        # Apply limit
+        if limit:
+            ref = ref.limit(limit)
+        
+        docs = ref.stream()
+        data = []
+        for doc in docs:
+            doc_data = doc.to_dict()
+            doc_data['id'] = doc.id
+            # Convert datetime objects to ISO strings
+            for key, value in doc_data.items():
+                if hasattr(value, 'isoformat'):
+                    doc_data[key] = value.isoformat()
+            data.append(doc_data)
+        
+        return data
+    except Exception as e:
+        print(f"Error getting collection data: {e}")
+        return get_mock_data(collection_name)
+
+def add_document(collection_name, data):
+    """Add document to Firestore collection"""
+    try:
+        if db is None:
+            # Mock behavior - add to in-memory storage
+            data['id'] = str(uuid.uuid4())
+            data['created_at'] = datetime.utcnow().isoformat()
+            in_memory_db[collection_name].append(data)
+            return data
+        
+        # Add timestamp
+        data['created_at'] = datetime.utcnow()
+        data['updated_at'] = datetime.utcnow()
+        
+        # Convert datetime strings to Firestore timestamps
+        for key, value in data.items():
+            if isinstance(value, str) and 'T' in value and ':' in value:
+                try:
+                    data[key] = datetime.fromisoformat(value.replace('Z', '+00:00'))
+                except:
+                    pass
+        
+        doc_ref = db.collection(collection_name).add(data)
+        doc_id = doc_ref[1].id
+        
+        # Return the created document
+        created_doc = data.copy()
+        created_doc['id'] = doc_id
+        created_doc['created_at'] = created_doc['created_at'].isoformat()
+        created_doc['updated_at'] = created_doc['updated_at'].isoformat()
+        
+        return created_doc
+    except Exception as e:
+        print(f"Error adding document: {e}")
+        raise HTTPException(status_code=500, detail=f"Error creating document: {str(e)}")
+
+def update_document(collection_name, doc_id, data):
+    """Update document in Firestore collection"""
+    try:
+        if db is None:
+            # Mock behavior - update in-memory storage
+            for item in in_memory_db[collection_name]:
+                if item['id'] == doc_id:
+                    item.update(data)
+                    item['updated_at'] = datetime.utcnow().isoformat()
+                    return item
+            raise HTTPException(status_code=404, detail="Document not found")
+        
+        data['updated_at'] = datetime.utcnow()
+        
+        # Convert datetime strings to Firestore timestamps
+        for key, value in data.items():
+            if isinstance(value, str) and 'T' in value and ':' in value:
+                try:
+                    data[key] = datetime.fromisoformat(value.replace('Z', '+00:00'))
+                except:
+                    pass
+        
+        doc_ref = db.collection(collection_name).document(doc_id)
+        if not doc_ref.get().exists:
+            raise HTTPException(status_code=404, detail="Document not found")
+        
+        doc_ref.update(data)
+        
+        # Return updated document
+        updated_doc = doc_ref.get().to_dict()
+        updated_doc['id'] = doc_id
+        for key, value in updated_doc.items():
+            if hasattr(value, 'isoformat'):
+                updated_doc[key] = value.isoformat()
+        
+        return updated_doc
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error updating document: {e}")
+        raise HTTPException(status_code=500, detail=f"Error updating document: {str(e)}")
+
+def delete_document(collection_name, doc_id):
+    """Delete document from Firestore collection"""
+    try:
+        if db is None:
+            # Mock behavior - delete from in-memory storage
+            in_memory_db[collection_name] = [item for item in in_memory_db[collection_name] if item['id'] != doc_id]
+            return {"message": "Document deleted successfully"}
+        
+        doc_ref = db.collection(collection_name).document(doc_id)
+        if not doc_ref.get().exists:
+            raise HTTPException(status_code=404, detail="Document not found")
+        
+        doc_ref.delete()
+        return {"message": "Document deleted successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error deleting document: {e}")
+        raise HTTPException(status_code=500, detail=f"Error deleting document: {str(e)}")
+
+def get_mock_data(collection_name):
+    """Get mock data for development"""
+    return in_memory_db.get(collection_name, [])
 in_memory_db = {
     "people": [],
     "publications": [],
