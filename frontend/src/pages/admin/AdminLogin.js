@@ -55,7 +55,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         {/* Header */}
         <div className="text-center">
@@ -64,19 +64,19 @@ const AdminLogin = () => {
             alt="SESGRG Logo" 
             className="mx-auto h-16 w-16 object-contain mb-4"
           />
-          <h2 className="text-3xl font-bold font-heading text-white">
+          <h2 className="text-3xl font-bold font-heading text-gray-900">
             Admin Portal
           </h2>
-          <p className="mt-2 text-gray-400">
+          <p className="mt-2 text-gray-600">
             Sustainable Energy & Smart Grid Research
           </p>
         </div>
 
         {/* Login Form */}
-        <div className="glass rounded-xl p-8">
+        <div className="glass rounded-xl p-8 border border-gray-200 shadow-lg">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
                 Username
               </label>
               <input
@@ -93,7 +93,7 @@ const AdminLogin = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -115,9 +115,9 @@ const AdminLogin = () => {
                   disabled={loading}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-300" />
+                    <EyeOff className="h-5 w-5 text-gray-500 hover:text-gray-700" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-400 hover:text-gray-300" />
+                    <Eye className="h-5 w-5 text-gray-500 hover:text-gray-700" />
                   )}
                 </button>
               </div>
@@ -142,7 +142,7 @@ const AdminLogin = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-gray-500">
               Default credentials: admin / @dminsesg705
             </p>
           </div>
