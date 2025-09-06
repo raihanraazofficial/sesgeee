@@ -530,7 +530,7 @@ Best regards,
                               className={`px-3 py-1 rounded text-sm ${
                                 currentPage === page
                                   ? 'bg-primary-600 text-white'
-                                  : 'text-gray-400 hover:text-white hover:bg-dark-700'
+                                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                               }`}
                             >
                               {page}
