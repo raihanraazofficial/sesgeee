@@ -9,7 +9,7 @@ const NewsDetail = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <HeroSection
         title="News Article"
@@ -19,11 +19,11 @@ const NewsDetail = () => {
       />
 
       {/* Back Navigation */}
-      <section className="py-6 bg-dark-800 border-b border-gray-700">
+      <section className="py-6 bg-gray-100 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             to="/news"
-            className="inline-flex items-center space-x-2 text-gray-300 hover:text-primary-400 transition-colors"
+            className="inline-flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Back to News & Events</span>
@@ -32,13 +32,13 @@ const NewsDetail = () => {
       </section>
 
       {/* Coming Soon */}
-      <section className="py-20 bg-dark-900">
+      <section className="py-20 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="glass rounded-xl p-12">
-            <h2 className="text-4xl font-bold font-heading text-white mb-6">
+            <h2 className="text-4xl font-bold font-heading text-gray-900 mb-6">
               Article Detail View
             </h2>
-            <p className="text-xl text-gray-300 mb-8">
+            <p className="text-xl text-gray-700 mb-8">
               This page will display full article content with rich text formatting, 
               images, videos, and interactive elements.
             </p>
@@ -52,7 +52,7 @@ const NewsDetail = () => {
           <div className="mt-12">
             <button
               onClick={scrollToTop}
-              className="flex items-center space-x-2 text-gray-300 hover:text-primary-400 transition-colors mx-auto"
+              className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors mx-auto"
             >
               <span>Back to Top</span>
               <ArrowUp className="h-4 w-4" />
