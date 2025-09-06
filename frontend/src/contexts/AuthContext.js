@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import axios from 'axios';
+import { auth, db } from '../firebase';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 
 const AuthContext = createContext();
 
@@ -42,73 +44,104 @@ export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
-    // Check for existing token on app load
-    const token = localStorage.getItem('admin_token');
-    const userData = localStorage.getItem('admin_user');
-    
-    if (token && userData) {
-      try {
-        const user = JSON.parse(userData);
-        dispatch({
-          type: 'LOGIN_SUCCESS',
-          payload: { user, token }
-        });
-        
-        // Set default axios header
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      } catch (error) {
-        console.error('Error parsing stored user data:', error);
-        localStorage.removeItem('admin_token');
-        localStorage.removeItem('admin_user');
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        try {
+          // Get user document from Firestore to check role
+          const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            if (userData.role === 'admin') {
+              const token = await firebaseUser.getIdToken();
+              dispatch({
+                type: 'LOGIN_SUCCESS',
+                payload: {
+                  user: {
+                    uid: firebaseUser.uid,
+                    email: firebaseUser.email,
+                    role: userData.role,
+                    username: userData.username || firebaseUser.email
+                  },
+                  token
+                }
+              });
+            } else {
+              // User is not admin, logout
+              await signOut(auth);
+              dispatch({ type: 'LOGOUT' });
+            }
+          } else {
+            // User document doesn't exist, logout
+            await signOut(auth);
+            dispatch({ type: 'LOGOUT' });
+          }
+        } catch (error) {
+          console.error('Error checking user role:', error);
+          dispatch({ type: 'LOGOUT' });
+        }
+      } else {
+        dispatch({ type: 'LOGOUT' });
       }
-    }
-    
-    dispatch({ type: 'SET_LOADING', payload: false });
+      dispatch({ type: 'SET_LOADING', payload: false });
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const login = async (credentials) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       
-      // Use environment variable or fallback to relative URL for production
-      const baseURL = process.env.REACT_APP_BACKEND_URL || '';
-      const loginURL = baseURL ? `${baseURL}/api/auth/login` : '/api/auth/login';
+      // Use Firebase Authentication
+      const userCredential = await signInWithEmailAndPassword(
+        auth, 
+        credentials.username.includes('@') ? credentials.username : `${credentials.username}@sesgrg.com`, 
+        credentials.password
+      );
       
-      const response = await axios.post(loginURL, credentials);
-      const { access_token, user_role } = response.data;
+      // Check if user is admin
+      const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
+      if (!userDoc.exists()) {
+        await signOut(auth);
+        throw new Error('User not found');
+      }
       
-      const user = {
-        username: credentials.username,
-        role: user_role
-      };
-      
-      // Store in localStorage
-      localStorage.setItem('admin_token', access_token);
-      localStorage.setItem('admin_user', JSON.stringify(user));
-      
-      // Set default axios header
-      axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-      
-      dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: { user, token: access_token }
-      });
+      const userData = userDoc.data();
+      if (userData.role !== 'admin') {
+        await signOut(auth);
+        throw new Error('Access denied. Admin privileges required.');
+      }
       
       return { success: true };
     } catch (error) {
       dispatch({ type: 'SET_LOADING', payload: false });
+      let errorMessage = 'Login failed';
+      
+      if (error.code === 'auth/user-not-found') {
+        errorMessage = 'User not found';
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'Incorrect password';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'Invalid email format';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       return {
         success: false,
-        error: error.response?.data?.detail || 'Login failed'
+        error: errorMessage
       };
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('admin_token');
-    localStorage.removeItem('admin_user');
-    delete axios.defaults.headers.common['Authorization'];
-    dispatch({ type: 'LOGOUT' });
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      dispatch({ type: 'LOGOUT' });
+    } catch (error) {
+      console.error('Logout error:', error);
+      dispatch({ type: 'LOGOUT' });
+    }
   };
 
   const value = {
