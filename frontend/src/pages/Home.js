@@ -82,10 +82,7 @@ const Home = () => {
     }
   ];
 
-  const scrollToSection = () => {
-    const aboutSection = document.getElementById('about');
-    aboutSection?.scrollIntoView({ behavior: 'smooth' });
-  };
+
 
   const nextImage = useCallback(() => {
     setCurrentImageIndex((prev) => (prev + 1) % carouselImages.length);
