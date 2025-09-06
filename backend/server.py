@@ -285,7 +285,7 @@ in_memory_db = {
             "total_members": 4,
             "status": "ongoing",
             "research_area": "Energy Storage",
-            "project_link": null,
+            "project_link": None,
             "image": null
         },
         {
