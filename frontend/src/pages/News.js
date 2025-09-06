@@ -1,6 +1,9 @@
-import React from 'react';
-import { ArrowUp } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ArrowUp, Calendar, Clock, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
+import { useData } from '../contexts/DataContext';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const News = () => {
   const scrollToTop = () => {
