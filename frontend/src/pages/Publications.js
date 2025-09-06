@@ -229,10 +229,10 @@ Best regards,
       </section>
 
       {/* Category Filter Buttons */}
-      <section className="py-6 bg-dark-900">
+      <section className="py-6 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center">
-            <div className="inline-flex bg-dark-800 rounded-lg p-1 border border-gray-700">
+            <div className="inline-flex bg-white rounded-lg p-1 border border-gray-200 shadow-sm">
               <button
                 onClick={() => {
                   setCategoryFilter('all');
@@ -241,7 +241,7 @@ Best regards,
                 className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
                   categoryFilter === 'all'
                     ? 'bg-primary-600 text-white shadow-lg'
-                    : 'text-gray-300 hover:text-white hover:bg-dark-700'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
               >
                 All Categories
@@ -254,7 +254,7 @@ Best regards,
                 className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
                   categoryFilter === 'journal'
                     ? 'bg-blue-600 text-white shadow-lg'
-                    : 'text-gray-300 hover:text-white hover:bg-dark-700'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
               >
                 Journal
@@ -267,7 +267,7 @@ Best regards,
                 className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
                   categoryFilter === 'conference'
                     ? 'bg-green-600 text-white shadow-lg'
-                    : 'text-gray-300 hover:text-white hover:bg-dark-700'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
               >
                 Conference Proceedings
@@ -280,7 +280,7 @@ Best regards,
                 className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
                   categoryFilter === 'book_chapter'
                     ? 'bg-purple-600 text-white shadow-lg'
-                    : 'text-gray-300 hover:text-white hover:bg-dark-700'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
               >
                 Book Chapter
