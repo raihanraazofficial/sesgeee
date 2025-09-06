@@ -39,72 +39,7 @@ const People = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Mock data for demonstration (same as reference website)
-  const mockPeople = {
-    advisors: [
-      {
-        id: '1',
-        name: 'Shameem Ahmad, PhD',
-        title: 'Associate Professor',
-        department: 'Department of EEE, BRAC University',
-        bio: 'Specialist in smart grids, microgrids, and AI-driven power system control with expertise in renewable energy and advanced power converters.',
-        research_interests: ['Microgrids & Distributed Energy Systems', 'Grid Optimization & Stability', 'Renewable Energy Integration'],
-        image: 'https://raw.githubusercontent.com/raihanraazofficial/SESGRG_v2/refs/heads/main/imgdirectory/Shameem%20Ahmad.jpg',
-        email: 'shameem.ahmad@bracu.ac.bd',
-        social_links: {
-          google_scholar: '#',
-          researchgate: '#',
-          orcid: '#',
-          linkedin: '#',
-          github: '#',
-          ieee: '#'
-        },
-        website: '#'
-      },
-      {
-        id: '2',
-        name: 'Amirul Islam, PhD',
-        title: 'Assistant Professor',
-        department: 'Department of EEE, BRAC University',
-        bio: 'Researcher in artificial intelligence and power systems with expertise in multimodal signal processing, smart grid automation, and interdisciplinary applications of AI.',
-        research_interests: ['Power System Automation', 'Cybersecurity and AI for Power Infrastructure'],
-        image: 'https://raw.githubusercontent.com/raihanraazofficial/SESGRG_v2/refs/heads/main/imgdirectory/Amirul%20Islam.jpg',
-        email: 'amirul.islam@bracu.ac.bd',
-        social_links: {
-          google_scholar: '#',
-          researchgate: '#',
-          orcid: '#',
-          linkedin: '#',
-          github: '#',
-          ieee: '#'
-        },
-        website: '#'
-      },
-      {
-        id: '3',
-        name: 'A. S. Nazmul Huda, PhD',
-        title: 'Associate Professor',
-        department: 'Department of EEE, BRAC University',
-        bio: 'Expert in power systems reliability, renewable energy, and smart grid optimization with strong focus on modeling, simulation, and condition monitoring.',
-        research_interests: ['Smart Grid Technologies', 'Renewable Energy Integration', 'Grid Optimization & Stability', 'Energy Storage Systems'],
-        image: 'https://i.ibb.co.com/mVjdfL22/Nazmul-sir.jpg',
-        email: 'nazmul.huda@bracu.ac.bd',
-        social_links: {
-          google_scholar: '#',
-          researchgate: '#',
-          orcid: '#',
-          linkedin: '#',
-          github: '#',
-          ieee: '#'
-        },
-        website: '#'
-      }
-    ],
-    team_members: [],
-    collaborators: []
-  };
-
-  const currentData = mockPeople[activeCategory] || [];
+  const currentData = filteredPeople;
 
   return (
     <div className="min-h-screen">
