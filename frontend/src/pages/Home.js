@@ -104,7 +104,7 @@ const Home = () => {
   useEffect(() => {
     const interval = setInterval(nextImage, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [nextImage]);
 
   const galleryImages = [
     {
