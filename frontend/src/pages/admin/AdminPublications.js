@@ -235,10 +235,6 @@ const AdminPublications = () => {
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">{publication.title}</h3>
                     <p className="text-gray-600 text-sm mb-3">{formatCitation(publication)}</p>
                     
-                    {publication.abstract && (
-                      <p className="text-gray-700 text-sm mb-3 line-clamp-3">{publication.abstract}</p>
-                    )}
-                    
                     {publication.keywords && publication.keywords.length > 0 && (
                       <div className="mb-3">
                         <div className="flex flex-wrap gap-2">
@@ -253,6 +249,21 @@ const AdminPublications = () => {
                           {publication.keywords.length > 5 && (
                             <span className="text-gray-500 text-xs">+{publication.keywords.length - 5} more</span>
                           )}
+                        </div>
+                      </div>
+                    )}
+
+                    {publication.research_areas && publication.research_areas.length > 0 && (
+                      <div className="mb-3">
+                        <div className="flex flex-wrap gap-2">
+                          {publication.research_areas.map((area, index) => (
+                            <span
+                              key={index}
+                              className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full border border-green-200"
+                            >
+                              {area}
+                            </span>
+                          ))}
                         </div>
                       </div>
                     )}
