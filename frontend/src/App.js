@@ -29,6 +29,7 @@ import AdminProjects from './pages/admin/AdminProjects';
 import AdminAchievements from './pages/admin/AdminAchievements';
 import AdminNews from './pages/admin/AdminNews';
 import AdminSettings from './pages/admin/AdminSettings';
+import FirestoreInit from './pages/admin/FirestoreInit';
 
 // Context
 import { AuthProvider } from './contexts/AuthContext';
