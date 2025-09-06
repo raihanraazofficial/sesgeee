@@ -642,7 +642,10 @@ async def delete_news(news_id: str, current_user: dict = Depends(get_current_use
 
 @app.get("/api/events")
 async def get_events(upcoming: Optional[bool] = None):
-    order_by = ("date", firestore.Query.ASCENDING) if db else None
+    if db:
+        order_by = ("date", firestore.Query.ASCENDING)
+    else:
+        order_by = None
     events = get_collection_data("events", order_by=order_by)
     
     if upcoming:
