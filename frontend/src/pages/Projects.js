@@ -41,11 +41,11 @@ const Projects = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'completed':
-        return 'text-green-400 bg-green-400/20';
+        return 'text-green-600 bg-green-50 border-green-200';
       case 'ongoing':
-        return 'text-yellow-400 bg-yellow-400/20';
+        return 'text-yellow-600 bg-yellow-50 border-yellow-200';
       default:
-        return 'text-blue-400 bg-blue-400/20';
+        return 'text-blue-600 bg-blue-50 border-blue-200';
     }
   };
 
@@ -60,10 +60,10 @@ const Projects = () => {
       />
 
       {/* Filter Tabs */}
-      <section className="py-12 bg-dark-800">
+      <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center">
-            <div className="flex bg-dark-700 rounded-lg p-2">
+            <div className="flex bg-white rounded-lg p-2 border border-gray-200 shadow-sm">
               {[
                 { id: 'all', name: 'All Projects' },
                 { id: 'ongoing', name: 'Ongoing' },
@@ -74,8 +74,8 @@ const Projects = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`px-6 py-3 rounded-md font-medium transition-all ${
                     activeTab === tab.id
-                      ? 'bg-primary-600 text-white'
-                      : 'text-gray-300 hover:text-white hover:bg-dark-600'
+                      ? 'bg-primary-600 text-white shadow-md'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                 >
                   {tab.name}
@@ -87,7 +87,7 @@ const Projects = () => {
       </section>
 
       {/* Projects Section */}
-      <section className="py-20 bg-dark-900">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading.projects ? (
             <LoadingSpinner text="Loading projects..." />
@@ -98,21 +98,21 @@ const Projects = () => {
                   {filteredProjects.map((project) => {
                     const StatusIcon = getStatusIcon(project.status);
                     return (
-                      <div key={project.id} className="research-card">
+                      <div key={project.id} className="research-card border border-gray-200 shadow-lg">
                         <div className="p-6">
                           <div className="flex items-start justify-between mb-4">
-                            <h3 className="text-xl font-semibold text-white mb-2">{project.name}</h3>
-                            <span className={`flex items-center space-x-1 px-3 py-1 rounded-full text-sm ${getStatusColor(project.status)}`}>
+                            <h3 className="text-xl font-semibold text-gray-900 mb-2">{project.name}</h3>
+                            <span className={`flex items-center space-x-1 px-3 py-1 rounded-full text-sm border ${getStatusColor(project.status)}`}>
                               <StatusIcon className="h-4 w-4" />
                               <span className="capitalize">{project.status}</span>
                             </span>
                           </div>
                           
-                          <p className="text-gray-300 mb-4 leading-relaxed">
+                          <p className="text-gray-600 mb-4 leading-relaxed">
                             {project.description}
                           </p>
                           
-                          <div className="flex items-center space-x-4 text-sm text-gray-400 mb-6">
+                          <div className="flex items-center space-x-4 text-sm text-gray-500 mb-6">
                             <div className="flex items-center space-x-1">
                               <Calendar className="h-4 w-4" />
                               <span>{project.year}</span>
@@ -130,10 +130,10 @@ const Projects = () => {
               ) : (
                 <div className="text-center py-16">
                   <FolderOpen className="h-16 w-16 text-gray-400 mx-auto mb-6" />
-                  <h3 className="text-2xl font-semibold text-white mb-4">
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">
                     No Projects Found
                   </h3>
-                  <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+                  <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
                     {activeTab === 'all' 
                       ? 'Our projects database is being updated. Please check back soon or contact us for more information.'
                       : `No ${activeTab} projects available at the moment. Try switching to a different category.`
@@ -161,7 +161,7 @@ const Projects = () => {
           <div className="mt-12 text-center">
             <button
               onClick={scrollToTop}
-              className="flex items-center space-x-2 text-gray-300 hover:text-primary-400 transition-colors mx-auto"
+              className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors mx-auto"
             >
               <span>Back to Top</span>
               <ArrowUp className="h-4 w-4" />

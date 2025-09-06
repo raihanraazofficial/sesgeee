@@ -76,11 +76,11 @@ const PhotoGallery = () => {
       />
 
       {/* Photo Gallery Grid */}
-      <section className="py-20 bg-dark-900">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {galleryImages.map((image, index) => (
-              <div key={index} className="group relative rounded-xl overflow-hidden card-hover cursor-pointer">
+              <div key={index} className="group relative rounded-xl overflow-hidden card-hover cursor-pointer shadow-lg border border-gray-200">
                 <div className="aspect-square">
                   <img
                     src={image.url}
@@ -110,7 +110,7 @@ const PhotoGallery = () => {
           <div className="mt-12 text-center">
             <button
               onClick={scrollToTop}
-              className="flex items-center space-x-2 text-gray-300 hover:text-primary-400 transition-colors mx-auto"
+              className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors mx-auto"
             >
               <span>Back to Top</span>
               <ArrowUp className="h-4 w-4" />
@@ -121,5 +121,3 @@ const PhotoGallery = () => {
     </div>
   );
 };
-
-export default PhotoGallery;

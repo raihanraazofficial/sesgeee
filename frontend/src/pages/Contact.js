@@ -71,16 +71,16 @@ const Contact = () => {
       />
 
       {/* Contact Section */}
-      <section className="py-20 bg-dark-900">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information */}
             <div>
               <div className="mb-12">
-                <h2 className="text-3xl font-bold font-heading text-white mb-6">
+                <h2 className="text-3xl font-bold font-heading text-gray-900 mb-6">
                   Get In Touch
                 </h2>
-                <p className="text-gray-300 text-lg leading-relaxed mb-8">
+                <p className="text-gray-600 text-lg leading-relaxed mb-8">
                   We're always interested in connecting with researchers, students, industry partners, 
                   and anyone passionate about sustainable energy and smart grid technologies. 
                   Reach out to us for collaborations, research opportunities, or general inquiries.
@@ -90,18 +90,18 @@ const Contact = () => {
               {/* Contact Info Cards */}
               <div className="space-y-6">
                 {contactInfo.map((info, index) => (
-                  <div key={index} className="glass rounded-xl p-6 card-hover">
+                  <div key={index} className="glass rounded-xl p-6 card-hover border border-gray-200 shadow-lg">
                     <div className="flex items-center space-x-4">
                       <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
                         <info.icon className="h-6 w-6 text-white" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-white font-semibold mb-1">{info.title}</h3>
+                        <h3 className="text-gray-900 font-semibold mb-1">{info.title}</h3>
                         <a
                           href={info.link}
                           target={info.title === 'Address' ? '_blank' : '_self'}
                           rel={info.title === 'Address' ? 'noopener noreferrer' : ''}
-                          className="text-gray-300 hover:text-primary-400 transition-colors"
+                          className="text-gray-600 hover:text-primary-600 transition-colors"
                         >
                           {info.details}
                         </a>
@@ -112,8 +112,8 @@ const Contact = () => {
               </div>
 
               {/* Research Areas */}
-              <div className="mt-12 glass rounded-xl p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Research Collaboration Areas</h3>
+              <div className="mt-12 glass rounded-xl p-6 border border-gray-200 shadow-lg">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Research Collaboration Areas</h3>
                 <div className="grid grid-cols-2 gap-3">
                   {[
                     'Smart Grid Technologies',
@@ -123,8 +123,8 @@ const Contact = () => {
                     'Energy Storage Systems',
                     'Cybersecurity & AI'
                   ].map((area, index) => (
-                    <div key={index} className="bg-dark-700 rounded-lg p-3 text-center">
-                      <span className="text-gray-300 text-sm">{area}</span>
+                    <div key={index} className="bg-gray-50 rounded-lg p-3 text-center border border-gray-200">
+                      <span className="text-gray-600 text-sm">{area}</span>
                     </div>
                   ))}
                 </div>
@@ -132,15 +132,15 @@ const Contact = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="glass rounded-xl p-8">
-              <h3 className="text-2xl font-bold font-heading text-white mb-6">
+            <div className="glass rounded-xl p-8 border border-gray-200 shadow-lg">
+              <h3 className="text-2xl font-bold font-heading text-gray-900 mb-6">
                 Send us a Message
               </h3>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                       Full Name *
                     </label>
                     <input
@@ -157,7 +157,7 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                       Email Address *
                     </label>
                     <input
@@ -175,7 +175,7 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
                     Subject *
                   </label>
                   <input
@@ -192,7 +192,7 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                     Message *
                   </label>
                   <textarea
@@ -224,8 +224,8 @@ const Contact = () => {
                 </button>
               </form>
 
-              <div className="mt-6 pt-6 border-t border-gray-700">
-                <p className="text-sm text-gray-400 text-center">
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <p className="text-sm text-gray-500 text-center">
                   We typically respond within 24-48 hours during business days.
                 </p>
               </div>
@@ -234,15 +234,15 @@ const Contact = () => {
 
           {/* Location Map Placeholder */}
           <div className="mt-20">
-            <div className="glass rounded-xl p-8 text-center">
-              <h3 className="text-2xl font-bold font-heading text-white mb-4">Visit Our Location</h3>
-              <p className="text-gray-300 mb-6">
+            <div className="glass rounded-xl p-8 text-center border border-gray-200 shadow-lg">
+              <h3 className="text-2xl font-bold font-heading text-gray-900 mb-4">Visit Our Location</h3>
+              <p className="text-gray-600 mb-6">
                 Located at BRAC University, one of Bangladesh's leading private universities
               </p>
-              <div className="h-64 bg-dark-700 rounded-lg flex items-center justify-center">
+              <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
                 <div className="text-center">
                   <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                  <p className="text-gray-400">Interactive map coming soon</p>
+                  <p className="text-gray-500">Interactive map coming soon</p>
                 </div>
               </div>
             </div>
@@ -252,7 +252,7 @@ const Contact = () => {
           <div className="mt-12 text-center">
             <button
               onClick={scrollToTop}
-              className="flex items-center space-x-2 text-gray-300 hover:text-primary-400 transition-colors mx-auto"
+              className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors mx-auto"
             >
               <span>Back to Top</span>
               <ArrowUp className="h-4 w-4" />
