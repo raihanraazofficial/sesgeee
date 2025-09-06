@@ -156,6 +156,41 @@ const HeroSection = ({
         .slow-bounce {
           animation-duration: 3s;
         }
+        
+        .glow-text {
+          text-shadow: 
+            0 0 5px rgba(34, 211, 238, 0.5),
+            0 0 10px rgba(34, 211, 238, 0.4),
+            0 0 15px rgba(34, 211, 238, 0.3),
+            0 0 20px rgba(34, 211, 238, 0.2);
+          animation: glow-pulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow-pulse {
+          0% {
+            text-shadow: 
+              0 0 5px rgba(34, 211, 238, 0.5),
+              0 0 10px rgba(34, 211, 238, 0.4),
+              0 0 15px rgba(34, 211, 238, 0.3),
+              0 0 20px rgba(34, 211, 238, 0.2);
+          }
+          100% {
+            text-shadow: 
+              0 0 10px rgba(34, 211, 238, 0.8),
+              0 0 20px rgba(34, 211, 238, 0.6),
+              0 0 30px rgba(34, 211, 238, 0.4),
+              0 0 40px rgba(34, 211, 238, 0.3);
+          }
+        }
+        
+        @keyframes pulse-light {
+          0%, 100% { opacity: 0.9; }
+          50% { opacity: 1; }
+        }
+        
+        .animate-pulse-light {
+          animation: pulse-light 3s ease-in-out infinite;
+        }
       `}</style>
     </section>
   );
