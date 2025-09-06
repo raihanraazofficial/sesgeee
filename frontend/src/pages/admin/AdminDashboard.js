@@ -51,6 +51,7 @@ const AdminDashboard = () => {
     { name: 'Manage People', href: '/admin/people', icon: Users },
     { name: 'Publications', href: '/admin/publications', icon: FileText },
     { name: 'Projects', href: '/admin/projects', icon: FolderOpen },
+    { name: 'Achievements', href: '/admin/achievements', icon: Award },
     { name: 'News & Events', href: '/admin/news', icon: Calendar },
     { name: 'Settings', href: '/admin/settings', icon: Settings },
   ];
