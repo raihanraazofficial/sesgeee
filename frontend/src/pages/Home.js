@@ -16,7 +16,7 @@ const Home = () => {
     // Load data
     fetchData('news', { limit: 6 });
     fetchData('photoGallery');
-  }, []);
+  }, [fetchData]);
 
   useEffect(() => {
     if (news.length > 0) {
