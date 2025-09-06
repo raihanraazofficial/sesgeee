@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { db } from '../firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import axios from 'axios';
 
 const AuthContext = createContext();
 
@@ -45,19 +44,19 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     // Check for existing session on app load
     const userData = localStorage.getItem('admin_user');
-    const sessionToken = localStorage.getItem('admin_session');
+    const token = localStorage.getItem('token');
     
-    if (userData && sessionToken) {
+    if (userData && token) {
       try {
         const user = JSON.parse(userData);
         dispatch({
           type: 'LOGIN_SUCCESS',
-          payload: { user, token: sessionToken }
+          payload: { user, token }
         });
       } catch (error) {
         console.error('Error parsing stored user data:', error);
         localStorage.removeItem('admin_user');
-        localStorage.removeItem('admin_session');
+        localStorage.removeItem('token');
       }
     }
     
@@ -68,68 +67,27 @@ export function AuthProvider({ children }) {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       
-      // Check credentials in Firestore
-      const usersRef = collection(db, 'users');
-      const q = query(
-        usersRef, 
-        where('username', '==', credentials.username),
-        where('role', '==', 'admin')
-      );
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
       
-      const querySnapshot = await getDocs(q);
+      const response = await axios.post(`${backendUrl}/api/auth/login`, {
+        username: credentials.username,
+        password: credentials.password
+      });
       
-      if (querySnapshot.empty) {
-        // If no user found in Firestore, check hardcoded admin credentials
-        if (credentials.username === 'admin' && credentials.password === '@dminsesg705') {
-          const user = {
-            uid: 'hardcoded-admin',
-            username: 'admin',
-            email: 'admin@sesgrg.com',
-            role: 'admin'
-          };
-          
-          const sessionToken = `session-${Date.now()}`;
-          
-          // Store in localStorage
-          localStorage.setItem('admin_user', JSON.stringify(user));
-          localStorage.setItem('admin_session', sessionToken);
-          
-          dispatch({
-            type: 'LOGIN_SUCCESS',
-            payload: { user, token: sessionToken }
-          });
-          
-          return { success: true };
-        } else {
-          throw new Error('Invalid credentials');
-        }
-      }
-      
-      // If user found in Firestore, validate password
-      const userDoc = querySnapshot.docs[0];
-      const userData = userDoc.data();
-      
-      // Simple password check (in production, passwords should be hashed)
-      if (userData.password !== credentials.password) {
-        throw new Error('Invalid password');
-      }
+      const { access_token, user_role } = response.data;
       
       const user = {
-        uid: userDoc.id,
-        username: userData.username,
-        email: userData.email || `${userData.username}@sesgrg.com`,
-        role: userData.role
+        username: credentials.username,
+        role: user_role
       };
-      
-      const sessionToken = `session-${Date.now()}`;
       
       // Store in localStorage
       localStorage.setItem('admin_user', JSON.stringify(user));
-      localStorage.setItem('admin_session', sessionToken);
+      localStorage.setItem('token', access_token);
       
       dispatch({
         type: 'LOGIN_SUCCESS',
-        payload: { user, token: sessionToken }
+        payload: { user, token: access_token }
       });
       
       return { success: true };
@@ -137,12 +95,12 @@ export function AuthProvider({ children }) {
       dispatch({ type: 'SET_LOADING', payload: false });
       let errorMessage = 'Login failed';
       
-      if (error.message.includes('Invalid')) {
-        errorMessage = error.message;
-      } else if (error.code === 'permission-denied') {
-        errorMessage = 'Access denied. Please check your credentials.';
+      if (error.response?.status === 401) {
+        errorMessage = 'Invalid username or password';
+      } else if (error.response?.data?.detail) {
+        errorMessage = error.response.data.detail;
       } else {
-        errorMessage = 'Unable to connect to database. Please try again.';
+        errorMessage = 'Unable to connect to server. Please try again.';
       }
       
       return {
@@ -154,7 +112,7 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     localStorage.removeItem('admin_user');
-    localStorage.removeItem('admin_session');
+    localStorage.removeItem('token');
     dispatch({ type: 'LOGOUT' });
   };
 
