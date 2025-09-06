@@ -121,3 +121,5 @@ const PhotoGallery = () => {
     </div>
   );
 };
+
+export default PhotoGallery;
