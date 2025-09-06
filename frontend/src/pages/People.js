@@ -39,7 +39,28 @@ const People = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const currentData = filteredPeople;
+  const currentData = filteredPeople.length > 0 ? filteredPeople : [
+    // Sample data for testing layout when database is empty
+    {
+      id: 'sample-1',
+      name: 'Dr. Shameem Ahmad, PhD',
+      title: 'Associate Professor',
+      department: 'Department of EEE, BRAC University',
+      bio: 'Specialist in smart grids, microgrids, and AI-driven power system control with expertise in renewable energy and advanced power converters. His research focuses on developing innovative solutions for sustainable energy systems.',
+      research_interests: ['Smart Grid Technologies', 'Renewable Energy Integration', 'AI-driven Power Systems'],
+      image: 'https://raw.githubusercontent.com/raihanraazofficial/SESGRG_v2/refs/heads/main/imgdirectory/Shameem%20Ahmad.jpg',
+      email: 'shameem.ahmad@bracu.ac.bd',
+      social_links: {
+        google_scholar: '#',
+        researchgate: '#',
+        orcid: '#',
+        linkedin: '#',
+        github: '#',
+        ieee: '#'
+      },
+      website: '#'
+    }
+  ];
 
   return (
     <div className="min-h-screen">
