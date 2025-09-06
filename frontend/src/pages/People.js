@@ -88,7 +88,8 @@ const People = () => {
           linkedin: '#',
           github: '#',
           ieee: '#'
-        }
+        },
+        website: '#'
       }
     ],
     team_members: [],
