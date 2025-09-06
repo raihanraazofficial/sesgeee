@@ -5,8 +5,52 @@ import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const Achievements = () => {
+  const { achievements, fetchData, loading } = useData();
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [filteredAchievements, setFilteredAchievements] = useState([]);
+
+  useEffect(() => {
+    fetchData('achievements');
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (achievements.length > 0) {
+      let filtered = achievements;
+      if (activeCategory !== 'all') {
+        filtered = achievements.filter(achievement => achievement.category === activeCategory);
+      }
+      setFilteredAchievements(filtered);
+    }
+  }, [achievements, activeCategory]);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const getCategoryIcon = (category) => {
+    switch (category) {
+      case 'award':
+        return Award;
+      case 'funding':
+        return DollarSign;
+      case 'recognition':
+        return Users;
+      default:
+        return Award;
+    }
+  };
+
+  const getCategoryColor = (category) => {
+    switch (category) {
+      case 'award':
+        return 'text-yellow-400 bg-yellow-400/20';
+      case 'funding':
+        return 'text-green-400 bg-green-400/20';
+      case 'recognition':
+        return 'text-blue-400 bg-blue-400/20';
+      default:
+        return 'text-yellow-400 bg-yellow-400/20';
+    }
   };
 
   return (
