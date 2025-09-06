@@ -16,18 +16,8 @@ const HeroSection = ({
   
   return (
     <section className={`relative ${height} flex items-center justify-center overflow-hidden`}>
-      {/* Background with parallax effect */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105 transition-transform duration-1000 ease-out"
-        style={{
-          backgroundImage: `url(${backgroundImage || defaultBg})`
-        }}
-      />
-      
-      {/* Dark gradient overlay for better text contrast */}
-      {gradient && (
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/70 via-slate-800/60 to-teal-900/50" />
-      )}
+      {/* Solid Color Background - No Photo */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
       
       {/* Animated floating elements */}
       <div className="absolute inset-0 overflow-hidden">
