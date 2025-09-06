@@ -1,6 +1,8 @@
-import React from 'react';
-import { ArrowUp } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ArrowUp, Search, BookOpen, ExternalLink } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
+import { useData } from '../contexts/DataContext';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const Publications = () => {
   const scrollToTop = () => {
