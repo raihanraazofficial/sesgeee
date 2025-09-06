@@ -63,45 +63,103 @@ const Achievements = () => {
         height="h-96"
       />
 
-      {/* Coming Soon */}
-      <section className="py-20 bg-dark-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="glass rounded-xl p-12">
-            <h2 className="text-4xl font-bold font-heading text-white mb-6">
-              Achievements Portal
-            </h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-              Our achievements showcase is currently under development. 
-              This will feature awards, recognitions, milestones, and significant contributions 
-              to the research community.
-            </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              <div className="bg-dark-700 rounded-lg p-6">
-                <h3 className="text-white font-semibold mb-2">Research Awards</h3>
-                <p className="text-gray-400 text-sm">Recognition for outstanding research contributions</p>
-              </div>
-              <div className="bg-dark-700 rounded-lg p-6">
-                <h3 className="text-white font-semibold mb-2">Grant Success</h3>
-                <p className="text-gray-400 text-sm">Successful funding acquisitions</p>
-              </div>
-              <div className="bg-dark-700 rounded-lg p-6">
-                <h3 className="text-white font-semibold mb-2">Community Impact</h3>
-                <p className="text-gray-400 text-sm">Contributions to society and industry</p>
-              </div>
+      {/* Filter Tabs */}
+      <section className="py-12 bg-dark-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
+            <div className="flex bg-dark-700 rounded-lg p-2">
+              {[
+                { id: 'all', name: 'All Achievements' },
+                { id: 'award', name: 'Awards' },
+                { id: 'funding', name: 'Funding' },
+                { id: 'recognition', name: 'Recognition' }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveCategory(tab.id)}
+                  className={`px-4 py-3 rounded-md font-medium transition-all text-sm ${
+                    activeCategory === tab.id
+                      ? 'bg-primary-600 text-white'
+                      : 'text-gray-300 hover:text-white hover:bg-dark-600'
+                  }`}
+                >
+                  {tab.name}
+                </button>
+              ))}
             </div>
-
-            <p className="text-gray-400 mb-8">
-              Stay tuned as we prepare to showcase our significant achievements and milestones.
-            </p>
-
-            <button className="btn-primary">
-              View Research Impact
-            </button>
           </div>
+        </div>
+      </section>
+
+      {/* Achievements Section */}
+      <section className="py-20 bg-dark-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {loading.achievements ? (
+            <LoadingSpinner text="Loading achievements..." />
+          ) : (
+            <>
+              {filteredAchievements.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {filteredAchievements.map((achievement) => {
+                    const CategoryIcon = getCategoryIcon(achievement.category);
+                    return (
+                      <div key={achievement.id} className="glass rounded-xl p-6 card-hover">
+                        <div className="flex items-start space-x-4">
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center ${getCategoryColor(achievement.category)}`}>
+                            <CategoryIcon className="h-6 w-6" />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-lg font-semibold text-white mb-2">{achievement.name}</h3>
+                            <p className="text-gray-300 text-sm mb-3 leading-relaxed">
+                              {achievement.description}
+                            </p>
+                            <div className="flex items-center space-x-4 text-sm text-gray-400">
+                              <div className="flex items-center space-x-1">
+                                <Calendar className="h-4 w-4" />
+                                <span>{achievement.year}</span>
+                              </div>
+                              <span className={`px-2 py-1 rounded text-xs capitalize ${getCategoryColor(achievement.category)}`}>
+                                {achievement.category}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="text-center py-16">
+                  <Award className="h-16 w-16 text-gray-400 mx-auto mb-6" />
+                  <h3 className="text-2xl font-semibold text-white mb-4">
+                    No Achievements Found
+                  </h3>
+                  <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+                    {activeCategory === 'all' 
+                      ? 'Our achievements database is being updated. Stay tuned as we prepare to showcase our significant achievements and milestones.'
+                      : `No ${activeCategory} achievements available at the moment. Try switching to a different category.`
+                    }
+                  </p>
+                  <div className="space-x-4">
+                    {activeCategory !== 'all' && (
+                      <button 
+                        onClick={() => setActiveCategory('all')}
+                        className="btn-secondary"
+                      >
+                        View All Achievements
+                      </button>
+                    )}
+                    <button className="btn-primary">
+                      View Research Impact
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
 
           {/* Back to Top */}
-          <div className="mt-12">
+          <div className="mt-12 text-center">
             <button
               onClick={scrollToTop}
               className="flex items-center space-x-2 text-gray-300 hover:text-primary-400 transition-colors mx-auto"
