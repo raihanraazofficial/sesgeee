@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Plus, Edit, Trash2, Save, X, Search, Filter } from 'lucide-react';
+import { ArrowLeft, Plus, Edit, Trash2, Save, X, Search } from 'lucide-react';
 import { useData } from '../../contexts/DataContext';
 import { toast } from 'react-toastify';
 
