@@ -29,25 +29,33 @@ const HeroSection = ({
       
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="animate-hero-fade-in">
+        <div className={enableAnimations ? "animate-hero-fade-in" : ""}>
           {subtitle && (
-            <p className="text-cyan-400 font-semibold text-lg mb-4 tracking-wide uppercase animate-slide-up">
+            <p className={`text-cyan-400 font-semibold text-lg mb-4 tracking-wide uppercase ${enableAnimations ? 'animate-slide-up' : ''}`}>
               {subtitle}
             </p>
           )}
           
-          <h1 className="hero-title text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold font-heading mb-3 leading-tight animate-scale-in">
-            <span className="bg-gradient-to-r from-white via-gray-100 to-cyan-200 bg-clip-text text-transparent drop-shadow-lg">
-              Sustainable Energy &
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-400 bg-clip-text text-transparent animate-gradient-x glow-text">
-              Smart Grid Research
-            </span>
+          <h1 className={`hero-title text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold font-heading mb-3 leading-tight ${enableAnimations ? 'animate-scale-in' : ''}`}>
+            {enableAnimations ? (
+              <>
+                <span className="bg-gradient-to-r from-white via-gray-100 to-cyan-200 bg-clip-text text-transparent drop-shadow-lg">
+                  Sustainable Energy &
+                </span>
+                <br />
+                <span className="bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-400 bg-clip-text text-transparent animate-gradient-x glow-text">
+                  Smart Grid Research
+                </span>
+              </>
+            ) : (
+              <span className="bg-gradient-to-r from-white via-gray-100 to-cyan-200 bg-clip-text text-transparent drop-shadow-lg">
+                {title}
+              </span>
+            )}
           </h1>
           
           {description && (
-            <p className="hero-subtitle text-lg md:text-xl text-gray-200 mb-2 max-w-3xl mx-auto leading-relaxed animate-fade-up delay-300 animate-pulse-light">
+            <p className={`hero-subtitle text-lg md:text-xl text-gray-200 mb-2 max-w-3xl mx-auto leading-relaxed ${enableAnimations ? 'animate-fade-up delay-300 animate-pulse-light' : ''}`}>
               {description}
             </p>
           )}
