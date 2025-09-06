@@ -165,15 +165,9 @@ const Home = () => {
         title="Sustainable Energy & Smart Grid Research"
         description="Pioneering Research in Clean Energy, Renewable Integration, and Next-Generation Smart Grid Systems."
         backgroundImage="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwxfHxzbWFydCUyMGdyaWR8ZW58MHx8fHwxNzU2NTM1MTU3fDA&ixlib=rb-4.1.0&q=85"
-        showScrollIndicator={true}
-        onScrollClick={scrollToSection}
-        buttons={[
-          {
-            text: "Explore Research",
-            onClick: () => document.getElementById('research')?.scrollIntoView({ behavior: 'smooth' }),
-            icon: ArrowRight
-          }
-        ]}
+        height="h-[80vh]"
+        showScrollIndicator={false}
+        buttons={[]}
       />
 
       {/* About Us Section */}
