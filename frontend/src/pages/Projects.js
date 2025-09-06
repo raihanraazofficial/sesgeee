@@ -5,8 +5,48 @@ import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const Projects = () => {
+  const { projects, fetchData, loading } = useData();
+  const [activeTab, setActiveTab] = useState('all');
+  const [filteredProjects, setFilteredProjects] = useState([]);
+
+  useEffect(() => {
+    fetchData('projects');
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (projects.length > 0) {
+      let filtered = projects;
+      if (activeTab !== 'all') {
+        filtered = projects.filter(project => project.status === activeTab);
+      }
+      setFilteredProjects(filtered);
+    }
+  }, [projects, activeTab]);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'completed':
+        return CheckCircle;
+      case 'ongoing':
+        return Clock;
+      default:
+        return FolderOpen;
+    }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'completed':
+        return 'text-green-400 bg-green-400/20';
+      case 'ongoing':
+        return 'text-yellow-400 bg-yellow-400/20';
+      default:
+        return 'text-blue-400 bg-blue-400/20';
+    }
   };
 
   return (
