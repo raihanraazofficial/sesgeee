@@ -276,26 +276,26 @@ const Projects = () => {
                   {filteredProjects.map((project) => {
                     const StatusIcon = getStatusIcon(project.status);
                     return (
-                      <div key={project.id} className="bg-white rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
+                      <div key={project.id} className="group bg-white rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                         {/* Project Image */}
-                        <div className="relative h-48 rounded-t-xl overflow-hidden">
+                        <div className="relative h-48 overflow-hidden">
                           <img
                             src={project.image || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxyZXNlYXJjaCUyMHByb2plY3RzfGVufDB8fHx8MTc1NjY1NDE0OXww&ixlib=rb-4.1.0&q=85"}
                             alt={project.name || 'Project image'}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                           <div className="absolute top-4 right-4">
                             <span className={`flex items-center space-x-1 px-3 py-1 rounded-full text-sm border backdrop-blur-sm ${getStatusColor(project.status)}`}>
                               <StatusIcon className="h-4 w-4" />
-                              <span className="capitalize">{project.status}</span>
+                              <span className="capitalize font-medium">{project.status}</span>
                             </span>
                           </div>
                           {!project.image && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
                               <div className="text-center text-gray-500">
-                                <FolderOpen className="h-12 w-12 mx-auto mb-2" />
-                                <p className="text-sm">No Image Available</p>
+                                <FolderOpen className="h-12 w-12 mx-auto mb-2 text-gray-400" />
+                                <p className="text-sm font-medium">Research Project</p>
                               </div>
                             </div>
                           )}
@@ -303,42 +303,42 @@ const Projects = () => {
 
                         <div className="p-6">
                           {/* Project Title */}
-                          <h3 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
+                          <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-primary-600 transition-colors">
                             {project.name || 'Untitled Project'}
                           </h3>
                           
                           {/* Short Description */}
                           <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3">
-                            {project.description || 'No description available'}
+                            {project.description || 'No description available for this research project.'}
                           </p>
                           
-                          {/* Duration */}
-                          <div className="flex items-center space-x-2 text-sm text-gray-600 mb-3">
-                            <Calendar className="h-4 w-4 text-primary-500" />
-                            <span>
-                              {formatDate(project.start_date)} - {formatDate(project.end_date)}
-                            </span>
+                          {/* Project Meta Information */}
+                          <div className="space-y-3 mb-4">
+                            {/* Duration */}
+                            <div className="flex items-center space-x-2 text-sm text-gray-600">
+                              <Calendar className="h-4 w-4 text-primary-500 flex-shrink-0" />
+                              <span className="font-medium">Duration:</span>
+                              <span>{formatDate(project.start_date)} - {formatDate(project.end_date)}</span>
+                            </div>
+                            
+                            {/* Team Leader */}
+                            {project.team_leader && (
+                              <div className="flex items-center space-x-2 text-sm text-gray-600">
+                                <Users className="h-4 w-4 text-primary-500 flex-shrink-0" />
+                                <span className="font-medium">Team Leader:</span>
+                                <span>{project.team_leader}</span>
+                              </div>
+                            )}
+                            
+                            {/* Research Area */}
+                            {project.research_area && (
+                              <div className="flex items-center space-x-2 text-sm text-gray-600">
+                                <Building className="h-4 w-4 text-primary-500 flex-shrink-0" />
+                                <span className="font-medium">Research Area:</span>
+                                <span>{project.research_area}</span>
+                              </div>
+                            )}
                           </div>
-                          
-                          {/* Team Leader */}
-                          {project.team_leader && (
-                            <div className="mb-2">
-                              <span className="text-sm font-medium text-gray-700">Team Leader: </span>
-                              <span className="text-sm text-gray-600">
-                                {project.team_leader}
-                              </span>
-                            </div>
-                          )}
-                          
-                          {/* Team Members */}
-                          {project.team_members && (
-                            <div className="mb-4">
-                              <span className="text-sm font-medium text-gray-700">Team Members: </span>
-                              <p className="text-sm text-gray-600 line-clamp-2">
-                                {formatTeamMembers(project.team_members)}
-                              </p>
-                            </div>
-                          )}
                           
                           {/* Divider */}
                           <hr className="border-gray-200 my-4" />
@@ -347,18 +347,15 @@ const Projects = () => {
                           <div className="flex items-center justify-between">
                             <div className="flex flex-col space-y-1">
                               {project.funded_by && (
-                                <div className="flex items-center space-x-2 text-sm text-gray-600">
-                                  <Building className="h-4 w-4 text-primary-500" />
-                                  <span className="text-xs">
-                                    <span className="font-medium">Funded By:</span> {project.funded_by}
-                                  </span>
+                                <div className="text-xs text-gray-500">
+                                  <span className="font-medium">Funded by:</span> {project.funded_by}
                                 </div>
                               )}
                             </div>
-                            <div className="flex items-center space-x-1 text-sm text-gray-600">
+                            <div className="flex items-center space-x-1 text-sm">
                               <Users className="h-4 w-4 text-primary-500" />
-                              <span className="text-xs">
-                                {project.total_members || project.team_members?.length || 'N/A'} {(project.total_members === 1 || project.team_members?.length === 1) ? 'Member' : 'Members'}
+                              <span className="text-xs text-gray-600 font-medium">
+                                {project.total_members || project.team_members?.length || 0} Members
                               </span>
                             </div>
                           </div>
@@ -370,7 +367,7 @@ const Projects = () => {
                                 href={project.project_link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="btn-primary w-full flex items-center justify-center space-x-2"
+                                className="btn-primary w-full flex items-center justify-center space-x-2 group-hover:bg-primary-700 transition-colors"
                               >
                                 <span>View Project Details</span>
                                 <ExternalLink className="h-4 w-4" />
