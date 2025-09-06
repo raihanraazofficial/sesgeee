@@ -12,6 +12,60 @@ The user encountered two main issues:
    - News and events option exists but can't add/edit/delete
    - Existing data in Firestore not initialized/showing
 
+# SESGRG Website - Admin Panel CRUD Functionality Implementation & ESLint Fix
+
+## Problem Statement Summary
+The user encountered two main issues:
+1. **Vercel deployment errors**: ESLint errors preventing successful builds:
+   - Missing dependency 'fetchDashboardData' in AdminDashboard.js useEffect
+   - Unused imports 'Save' and 'Trash2' in AdminSettings.js
+
+2. **Admin Panel Functionality Issues**:
+   - No achievements option for add/edit/delete data
+   - Existing data not showing from Firestore database  
+   - News and events option exists but can't add/edit/delete
+   - Existing data in Firestore not initialized/showing
+
+## Recent Fixes Applied (January 7, 2025)
+
+### User Request: UI Modifications
+User requested two specific changes:
+1. **Home page research area section**: Remove "Learn More" buttons, keep them only on research area page
+2. **People page database issue**: Fix the issue where Shameem Ahmad's card shows in all 3 categories (advisor, team member, collaborator) when database is empty, instead should show "no member" message
+
+### Fixes Applied:
+
+#### 1. Removed "Learn More" Buttons from Home Page Research Areas
+- **File**: `/app/frontend/src/pages/Home.js`
+- **Issue**: "Learn More" buttons were appearing in both home page research section and research areas page
+- **Fix**: 
+  - Removed "Learn More" link buttons from research area cards in home page (lines 310-316)
+  - Removed "Learn More" link button from the 7th research area card (lines 336-342)
+  - Kept "Learn More" buttons only on the dedicated research areas page (`/research`)
+- **Result**: Home page now shows research areas without individual "Learn More" buttons, maintaining clean UI while research areas page retains full functionality
+
+#### 2. Fixed People Page Database Fallback Issue
+- **File**: `/app/frontend/src/pages/People.js`
+- **Issue**: When Firestore database was empty, the page was showing Shameem Ahmad's card in all categories instead of showing "no member" message
+- **Root Cause**: Mock data fallback was always providing sample data regardless of database state
+- **Fix**: 
+  - Removed the hardcoded sample data fallback that always showed Shameem Ahmad's card (lines 42-63)
+  - Changed `const currentData = filteredPeople.length > 0 ? filteredPeople : [sample data]` to `const currentData = filteredPeople`
+  - Now when database is empty, the existing "No Members Found in this Category" message will display properly
+- **Result**: People page now correctly shows "no member" message when database is empty instead of showing mock data
+
+### Technical Details:
+- **Services Status**: ✅ Frontend and Backend services restarted successfully
+- **Database Integration**: ✅ Firestore integration maintained with proper fallback handling
+- **UI Consistency**: ✅ Maintained existing design and functionality while fixing specific issues
+- **No Breaking Changes**: ✅ All other functionality remains intact
+
+### Testing Status:
+- ✅ **Home Page**: Research areas display without "Learn More" buttons
+- ✅ **Research Areas Page**: "Learn More" buttons still functional for detailed view
+- ✅ **People Page**: Shows proper "no member" message when database is empty
+- ✅ **Database Integration**: Firestore data loading working correctly when data is present
+
 ## Fixes Applied
 
 ### Phase 1: ESLint Errors Fixed (Critical for Deployment)
