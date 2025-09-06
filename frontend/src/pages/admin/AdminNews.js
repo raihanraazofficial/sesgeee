@@ -34,8 +34,8 @@ const AdminNews = () => {
   ];
 
   const filteredNews = news.filter(item => {
-    const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = (item.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (item.excerpt || '').toLowerCase().includes(searchTerm.toLowerCase());
     
     let matchesFilter = true;
     if (selectedFilter === 'featured') {
