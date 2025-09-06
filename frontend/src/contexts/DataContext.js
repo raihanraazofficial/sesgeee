@@ -27,6 +27,22 @@ const initialState = {
   error: null,
 };
 
+// Mock data fallback
+const getMockData = (type) => {
+  const mock = {
+    people: [{ id: 1, name: 'John Doe' }],
+    publications: [{ id: 1, title: 'Sample Publication' }],
+    projects: [{ id: 1, name: 'Demo Project' }],
+    achievements: [{ id: 1, name: 'Achievement' }],
+    news: [{ id: 1, title: 'News Item' }],
+    events: [{ id: 1, title: 'Event' }],
+    researchAreas: [{ id: 1, name: 'Research Area' }],
+    photoGallery: [{ id: 1, url: '/placeholder.png' }],
+    settings: {},
+  };
+  return mock[type] || [];
+};
+
 function dataReducer(state, action) {
   switch (action.type) {
     case 'SET_LOADING':
@@ -82,48 +98,45 @@ export function DataProvider({ children }) {
   const fetchData = async (type, params = {}) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: { type, loading: true } });
-      
+
       let endpoint = `/api/${type.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
       if (type === 'researchAreas') endpoint = '/api/research-areas';
       if (type === 'photoGallery') endpoint = '/api/photo-gallery';
-      
-      // Use environment variable or fallback to relative URL for production
+
       const baseURL = process.env.REACT_APP_BACKEND_URL || '/api';
       const fullURL = baseURL.startsWith('http') ? `${baseURL}${endpoint}` : endpoint;
-      
+
       try {
         const response = await axios.get(fullURL, { params });
-        
+
         dispatch({
           type: 'SET_DATA',
           payload: { type, data: response.data },
         });
-        
+
         return response.data;
       } catch (apiError) {
         console.warn(`API call failed for ${type}, using mock data:`, apiError.message);
-        
-        // Fallback to mock data when API is not available
+
         const mockData = getMockData(type);
-        
+
         dispatch({
           type: 'SET_DATA',
           payload: { type, data: mockData },
         });
-        
+
         return mockData;
       }
     } catch (error) {
       console.error(`Error fetching ${type}:`, error);
-      
-      // Always fallback to mock data on any error
+
       const mockData = getMockData(type);
-      
+
       dispatch({
         type: 'SET_DATA',
         payload: { type, data: mockData },
       });
-      
+
       dispatch({ type: 'SET_LOADING', payload: { type, loading: false } });
       return mockData;
     }
@@ -132,14 +145,14 @@ export function DataProvider({ children }) {
   const createItem = async (type, data) => {
     try {
       let endpoint = `/api/${type.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
-      
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}${endpoint}`, data);
-      
+
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL || ''}${endpoint}`, data);
+
       dispatch({
         type: 'ADD_ITEM',
         payload: { type, item: response.data },
       });
-      
+
       return response.data;
     } catch (error) {
       console.error(`Error creating ${type}:`, error);
@@ -150,14 +163,14 @@ export function DataProvider({ children }) {
   const updateItem = async (type, id, data) => {
     try {
       let endpoint = `/api/${type.replace(/([A-Z])/g, '-$1').toLowerCase()}/${id}`;
-      
-      const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}${endpoint}`, data);
-      
+
+      const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL || ''}${endpoint}`, data);
+
       dispatch({
         type: 'UPDATE_ITEM',
         payload: { type, item: response.data },
       });
-      
+
       return response.data;
     } catch (error) {
       console.error(`Error updating ${type}:`, error);
@@ -168,9 +181,9 @@ export function DataProvider({ children }) {
   const deleteItem = async (type, id) => {
     try {
       let endpoint = `/api/${type.replace(/([A-Z])/g, '-$1').toLowerCase()}/${id}`;
-      
-      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}${endpoint}`);
-      
+
+      await axios.delete(`${process.env.REACT_APP_BACKEND_URL || ''}${endpoint}`);
+
       dispatch({
         type: 'DELETE_ITEM',
         payload: { type, id },
@@ -205,11 +218,7 @@ export function DataProvider({ children }) {
     deleteItem,
   };
 
-  return (
-    <DataContext.Provider value={value}>
-      {children}
-    </DataContext.Provider>
-  );
+  return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 }
 
 export function useData() {
