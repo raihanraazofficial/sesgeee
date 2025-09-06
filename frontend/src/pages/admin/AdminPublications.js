@@ -110,9 +110,26 @@ const AdminPublications = () => {
   const handleEdit = (publication) => {
     setEditingPublication(publication);
     setFormData({
-      ...publication,
+      title: publication.title || '',
       authors: publication.authors || [],
-      keywords: publication.keywords || []
+      publication_type: publication.publication_type || 'journal',
+      journal_name: publication.journal_name || '',
+      conference_name: publication.conference_name || '',
+      book_title: publication.book_title || '',
+      volume: publication.volume || '',
+      issue: publication.issue || '',
+      pages: publication.pages || '',
+      year: publication.year || new Date().getFullYear(),
+      month: publication.month || '',
+      location: publication.location || '',
+      editor: publication.editor || [],
+      publisher: publication.publisher || '',
+      edition: publication.edition || '',
+      keywords: publication.keywords || [],
+      link: publication.link || '',
+      is_open_access: publication.is_open_access || false,
+      citations: publication.citations || 0,
+      research_areas: publication.research_areas || []
     });
     setShowModal(true);
   };
