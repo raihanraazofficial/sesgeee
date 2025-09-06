@@ -317,8 +317,8 @@ const Home = () => {
                 </div>
               ))}
               
-              {/* Center the last research area if it's the 7th one */}
-              {researchAreas.length === 7 && (
+              {/* Center the 7th research area */}
+              {researchAreas.length >= 7 && (
                 <div className="md:col-span-2 lg:col-span-3 flex justify-center">
                   <div className="research-card max-w-md">
                     <div className="relative h-48">
