@@ -155,7 +155,9 @@ const Footer = () => {
               
               {/* YouTube */}
               <a 
-                href="#" 
+                href="https://youtube.com/@bracuniversity" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-700 hover:bg-red-600 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg group"
                 title="YouTube"
               >
