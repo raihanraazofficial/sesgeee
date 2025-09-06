@@ -28,8 +28,8 @@ const Navbar = () => {
     { name: 'Projects', path: '/projects' },
     { name: 'Achievements', path: '/achievements' },
     { name: 'News & Events', path: '/news' },
-    { name: 'Gallery', path: '/gallery' },
     { name: 'Contact', path: '/contact' },
+    { name: 'Admin Login', path: '/admin/login' },
   ];
 
   return (
