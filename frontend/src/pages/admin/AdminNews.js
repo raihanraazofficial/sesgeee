@@ -845,9 +845,11 @@ const AdminNews = () => {
 
                 <div className="border border-gray-300 rounded-lg bg-white" style={{ minHeight: '500px' }}>
                   <ReactQuill
+                    key={editorKey} // Force re-render when key changes
                     ref={quillRef}
                     value={formData.content}
-                    onChange={(content) => setFormData(prev => ({ ...prev, content }))}
+                    onChange={handleEditorChange}
+                    onReady={handleEditorReady}
                     modules={quillModules}
                     formats={quillFormats}
                     placeholder="Start writing your amazing content... Use the toolbar above or keyboard shortcuts for formatting!"
