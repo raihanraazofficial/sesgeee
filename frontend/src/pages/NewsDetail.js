@@ -1,7 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowUp } from 'lucide-react';
-import HeroSection from '../components/HeroSection';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { ArrowLeft, ArrowUp, Calendar, User, Tag, Share2, Printer, Download, Copy, Eye } from 'lucide-react';
+import { useData } from '../contexts/DataContext';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { toast } from 'react-toastify';
 
 const NewsDetail = () => {
   const scrollToTop = () => {
