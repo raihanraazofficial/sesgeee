@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
@@ -15,7 +15,6 @@ import {
   Mail,
   Copy,
   CheckCircle,
-  FileText,
   BookOpen,
   Eye
 } from 'lucide-react';
