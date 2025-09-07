@@ -388,18 +388,26 @@ const Home = () => {
                               </div>
                     </div>
                     <div className="p-6">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${
+                          featuredNews[0].category === 'news' ? 'text-blue-800 bg-blue-100 border-blue-200' :
+                          featuredNews[0].category === 'events' ? 'text-green-800 bg-green-100 border-green-200' :
+                          featuredNews[0].category === 'upcoming_events' ? 'text-purple-800 bg-purple-100 border-purple-200' :
+                          'text-gray-800 bg-gray-100 border-gray-200'
+                        }`}>
+                          {featuredNews[0].category === 'upcoming_events' ? 'Upcoming Events' : 
+                           featuredNews[0].category?.charAt(0).toUpperCase() + featuredNews[0].category?.slice(1) || 'News'}
+                        </span>
+                        <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                          Featured
+                        </span>
+                      </div>
                       <h3 className="text-2xl font-semibold text-gray-900 mb-3">{featuredNews[0].title}</h3>
                       <p className="text-gray-600 mb-4 line-clamp-3">{featuredNews[0].excerpt}</p>
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-gray-500">
                           {new Date(featuredNews[0].published_date).toLocaleDateString()}
                         </span>
-                        <Link
-                          to={`/news/${featuredNews[0].id}`}
-                          className="text-primary-600 hover:text-primary-700 font-medium"
-                        >
-                          Read More
-                        </Link>
                       </div>
                     </div>
                   </div>
