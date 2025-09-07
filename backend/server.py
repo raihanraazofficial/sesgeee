@@ -438,9 +438,14 @@ class NewsCreate(BaseModel):
     excerpt: str
     author: str
     published_date: datetime
+    category: str = "news"  # news, events, upcoming_events
     is_featured: bool = False
     image: Optional[str] = None
+    image_alt: Optional[str] = None
     tags: List[str] = []
+    seo_keywords: Optional[str] = None
+    status: str = "published"  # published, draft
+    google_calendar_link: Optional[str] = None
 
 class EventCreate(BaseModel):
     title: str
