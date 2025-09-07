@@ -568,36 +568,97 @@ const AdminNews = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Rich Content *
                   <span className="text-xs text-gray-500 ml-2">
-                    (Supports formatting, images, videos, math formulas, tables, PDF embedding)
+                    (Professional WordPress-style editor with all formatting options)
                   </span>
                 </label>
-                <div className="border border-gray-300 rounded-md relative">
+                <div className="border border-gray-300 rounded-md relative bg-white">
                   <ReactQuill
                     value={formData.content}
                     onChange={(content) => setFormData(prev => ({ ...prev, content }))}
                     modules={quillModules}
                     formats={quillFormats}
-                    placeholder="Write your content using the rich text editor..."
-                    style={{ height: '300px', marginBottom: '50px' }}
+                    placeholder="Write your content using the rich text editor. Use toolbar buttons or keyboard shortcuts..."
+                    style={{ minHeight: '400px' }}
+                    theme="snow"
                   />
                   <style dangerouslySetInnerHTML={{
                     __html: `
+                      .ql-toolbar {
+                        border-bottom: 1px solid #e5e7eb !important;
+                        padding: 12px !important;
+                        background-color: #f9fafb;
+                      }
+                      .ql-container {
+                        border: none !important;
+                        font-size: 14px;
+                        min-height: 300px;
+                      }
+                      .ql-editor {
+                        min-height: 300px !important;
+                        padding: 16px !important;
+                        line-height: 1.6;
+                      }
+                      .ql-editor.ql-blank::before {
+                        font-style: italic;
+                        color: #9ca3af;
+                      }
                       .ql-toolbar .ql-insertTable:before {
                         content: '⊞';
                         font-size: 18px;
+                        font-weight: bold;
                       }
                       .ql-toolbar .ql-insertPDF:before {
                         content: '📄';
                         font-size: 16px;
                       }
+                      .ql-toolbar button {
+                        padding: 6px !important;
+                        margin: 2px !important;
+                        border-radius: 4px !important;
+                      }
+                      .ql-toolbar button:hover {
+                        background-color: #e5e7eb !important;
+                      }
+                      .ql-toolbar button.ql-active {
+                        background-color: #3b82f6 !important;
+                        color: white !important;
+                      }
+                      .ql-formats {
+                        margin-right: 15px !important;
+                      }
+                      .ql-picker-options {
+                        background-color: white;
+                        border: 1px solid #d1d5db;
+                        border-radius: 6px;
+                        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                      }
                     `
                   }} />
                 </div>
-                <div className="mt-2 text-xs text-gray-500 space-y-1">
-                  <p><strong>Shortcuts:</strong> Ctrl+B (Bold), Ctrl+I (Italic), Ctrl+Shift+L (LaTeX)</p>
-                  <p><strong>Tables:</strong> Click table button to insert, then edit content</p>
-                  <p><strong>PDF:</strong> Click PDF button and enter URL to embed</p>
-                  <p><strong>LaTeX:</strong> Use formula button or Ctrl+Shift+L for math equations</p>
+                <div className="mt-3 text-xs text-gray-600 space-y-2 bg-blue-50 p-3 rounded-lg border border-blue-200">
+                  <div className="font-semibold text-blue-800 mb-2">💡 Rich Editor Features & Shortcuts:</div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <div>
+                      <strong>📝 Text Formatting:</strong>
+                      <ul className="ml-4 list-disc">
+                        <li>Ctrl+B (Bold), Ctrl+I (Italic), Ctrl+U (Underline)</li>
+                        <li>Headers (H1-H6), Font sizes, Colors</li>
+                        <li>Lists (ordered/bullet), Quotes, Code blocks</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <strong>🔧 Advanced Tools:</strong>
+                      <ul className="ml-4 list-disc">
+                        <li>📄 PDF Embedding (click PDF button)</li>
+                        <li>⊞ Tables (click table button)</li>
+                        <li>🧮 LaTeX Math (Ctrl+Shift+L)</li>
+                        <li>🔗 Links, Images, Videos</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="mt-2 p-2 bg-yellow-100 rounded border-yellow-300 border">
+                    <strong>💡 Pro Tips:</strong> Click table/PDF buttons in toolbar, use Ctrl+Shift+L for math formulas, drag to select text for quick formatting
+                  </div>
                 </div>
               </div>
 
