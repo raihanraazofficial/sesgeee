@@ -306,6 +306,19 @@ const News = () => {
             <Calendar className="mx-auto h-16 w-16 text-gray-400" />
             <h3 className="mt-4 text-xl font-medium text-gray-900">No news or events found</h3>
             <p className="mt-2 text-gray-600">Try adjusting your search terms or filters.</p>
+            
+            {/* Debug button for testing Firebase connection */}
+            <div className="mt-6">
+              <button
+                onClick={debugFirebase}
+                className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors"
+              >
+                🔧 Debug Firebase Connection
+              </button>
+              <p className="mt-2 text-sm text-gray-500">
+                Click to test Firebase connection and add sample data if needed
+              </p>
+            </div>
           </div>
         ) : (
           <div className="space-y-12">
