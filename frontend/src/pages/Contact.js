@@ -55,7 +55,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Address',
-      details: 'BRAC University, 66 Mohakhali, Dhaka 1212, Bangladesh',
+      details: 'BRAC University, Kha 224 Bir Uttam Rafiqul Islam Ave, Merul Badda, Dhaka-1212, Bangladesh',
       link: 'https://www.google.com/maps/place/BRAC+University/@23.773206,90.42482,17z/data=!4m6!3m5!1s0x3755c7715a40c603:0xec01cd75f33139f5!8m2!3d23.773206!4d90.4248203!16s%2Fg%2F120vm_vk?hl=en-US&entry=ttu&g_ep=EgoyMDI1MDkwMy4wIKXMDSoASAFQAw%3D%3D'
     }
   ];
