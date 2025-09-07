@@ -313,6 +313,9 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Latest News & Events Section */}
+      <LatestNewsSection />
+
       {/* Photo Gallery Section */}
       <section className="py-20 bg-gray-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
