@@ -139,11 +139,11 @@ const News = () => {
                     <button
                       key={category.value}
                       onClick={() => setSelectedCategory(category.value)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${
                         selectedCategory === category.value 
-                          ? category.color.replace('hover:', '') 
+                          ? category.color.replace('hover:', '').replace('bg-', 'bg-') + ' ring-2 ring-offset-2 ring-primary-500'
                           : category.color
-                      } ${selectedCategory === category.value ? 'ring-2 ring-offset-2 ring-primary-500' : ''}`}
+                      }`}
                     >
                       {category.label}
                     </button>
