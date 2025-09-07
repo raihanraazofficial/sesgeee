@@ -362,45 +362,7 @@ const ProfessionalContentRenderer = ({ content, className = "" }) => {
 
 
 
-  const processTables = () => {
-    const tables = contentRef.current.querySelectorAll('table');
-    tables.forEach(table => {
-      if (table.closest('.processed-table')) return;
-      
-      // Create wrapper
-      const wrapper = document.createElement('div');
-      wrapper.className = 'professional-table-wrapper';
-      
-      const tableContainer = document.createElement('div');
-      tableContainer.className = 'table-container';
-      
-      // Apply professional styling
-      table.className = 'professional-table';
-      
-      // Ensure proper header styling
-      const thead = table.querySelector('thead');
-      if (thead) {
-        thead.className = 'table-header';
-      }
-      
-      const tbody = table.querySelector('tbody');
-      if (tbody) {
-        tbody.className = 'table-body';
-      }
-      
-      // Style cells
-      const cells = table.querySelectorAll('td, th');
-      cells.forEach(cell => {
-        cell.className = cell.tagName === 'TH' ? 'table-header-cell' : 'table-data-cell';
-      });
-      
-      tableContainer.appendChild(table.cloneNode(true));
-      wrapper.appendChild(tableContainer);
-      
-      table.parentNode.replaceChild(wrapper, table);
-      wrapper.classList.add('processed-table');
-    });
-  };
+
 
   const processImages = () => {
     const images = contentRef.current.querySelectorAll('img');
