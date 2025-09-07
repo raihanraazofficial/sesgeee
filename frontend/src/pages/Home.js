@@ -1,9 +1,224 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Clock, ArrowRight } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
+
+// Latest News & Events Component
+const LatestNewsSection = () => {
+  const { fetchData } = useData();
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadLatestNews();
+  }, []);
+
+  const loadLatestNews = async () => {
+    try {
+      setLoading(true);
+      const newsData = await fetchData('news', { 
+        status: 'published',
+        sort_by: 'published_date',
+        sort_order: 'desc',
+        limit: 6
+      });
+      setNews(newsData || []);
+    } catch (error) {
+      console.error('Error loading latest news:', error);
+      setNews([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getCategoryBadge = (category) => {
+    const categoryStyles = {
+      news: 'bg-blue-100 text-blue-800 border-blue-300',
+      events: 'bg-green-100 text-green-800 border-green-300',
+      upcoming_events: 'bg-purple-100 text-purple-800 border-purple-300'
+    };
+    
+    const categoryNames = {
+      news: 'News',
+      events: 'Events',
+      upcoming_events: 'Upcoming Events'
+    };
+    
+    return (
+      <span className={`px-2 py-1 rounded-full text-xs font-medium border ${categoryStyles[category] || categoryStyles.news}`}>
+        {categoryNames[category] || 'News'}
+      </span>
+    );
+  };
+
+  const createSlug = (title, id) => {
+    const slug = title?.toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'untitled';
+    return `${slug}-${id}`;
+  };
+
+  const getNewsUrl = (item) => {
+    const slug = createSlug(item.title, item.id);
+    
+    switch (item.category) {
+      case 'events':
+        return `/events/${slug}`;
+      case 'upcoming_events':
+        return `/upcoming-events/${slug}`;
+      default:
+        return `/news/${slug}`;
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  };
+
+  const featuredNews = news.filter(item => item.is_featured);
+  const regularNews = news.filter(item => !item.is_featured);
+
+  if (loading) {
+    return (
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <LoadingSpinner text="Loading latest news..." />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (news.length === 0) return null;
+
+  return (
+    <section className="py-16 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">Latest News & Events</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Stay updated with our latest research developments, achievements, and upcoming events.
+          </p>
+        </div>
+
+        <div className="space-y-12">
+          {/* Featured News */}
+          {featuredNews.length > 0 && (
+            <div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-6">Featured</h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {featuredNews.slice(0, 2).map((item) => (
+                  <article key={item.id} className="group bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300">
+                    {item.image && (
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={item.image}
+                          alt={item.image_alt || item.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                          <span className="bg-yellow-100 text-yellow-800 border-yellow-300 px-2 py-1 rounded-full text-xs font-medium border">
+                            Featured
+                          </span>
+                          {getCategoryBadge(item.category)}
+                        </div>
+                      </div>
+                    )}
+                    <div className="p-6">
+                      <div className="flex items-center text-sm text-gray-500 mb-3">
+                        <Clock className="h-4 w-4 mr-1" />
+                        <span>{formatDate(item.published_date)}</span>
+                        <span className="mx-2">•</span>
+                        <span>by {item.author}</span>
+                      </div>
+                      
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors line-clamp-2">
+                        {item.title}
+                      </h3>
+                      
+                      {item.excerpt && (
+                        <p className="text-gray-600 mb-4 line-clamp-3">
+                          {item.excerpt}
+                        </p>
+                      )}
+                      
+                      <Link
+                        to={getNewsUrl(item)}
+                        className="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium group-hover:gap-2 transition-all duration-200"
+                      >
+                        Read Full Story
+                        <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Recent News */}
+          {regularNews.length > 0 && (
+            <div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-6">Recent News</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {regularNews.slice(0, 3).map((item) => (
+                  <article key={item.id} className="group bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-200">
+                    {item.image && (
+                      <div className="relative h-32 overflow-hidden">
+                        <img
+                          src={item.image}
+                          alt={item.image_alt || item.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div className="absolute top-2 left-2">
+                          {getCategoryBadge(item.category)}
+                        </div>
+                      </div>
+                    )}
+                    <div className="p-4">
+                      <div className="flex items-center text-xs text-gray-500 mb-2">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        <span>{formatDate(item.published_date)}</span>
+                      </div>
+                      
+                      <h3 className="text-sm font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors">
+                        {item.title}
+                      </h3>
+                      
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-gray-500">by {item.author}</span>
+                        <Link
+                          to={getNewsUrl(item)}
+                          className="text-primary-600 hover:text-primary-700 text-xs font-medium"
+                        >
+                          Read →
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="text-center mt-12">
+          <Link to="/news" className="btn-primary">
+            View All
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const Home = () => {
   const { researchAreas, fetchData, loading } = useData();
