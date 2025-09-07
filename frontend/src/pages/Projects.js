@@ -287,9 +287,9 @@ const Projects = () => {
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                           <div className="absolute top-4 right-4">
-                            <span className={`flex items-center space-x-1 px-3 py-1 rounded-full text-sm border backdrop-blur-sm ${getStatusColor(project.status)}`}>
-                              <StatusIcon className="h-4 w-4" />
-                              <span className="capitalize font-medium">{project.status}</span>
+                            <span className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-semibold backdrop-blur-sm shadow-lg ${getStatusColor(project.status)}`}>
+                              <StatusIcon className="h-5 w-5" />
+                              <span className="capitalize">{project.status || 'Unknown'}</span>
                             </span>
                           </div>
                           {!project.image && (
