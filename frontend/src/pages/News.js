@@ -31,6 +31,7 @@ const News = () => {
 
   useEffect(() => {
     fetchData('news');
+    fetchData('settings');
   }, [fetchData]);
 
   useEffect(() => {
