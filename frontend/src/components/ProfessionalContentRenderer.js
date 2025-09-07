@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Copy, Check, ExternalLink, Download, Play, Book, FileText, Calculator } from 'lucide-react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { Copy, Check } from 'lucide-react';
 import { toast } from 'react-toastify';
 import 'katex/dist/katex.min.css';
 import katex from 'katex';
@@ -10,12 +10,43 @@ const ProfessionalContentRenderer = ({ content, className = "" }) => {
   const contentRef = useRef(null);
   const [copiedText, setCopiedText] = useState('');
 
+  const processContent = useCallback(() => {
+    if (!contentRef.current) return;
+
+    // Process KaTeX formulas
+    processKaTexFormulas();
+    
+    // Process code blocks
+    processCodeBlocks();
+    
+    // Process tables
+    processTables();
+    
+    // Process images
+    processImages();
+    
+    // Process links
+    processLinks();
+    
+    // Process videos
+    processVideos();
+    
+    // Process PDFs
+    processPDFs();
+    
+    // Process blockquotes
+    processBlockquotes();
+    
+    // Process lists
+    processLists();
+  }, []);
+
   useEffect(() => {
     if (contentRef.current && content) {
       // Process the content after rendering
       processContent();
     }
-  }, [content]);
+  }, [content, processContent]);
 
   const processContent = () => {
     if (!contentRef.current) return;
