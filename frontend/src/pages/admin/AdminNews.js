@@ -331,6 +331,15 @@ const AdminNews = () => {
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
                           <h3 className="text-xl font-semibold text-gray-900">{newsItem.title}</h3>
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                            newsItem.category === 'news' ? 'text-blue-800 bg-blue-100 border-blue-200' :
+                            newsItem.category === 'events' ? 'text-green-800 bg-green-100 border-green-200' :
+                            newsItem.category === 'upcoming_events' ? 'text-purple-800 bg-purple-100 border-purple-200' :
+                            'text-gray-800 bg-gray-100 border-gray-200'
+                          }`}>
+                            {newsItem.category === 'upcoming_events' ? 'Upcoming Events' : 
+                             newsItem.category?.charAt(0).toUpperCase() + newsItem.category?.slice(1) || 'News'}
+                          </span>
                           {newsItem.is_featured && (
                             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-yellow-800 bg-yellow-100 border border-yellow-200">
                               <Star className="h-3 w-3 mr-1" />
