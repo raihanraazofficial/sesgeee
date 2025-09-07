@@ -143,7 +143,7 @@ const AdminNews = () => {
     
     // Validate URL
     if (!url.match(/^https?:\/\/.+\.(pdf)(\?.*)?$/i) && !url.includes('drive.google.com') && !url.includes('dropbox.com')) {
-      const proceed = confirm('The URL doesn\'t appear to be a PDF. Continue anyway?');
+      const proceed = window.confirm('The URL doesn\'t appear to be a PDF. Continue anyway?');
       if (!proceed) return;
     }
     
