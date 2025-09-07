@@ -59,6 +59,7 @@ const AdminNews = () => {
         ['blockquote', 'code-block'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         [{ 'indent': '-1'}, { 'indent': '+1' }],
+        [{ 'direction': 'rtl' }],
         [{ 'align': [] }],
         ['link', 'image', 'video'],
         ['formula'],
@@ -68,48 +69,58 @@ const AdminNews = () => {
       handlers: {
         insertTable: function() {
           const tableHtml = `
-            <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+            <table style="width: 100%; border-collapse: collapse; margin: 10px 0; border: 1px solid #ddd;">
               <thead>
                 <tr style="background-color: #f8f9fa;">
-                  <th style="border: 1px solid #dee2e6; padding: 8px; text-align: left;">Header 1</th>
-                  <th style="border: 1px solid #dee2e6; padding: 8px; text-align: left;">Header 2</th>
-                  <th style="border: 1px solid #dee2e6; padding: 8px; text-align: left;">Header 3</th>
+                  <th style="border: 1px solid #dee2e6; padding: 12px; text-align: left; font-weight: 600;">Header 1</th>
+                  <th style="border: 1px solid #dee2e6; padding: 12px; text-align: left; font-weight: 600;">Header 2</th>
+                  <th style="border: 1px solid #dee2e6; padding: 12px; text-align: left; font-weight: 600;">Header 3</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="border: 1px solid #dee2e6; padding: 8px;">Row 1, Cell 1</td>
-                  <td style="border: 1px solid #dee2e6; padding: 8px;">Row 1, Cell 2</td>
-                  <td style="border: 1px solid #dee2e6; padding: 8px;">Row 1, Cell 3</td>
+                  <td style="border: 1px solid #dee2e6; padding: 12px;">Click to edit cell</td>
+                  <td style="border: 1px solid #dee2e6; padding: 12px;">Click to edit cell</td>
+                  <td style="border: 1px solid #dee2e6; padding: 12px;">Click to edit cell</td>
                 </tr>
                 <tr>
-                  <td style="border: 1px solid #dee2e6; padding: 8px;">Row 2, Cell 1</td>
-                  <td style="border: 1px solid #dee2e6; padding: 8px;">Row 2, Cell 2</td>
-                  <td style="border: 1px solid #dee2e6; padding: 8px;">Row 2, Cell 3</td>
+                  <td style="border: 1px solid #dee2e6; padding: 12px;">Click to edit cell</td>
+                  <td style="border: 1px solid #dee2e6; padding: 12px;">Click to edit cell</td>
+                  <td style="border: 1px solid #dee2e6; padding: 12px;">Click to edit cell</td>
                 </tr>
               </tbody>
             </table>
+            <p><br></p>
           `;
           const range = this.quill.getSelection(true);
           this.quill.clipboard.dangerouslyPasteHTML(range.index, tableHtml);
+          this.quill.setSelection(range.index + tableHtml.length);
         },
         insertPDF: function() {
-          const pdfUrl = prompt('Enter PDF URL:');
-          if (pdfUrl) {
+          const pdfUrl = prompt('Enter PDF URL (paste the direct link to your PDF file):');
+          if (pdfUrl && pdfUrl.trim()) {
             const pdfEmbed = `
-              <div style="border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin: 10px 0; background-color: #f8f9fa;">
-                <div style="display: flex; align-items: center; margin-bottom: 8px;">
-                  <svg style="width: 20px; height: 20px; margin-right: 8px; color: #dc3545;" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M4 18h12V6h-4V2H4v16zm-2 1V1a1 1 0 011-1h8.414a1 1 0 01.707.293l4.586 4.586A1 1 0 0117 5.828V19a1 1 0 01-1 1H3a1 1 0 01-1-1z"/>
-                  </svg>
-                  <strong>PDF Document</strong>
+              <div style="border: 2px solid #e5e7eb; border-radius: 12px; padding: 20px; margin: 16px 0; background-color: #f9fafb;">
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                  <div style="width: 24px; height: 24px; margin-right: 12px; background-color: #dc2626; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                    <span style="color: white; font-size: 12px; font-weight: bold;">PDF</span>
+                  </div>
+                  <strong style="font-size: 16px; color: #1f2937;">PDF Document</strong>
                 </div>
-                <p><a href="${pdfUrl}" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;">Click here to view PDF</a></p>
-                <iframe src="${pdfUrl}" width="100%" height="500" style="border: none; border-radius: 4px;"></iframe>
+                <p style="margin-bottom: 12px;">
+                  <a href="${pdfUrl}" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: underline; font-weight: 500;">
+                    📄 Click here to view PDF document
+                  </a>
+                </p>
+                <div style="border: 1px solid #d1d5db; border-radius: 8px; overflow: hidden;">
+                  <iframe src="${pdfUrl}#view=FitH" width="100%" height="400" style="border: none; display: block;"></iframe>
+                </div>
               </div>
+              <p><br></p>
             `;
             const range = this.quill.getSelection(true);
             this.quill.clipboard.dangerouslyPasteHTML(range.index, pdfEmbed);
+            this.quill.setSelection(range.index + pdfEmbed.length);
           }
         }
       }
@@ -122,14 +133,19 @@ const AdminNews = () => {
           ctrlKey: true,
           shiftKey: true,
           handler: function() {
-            const latex = prompt('Enter LaTeX formula (e.g., E = mc^2):');
-            if (latex) {
-              const range = this.quill.getSelection(true);
-              this.quill.insertEmbed(range.index, 'formula', latex);
+            const latex = prompt('Enter LaTeX formula (e.g., E = mc^2, \\frac{a}{b}, \\sum_{i=1}^{n} x_i):');
+            if (latex && latex.trim()) {
+              try {
+                const range = this.quill.getSelection(true);
+                this.quill.insertEmbed(range.index, 'formula', latex);
+                this.quill.setSelection(range.index + 1);
+              } catch (error) {
+                alert('Invalid LaTeX formula. Please check your syntax.');
+              }
             }
           }
         },
-        // Bold shortcut
+        // Bold shortcut: Ctrl+B
         bold: {
           key: 'B',
           ctrlKey: true,
@@ -137,12 +153,20 @@ const AdminNews = () => {
             this.quill.format('bold', !this.quill.getFormat().bold);
           }
         },
-        // Italic shortcut  
+        // Italic shortcut: Ctrl+I
         italic: {
           key: 'I',
           ctrlKey: true,
           handler: function() {
             this.quill.format('italic', !this.quill.getFormat().italic);
+          }
+        },
+        // Underline shortcut: Ctrl+U
+        underline: {
+          key: 'U',
+          ctrlKey: true,
+          handler: function() {
+            this.quill.format('underline', !this.quill.getFormat().underline);
           }
         }
       }
