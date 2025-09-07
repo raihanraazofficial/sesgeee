@@ -242,14 +242,11 @@ const News = () => {
               {/* Google Calendar Integration for Events */}
               {(selectedCategory === 'events' || selectedCategory === 'upcoming_events' || selectedCategory === 'all') && (
                 <div className="mt-16">
-                  <h2 className="text-3xl font-bold font-heading text-gray-900 mb-8 text-center">Upcoming Events Calendar</h2>
-                  <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                    <div className="text-center text-gray-600">
-                      <Calendar className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-                      <p className="text-lg mb-4">Interactive events calendar will be displayed here</p>
-                      <p className="text-sm">Calendar integration managed through admin panel</p>
-                    </div>
-                  </div>
+                  <GoogleCalendar 
+                    calendarLink={getCalendarLink()}
+                    title="Upcoming Events Calendar"
+                    height={500}
+                  />
                 </div>
               )}
 
