@@ -139,28 +139,69 @@ const AdminNews = () => {
 
   const insertPDF = (quill) => {
     const url = prompt('Enter PDF URL:');
-    if (url) {
-      const pdfHTML = `
-        <div style="border: 2px solid #e9ecef; border-radius: 8px; padding: 20px; margin: 20px 0; background-color: #f8f9fa;">
-          <div style="display: flex; align-items: center; margin-bottom: 15px;">
-            <svg style="width: 24px; height: 24px; margin-right: 10px; color: #dc3545;" fill="currentColor" viewBox="0 0 20 20">
+    if (!url) return;
+    
+    // Validate URL
+    if (!url.match(/^https?:\/\/.+\.(pdf)(\?.*)?$/i) && !url.includes('drive.google.com') && !url.includes('dropbox.com')) {
+      const proceed = confirm('The URL doesn\'t appear to be a PDF. Continue anyway?');
+      if (!proceed) return;
+    }
+    
+    const title = prompt('Enter PDF title (optional):', 'Document') || 'Document';
+    
+    const pdfHTML = `
+      <div style="border: 2px solid #e9ecef; border-radius: 12px; padding: 24px; margin: 24px 0; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <div style="display: flex; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #dee2e6;">
+          <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #dc3545, #c82333); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
+            <svg style="width: 24px; height: 24px; color: white;" fill="currentColor" viewBox="0 0 20 20">
               <path d="M4 18h12V6h-4V2H4v16zm-2 1V1a1 1 0 011-1h8.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V19a1 1 0 01-1 1H3a1 1 0 01-1-1z"/>
             </svg>
-            <strong>PDF Document</strong>
           </div>
-          <iframe src="${url}" width="100%" height="400px" style="border: none; border-radius: 4px;"></iframe>
-          <div style="margin-top: 10px;">
-            <a href="${url}" target="_blank" style="color: #007bff; text-decoration: none; font-weight: 500;">
-              📄 Download PDF
-            </a>
+          <div>
+            <h4 style="margin: 0; font-size: 18px; font-weight: 600; color: #212529;">${title}</h4>
+            <p style="margin: 4px 0 0 0; font-size: 14px; color: #6c757d;">PDF Document</p>
           </div>
         </div>
-      `;
-      
-      const range = quill.getSelection();
-      if (range) {
-        quill.clipboard.dangerouslyPasteHTML(range.index, pdfHTML);
-      }
+        
+        <div style="background: white; border-radius: 8px; overflow: hidden; margin-bottom: 16px;">
+          <iframe 
+            src="${url}#toolbar=1&navpanes=1&scrollbar=1" 
+            width="100%" 
+            height="500px" 
+            style="border: none; display: block;"
+            loading="lazy"
+            title="${title}">
+          </iframe>
+        </div>
+        
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <a href="${url}" target="_blank" 
+               style="display: inline-flex; align-items: center; padding: 10px 16px; background: #007bff; color: white; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 14px; transition: background-color 0.2s;">
+              <svg style="width: 16px; height: 16px; margin-right: 8px;" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"/>
+              </svg>
+              Download PDF
+            </a>
+            <a href="${url}" target="_blank" 
+               style="display: inline-flex; align-items: center; padding: 10px 16px; background: #6c757d; color: white; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 14px; transition: background-color 0.2s;">
+              <svg style="width: 16px; height: 16px; margin-right: 8px;" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/>
+                <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"/>
+              </svg>
+              Open in New Tab
+            </a>
+          </div>
+          <div style="font-size: 12px; color: #6c757d;">
+            📄 PDF • Professional Document Viewer
+          </div>
+        </div>
+      </div>
+    `;
+    
+    const range = quill.getSelection();
+    if (range) {
+      quill.clipboard.dangerouslyPasteHTML(range.index, pdfHTML);
     }
   };
 
