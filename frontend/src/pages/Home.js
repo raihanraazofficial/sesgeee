@@ -1,32 +1,20 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const Home = () => {
-  const { researchAreas, news, fetchData, loading } = useData();
+  const { researchAreas, fetchData, loading } = useData();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const galleryRef = useRef(null);
-  const [featuredNews, setFeaturedNews] = useState([]);
-  const [recentNews, setRecentNews] = useState([]);
 
   useEffect(() => {
     // Load data
     fetchData('researchAreas');
-    fetchData('news', { limit: 6 });
     fetchData('photoGallery');
   }, [fetchData]);
-
-  useEffect(() => {
-    if (news.length > 0) {
-      const featured = news.filter(item => item.is_featured);
-      const recent = news.filter(item => !item.is_featured).slice(0, 5);
-      setFeaturedNews(featured);
-      setRecentNews(recent);
-    }
-  }, [news]);
 
   const objectives = [
     {
