@@ -1,3 +1,113 @@
+# SESGRG Website - News & Events Enhancement & Rich Text Editor Updates (January 9, 2025)
+
+## Latest Enhancement: News & Events Page Complete Overhaul
+
+### 🎯 **User Requirements Implemented**:
+
+#### **1. NewsDetail Page White Text Fix**:
+- ✅ **Fixed White Text Issue**: Added proper text color classes to prose content
+- ✅ **Enhanced Readability**: Added `prose-p:text-gray-800`, `prose-li:text-gray-800`, `prose-strong:text-gray-900` classes
+- ✅ **Consistent Styling**: Maintained existing prose styling while fixing visibility issues
+
+#### **2. News Page Layout Enhancement**:
+- ✅ **Featured News Large Cards**: All featured news now displayed in large 2-column grid layout
+- ✅ **Regular News Small Cards**: Non-featured news shown in compact horizontal card layout
+- ✅ **Read Full Story Button**: Changed from "Read More" to "Read Full Story→" with enhanced styling
+- ✅ **Section Separation**: Clear visual separation between "Featured News" and "Latest News" sections
+
+#### **3. Pagination System**:
+- ✅ **10 Items Per Page**: Implemented pagination showing 10 news items per page
+- ✅ **Go to Page Feature**: Added input box and "Go" button for direct page navigation
+- ✅ **Smart Pagination**: Shows 5 page numbers with previous/next buttons
+- ✅ **Results Counter**: Displays "Showing X to Y of Z results" information
+
+#### **4. Enhanced Category Filters**:
+- ✅ **Colorful Category Buttons**: Each category has distinct colors with borders
+  - All Items: Gray (`bg-gray-100 text-gray-800 border-gray-300`)
+  - News: Blue (`bg-blue-100 text-blue-800 border-blue-300`)
+  - Events: Green (`bg-green-100 text-green-800 border-green-300`)
+  - Upcoming Events: Purple (`bg-purple-100 text-purple-800 border-purple-300`)
+  - Featured: Yellow (`bg-yellow-100 text-yellow-800 border-yellow-300`)
+
+#### **5. Sort Dropdown Fix**:
+- ✅ **Fixed Text Visibility**: Added `text-gray-900` class to sort dropdown and options
+- ✅ **Improved Contrast**: Ensured all dropdown text is clearly visible
+
+#### **6. Home Page Modifications**:
+- ✅ **Removed Read Buttons**: Eliminated all "Read More" and "Read" buttons from news sections
+- ✅ **Colorful Category Tags**: Applied same color scheme to news category badges
+- ✅ **Clean Layout**: Maintained visual hierarchy without action buttons
+
+#### **7. Rich Text Editor Enhancement**:
+- ✅ **LaTeX Support**: Added Ctrl+Shift+L shortcut for LaTeX formula insertion
+- ✅ **Table Insertion**: Added table button (⊞) for inserting formatted tables
+- ✅ **PDF Embedding**: Added PDF button (📄) for embedding PDF documents
+- ✅ **Enhanced Toolbar**: Extended toolbar with new features while maintaining existing functionality
+- ✅ **Keyboard Shortcuts**: Added Ctrl+B for bold, Ctrl+I for italic, Ctrl+Shift+L for LaTeX
+
+#### **8. Documentation & Usage Guide**:
+- ✅ **Comprehensive MD File**: Created `/app/rich-text-editor-guide.md` with detailed usage instructions
+- ✅ **Feature Documentation**: Covers all editor features including shortcuts, LaTeX examples, table creation
+- ✅ **Troubleshooting Section**: Common issues and solutions for content creators
+- ✅ **Pro Tips**: Best practices for content organization and SEO
+
+### 🔧 **Technical Implementation**:
+
+#### **Files Modified**:
+1. **`/app/frontend/src/pages/NewsDetail.js`** - Fixed white text issue with enhanced prose classes
+2. **`/app/frontend/src/pages/News.js`** - Complete layout overhaul with:
+   - Pagination system implementation
+   - Featured vs regular news separation
+   - Enhanced button styling
+   - Fixed sort dropdown text color
+   - Colorful category buttons with borders
+
+3. **`/app/frontend/src/pages/Home.js`** - Updated news section with:
+   - Removed all read buttons
+   - Added colorful category tags
+   - Maintained clean visual design
+
+4. **`/app/frontend/src/pages/admin/AdminNews.js`** - Enhanced rich text editor with:
+   - Custom toolbar handlers for table and PDF insertion
+   - LaTeX keyboard shortcut integration
+   - Enhanced help text and shortcuts display
+   - Improved editor configuration
+
+#### **New Features Added**:
+- **Table Insert Handler**: Creates properly formatted HTML tables with borders and styling
+- **PDF Embed Handler**: Allows URL-based PDF embedding with viewer interface
+- **LaTeX Formula Support**: Enhanced formula insertion with keyboard shortcuts
+- **Advanced Pagination**: Smart page number display with direct navigation
+- **Category Color System**: Consistent color scheme across all components
+
+### 📊 **Current Status**:
+- **News Page**: Fully enhanced with featured/regular layout and pagination ✅
+- **Home Page**: Clean design without read buttons, colorful categories ✅  
+- **NewsDetail**: Fixed white text visibility issue ✅
+- **Admin Editor**: Enhanced with LaTeX, tables, PDF support ✅
+- **Documentation**: Comprehensive usage guide created ✅
+
+### 🎨 **Visual Improvements**:
+- **Featured News Cards**: Large, prominent display with enhanced button styling
+- **Regular News Cards**: Compact horizontal layout for easy scanning
+- **Category Colors**: Distinct visual identification for different content types
+- **Pagination UI**: Professional pagination with go-to-page functionality
+- **Rich Text Editor**: Enhanced toolbar with intuitive icons and shortcuts
+
+### ✅ **User Requirements Satisfaction**:
+1. ✅ White text fix - NewsDetail content now clearly visible
+2. ✅ Featured news large cards - All featured items prominently displayed
+3. ✅ "Read Full Story→" buttons - Enhanced styling and text
+4. ✅ Home page without read buttons - Clean, colorful category display
+5. ✅ Rich text editor LaTeX support - Formula insertion with shortcuts
+6. ✅ PDF addition capability - URL-based PDF embedding
+7. ✅ Table creation tools - One-click table insertion
+8. ✅ News pagination - 10 items per page with go-to-page
+9. ✅ Sort box text visibility - Fixed dropdown text color
+10. ✅ Usage documentation - Comprehensive MD guide created
+
+---
+
 # SESGRG Website - Projects Page Enhancement & Admin Panel Updates (January 7, 2025)
 
 ## Latest Enhancement: Projects Page Complete Overhaul
