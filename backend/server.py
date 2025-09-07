@@ -37,7 +37,7 @@ app.add_middleware(
         "https://localhost:3000", 
         "https://*.vercel.app",
         "https://*.emergentagent.com",
-        "https://news-events-fix-2.preview.emergentagent.com",
+        "https://news-fetch-fix.preview.emergentagent.com",
         "*"  # Allow all origins for development
     ],
     allow_credentials=True,
