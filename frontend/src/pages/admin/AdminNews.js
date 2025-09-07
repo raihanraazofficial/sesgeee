@@ -810,6 +810,75 @@ const AdminNews = () => {
         </div>
       )}
 
+      {/* Table Configuration Dialog */}
+      {isTableDialogOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-[60]">
+          <div className="bg-white rounded-xl max-w-md w-full">
+            <div className="p-6 border-b border-gray-200">
+              <h3 className="text-lg font-semibold text-gray-900">Create Table</h3>
+              <p className="text-sm text-gray-600 mt-1">Specify the table dimensions</p>
+            </div>
+            
+            <div className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Number of Rows (1-20)
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  max="20"
+                  value={tableConfig.rows}
+                  onChange={(e) => setTableConfig({ ...tableConfig, rows: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 bg-white"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Number of Columns (1-10)
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  max="10"
+                  value={tableConfig.cols}
+                  onChange={(e) => setTableConfig({ ...tableConfig, cols: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 bg-white"
+                />
+              </div>
+              
+              <div className="bg-gray-50 p-3 rounded-lg">
+                <p className="text-sm text-gray-600">
+                  <strong>Preview:</strong> This will create a {tableConfig.rows} × {tableConfig.cols} table with professional styling that displays beautifully in blog posts.
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex justify-end space-x-3 p-6 border-t border-gray-200">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsTableDialogOpen(false);
+                  setCurrentQuillRef(null);
+                  setTableConfig({ rows: 3, cols: 3 });
+                }}
+                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleInsertTable}
+                className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
+              >
+                Insert Table
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Custom Styles for ReactQuill */}
       <style jsx global>{`
         .ql-editor {
