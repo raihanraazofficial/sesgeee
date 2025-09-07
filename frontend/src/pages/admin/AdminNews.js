@@ -544,10 +544,24 @@ const AdminNews = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Rich Content *
                   <span className="text-xs text-gray-500 ml-2">
-                    (Supports formatting, images, videos, math formulas, code blocks, tables)
+                    (Supports formatting, images, videos, math formulas, tables, PDF embedding)
                   </span>
                 </label>
                 <div className="border border-gray-300 rounded-md">
+                  <style jsx>{`
+                    .ql-toolbar .ql-picker-label:before,
+                    .ql-toolbar .ql-picker-options .ql-picker-item:before {
+                      content: 'Table' !important;
+                    }
+                    .ql-toolbar button[value="insertTable"]:before {
+                      content: '⊞';
+                      font-size: 18px;
+                    }
+                    .ql-toolbar button[value="insertPDF"]:before {
+                      content: '📄';
+                      font-size: 16px;
+                    }
+                  `}</style>
                   <ReactQuill
                     value={formData.content}
                     onChange={(content) => setFormData(prev => ({ ...prev, content }))}
@@ -556,6 +570,12 @@ const AdminNews = () => {
                     placeholder="Write your content using the rich text editor..."
                     style={{ height: '300px', marginBottom: '50px' }}
                   />
+                </div>
+                <div className="mt-2 text-xs text-gray-500 space-y-1">
+                  <p><strong>Shortcuts:</strong> Ctrl+B (Bold), Ctrl+I (Italic), Ctrl+Shift+L (LaTeX)</p>
+                  <p><strong>Tables:</strong> Click table button to insert, then edit content</p>
+                  <p><strong>PDF:</strong> Click PDF button and enter URL to embed</p>
+                  <p><strong>LaTeX:</strong> Use formula button or Ctrl+Shift+L for math equations</p>
                 </div>
               </div>
 
