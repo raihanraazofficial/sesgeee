@@ -36,25 +36,37 @@ const NewsDetail = () => {
     try {
       setLoading(true);
       
+      console.log('[NewsDetail] Loading news item for slug:', slug);
+      
       // Extract ID from slug (format: title-slug-id)
       const idMatch = slug?.match(/-([^-]+)$/);
+      console.log('[NewsDetail] ID match result:', idMatch);
+      
       if (!idMatch) {
+        console.log('[NewsDetail] No ID found in slug, redirecting to /news');
         navigate('/news');
         return;
       }
       
       const id = idMatch[1];
+      console.log('[NewsDetail] Extracted ID:', id);
       
       // Fetch all news and find the specific item
       const allNews = await fetchData('news');
+      console.log('[NewsDetail] Fetched news items:', allNews?.length || 0, 'items');
+      console.log('[NewsDetail] News IDs:', allNews?.map(n => n.id));
+      
       const item = allNews.find(news => news.id === id);
+      console.log('[NewsDetail] Found news item:', item ? item.title : 'NOT FOUND');
       
       if (!item) {
+        console.log('[NewsDetail] News item not found, redirecting to /news');
         navigate('/news');
         return;
       }
       
       setNewsItem(item);
+      console.log('[NewsDetail] News item loaded successfully');
     } catch (error) {
       console.error('Error loading news item:', error);
       navigate('/news');
