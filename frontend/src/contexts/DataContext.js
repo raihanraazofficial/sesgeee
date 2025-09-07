@@ -396,8 +396,6 @@ export function DataProvider({ children }) {
         if (params.sort_by) {
           const direction = params.sort_order === 'asc' ? 'asc' : 'desc';
           q = query(q, orderBy(params.sort_by, direction));
-        } else if (type === 'news' || type === 'events') {
-          q = query(q, orderBy('published_date', 'desc'));
         }
         
         // Apply limit
