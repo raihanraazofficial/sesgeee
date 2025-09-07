@@ -61,7 +61,7 @@ const AdminLogin = () => {
         <div className="text-center">
           <img 
             src="https://customer-assets.emergentagent.com/job_da31abd5-8dec-452e-a49e-9beda777d1d4/artifacts/ii07ct2o_Logo.jpg" 
-            alt="SESGRG Logo" 
+            alt="SESG Research Logo" 
             className="mx-auto h-16 w-16 object-contain mb-4"
           />
           <h2 className="text-3xl font-bold font-heading text-gray-900">
@@ -140,18 +140,12 @@ const AdminLogin = () => {
               </button>
             </div>
           </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-500">
-              Default credentials: admin / @dminsesg705
-            </p>
-          </div>
         </div>
 
         {/* Footer */}
         <div className="text-center">
           <p className="text-sm text-gray-500">
-            © {new Date().getFullYear()} SESGRG. All rights reserved.
+            © {new Date().getFullYear()} SESG Research. All rights reserved.
           </p>
         </div>
       </div>

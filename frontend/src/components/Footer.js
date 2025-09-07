@@ -14,7 +14,7 @@ const Footer = () => {
     <footer className="bg-slate-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* SESGRG Research Info */}
+          {/* SESG Research Info */}
           <div className="col-span-1">
             <div className="flex items-center space-x-3 mb-6">
               <img 
@@ -46,7 +46,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="https://www.bracu.ac.bd/academics/schools/engineering" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-cyan-400 transition-colors text-sm">
+                <a href="https://engineering.bracu.ac.bd/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-cyan-400 transition-colors text-sm">
                   BSRM School of Engineering ↗
                 </a>
               </li>
@@ -69,11 +69,11 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <Mail className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">sesg@bracu.ac.bd</span>
+                <span className="text-gray-300 text-sm">sesg.eee@bracu.ac.bd</span>
               </div>
               <div className="flex items-start space-x-3">
                 <Phone className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">+880 2-8844051-4</span>
+                <span className="text-gray-300 text-sm">Sunday - Thursday: 9:00 AM - 5:00 PM</span>
               </div>
               <div className="flex items-start space-x-3">
                 <MapPin className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
@@ -86,7 +86,7 @@ const Footer = () => {
               </div>
               <div className="mt-4">
                 <a 
-                  href="https://maps.google.com/?q=BRAC+University,+Dhaka" 
+                  href="https://www.google.com/maps?ll=23.773206,90.42482&z=17&t=m&hl=en-US&gl=US&mapclient=embed&cid=17006099574402660853" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-cyan-400 hover:text-cyan-300 transition-colors text-sm"

@@ -43,20 +43,20 @@ const Contact = () => {
     {
       icon: Mail,
       title: 'Email',
-      details: 'sesg@bracu.ac.bd',
-      link: 'mailto:sesg@bracu.ac.bd'
+      details: 'sesg.eee@bracu.ac.bd',
+      link: 'mailto:sesg.eee@bracu.ac.bd'
     },
     {
       icon: Phone,
-      title: 'Phone',
-      details: '+880-2-9844051-4',
-      link: 'tel:+88029844051'
+      title: 'Office Hours',
+      details: 'Sunday - Thursday: 9:00 AM - 5:00 PM',
+      link: null
     },
     {
       icon: MapPin,
       title: 'Address',
       details: 'BRAC University, 66 Mohakhali, Dhaka 1212, Bangladesh',
-      link: 'https://maps.google.com/?q=BRAC+University+Dhaka'
+      link: 'https://www.google.com/maps/place/BRAC+University/@23.773206,90.42482,17z/data=!4m6!3m5!1s0x3755c7715a40c603:0xec01cd75f33139f5!8m2!3d23.773206!4d90.4248203!16s%2Fg%2F120vm_vk?hl=en-US&entry=ttu&g_ep=EgoyMDI1MDkwMy4wIKXMDSoASAFQAw%3D%3D'
     }
   ];
 
@@ -97,14 +97,18 @@ const Contact = () => {
                       </div>
                       <div className="flex-1">
                         <h3 className="text-gray-900 font-semibold mb-1">{info.title}</h3>
-                        <a
-                          href={info.link}
-                          target={info.title === 'Address' ? '_blank' : '_self'}
-                          rel={info.title === 'Address' ? 'noopener noreferrer' : ''}
-                          className="text-gray-600 hover:text-primary-600 transition-colors"
-                        >
-                          {info.details}
-                        </a>
+                        {info.link ? (
+                          <a
+                            href={info.link}
+                            target={info.title === 'Address' ? '_blank' : '_self'}
+                            rel={info.title === 'Address' ? 'noopener noreferrer' : ''}
+                            className="text-gray-600 hover:text-primary-600 transition-colors"
+                          >
+                            {info.details}
+                          </a>
+                        ) : (
+                          <span className="text-gray-600">{info.details}</span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -243,6 +247,14 @@ const Contact = () => {
                 <div className="text-center">
                   <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
                   <p className="text-gray-500">Interactive map coming soon</p>
+                  <a 
+                    href="https://www.google.com/maps/place/BRAC+University/@23.773206,90.42482,17z/data=!4m6!3m5!1s0x3755c7715a40c603:0xec01cd75f33139f5!8m2!3d23.773206!4d90.4248203!16s%2Fg%2F120vm_vk?hl=en-US&entry=ttu&g_ep=EgoyMDI1MDkwMy4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-4 text-primary-600 hover:text-primary-700 font-medium"
+                  >
+                    View on Google Maps →
+                  </a>
                 </div>
               </div>
             </div>
