@@ -28,7 +28,7 @@ app.add_middleware(
         "https://localhost:3000", 
         "https://*.vercel.app",
         "https://*.emergentagent.com",
-        "https://content-editor-fix.preview.emergentagent.com",
+        "https://tumi-cleanup.preview.emergentagent.com",
         "*"  # Allow all origins for development
     ],
     allow_credentials=True,
