@@ -271,8 +271,10 @@ const AdminSettings = () => {
                   </label>
                   <input 
                     type="url" 
+                    value={calendarUrl}
+                    onChange={(e) => setCalendarUrl(e.target.value)}
                     placeholder="https://calendar.google.com/calendar/embed?src=..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900 bg-white"
                   />
                   <p className="text-xs text-gray-500 mt-1">
                     Get the embed URL from Google Calendar → Settings → Integrate Calendar → Embed Code
@@ -280,10 +282,27 @@ const AdminSettings = () => {
                 </div>
                 
                 <div className="flex items-center space-x-2">
-                  <button className="btn-primary">
-                    Save Calendar Settings
+                  <button 
+                    onClick={handleSaveCalendar}
+                    disabled={calendarLoading}
+                    className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                  >
+                    {calendarLoading ? (
+                      <>
+                        <div className="spinner" />
+                        <span>Saving...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Save className="h-4 w-4" />
+                        <span>Save Calendar Settings</span>
+                      </>
+                    )}
                   </button>
-                  <button className="btn-secondary">
+                  <button 
+                    onClick={handleTestCalendar}
+                    className="btn-secondary"
+                  >
                     Test Calendar
                   </button>
                 </div>
