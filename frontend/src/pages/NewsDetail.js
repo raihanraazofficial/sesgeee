@@ -36,50 +36,37 @@ const NewsDetail = () => {
     try {
       setLoading(true);
       
-      console.log('[NewsDetail] Loading news item for slug:', slug);
-      
       // Extract ID from slug (format: title-slug-id)
       const idMatch = slug?.match(/-([^-]+)$/);
-      console.log('[NewsDetail] ID match result:', idMatch);
-      
       if (!idMatch) {
-        console.log('[NewsDetail] No ID found in slug, redirecting to /news');
         navigate('/news');
         return;
       }
       
       const id = idMatch[1];
-      console.log('[NewsDetail] Extracted ID:', id);
       
       // Fetch all news and find the specific item
       // Use same parameters as News.js to ensure we get the same dataset
-      // Force to get mock data for consistency with News.js page
       const allNews = await fetchData('news', { 
         status: 'published',
         sort_by: 'published_date',
         sort_order: 'desc'
       });
-      console.log('[NewsDetail] Fetched news items:', allNews?.length || 0, 'items');
-      console.log('[NewsDetail] News IDs:', allNews?.map(n => `${n.id} (${n.title?.substring(0, 30)}...)`));
       
       // Try to find by ID first
       let item = allNews.find(news => news.id === id);
-      console.log('[NewsDetail] Found news item by ID:', item ? item.title : 'NOT FOUND');
       
       // If not found, try string comparison
       if (!item) {
         item = allNews.find(news => String(news.id) === String(id));
-        console.log('[NewsDetail] Found news item by string ID:', item ? item.title : 'NOT FOUND');
       }
       
       if (!item) {
-        console.log('[NewsDetail] News item not found, redirecting to /news');
         navigate('/news');
         return;
       }
       
       setNewsItem(item);
-      console.log('[NewsDetail] News item loaded successfully');
     } catch (error) {
       console.error('Error loading news item:', error);
       navigate('/news');
