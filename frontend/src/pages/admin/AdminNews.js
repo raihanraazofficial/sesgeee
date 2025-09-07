@@ -547,21 +547,7 @@ const AdminNews = () => {
                     (Supports formatting, images, videos, math formulas, tables, PDF embedding)
                   </span>
                 </label>
-                <div className="border border-gray-300 rounded-md">
-                  <style jsx>{`
-                    .ql-toolbar .ql-picker-label:before,
-                    .ql-toolbar .ql-picker-options .ql-picker-item:before {
-                      content: 'Table' !important;
-                    }
-                    .ql-toolbar button[value="insertTable"]:before {
-                      content: '⊞';
-                      font-size: 18px;
-                    }
-                    .ql-toolbar button[value="insertPDF"]:before {
-                      content: '📄';
-                      font-size: 16px;
-                    }
-                  `}</style>
+                <div className="border border-gray-300 rounded-md relative">
                   <ReactQuill
                     value={formData.content}
                     onChange={(content) => setFormData(prev => ({ ...prev, content }))}
@@ -570,6 +556,18 @@ const AdminNews = () => {
                     placeholder="Write your content using the rich text editor..."
                     style={{ height: '300px', marginBottom: '50px' }}
                   />
+                  <style dangerouslySetInnerHTML={{
+                    __html: `
+                      .ql-toolbar .ql-insertTable:before {
+                        content: '⊞';
+                        font-size: 18px;
+                      }
+                      .ql-toolbar .ql-insertPDF:before {
+                        content: '📄';
+                        font-size: 16px;
+                      }
+                    `
+                  }} />
                 </div>
                 <div className="mt-2 text-xs text-gray-500 space-y-1">
                   <p><strong>Shortcuts:</strong> Ctrl+B (Bold), Ctrl+I (Italic), Ctrl+Shift+L (LaTeX)</p>
