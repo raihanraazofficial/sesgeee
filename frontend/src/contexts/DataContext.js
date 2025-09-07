@@ -146,24 +146,7 @@ const getMockData = (type) => {
         category: 'funding'
       }
     ],
-    news: [
-      { 
-        id: 1, 
-        title: 'SESGRG Launches New Research Initiative',
-        excerpt: 'Our research group has launched a groundbreaking initiative in sustainable energy systems.',
-        published_date: '2024-12-01',
-        is_featured: true,
-        image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwyfHxuZXdzJTIwZXZlbnRzfGVufDB8fHx8MTc1NjY1NDE0OXww&ixlib=rb-4.1.0&q=85'
-      },
-      { 
-        id: 2, 
-        title: 'Research Collaboration with International Partners',
-        excerpt: 'We are excited to announce new research partnerships with leading international institutions.',
-        published_date: '2024-11-15',
-        is_featured: false,
-        image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHx0ZWFtJTIwY29sbGFib3JhdGlvbnxlbnwwfHx8fDE3NTY2NTQxNDl8MA&ixlib=rb-4.1.0&q=85'
-      }
-    ],
+    news: [],
     events: [{ id: 1, title: 'Smart Grid Conference 2024', date: '2024-12-15' }],
     researchAreas: [
       {
