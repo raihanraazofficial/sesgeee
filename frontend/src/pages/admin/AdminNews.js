@@ -813,9 +813,10 @@ const AdminNews = () => {
           border-top: 1px solid #e5e7eb;
           border-left: 1px solid #e5e7eb;
           border-right: 1px solid #e5e7eb;
-          background: white;
+          background: linear-gradient(135deg, #f9fafb, #ffffff);
           position: relative;
           z-index: 1001;
+          padding: 8px;
         }
         
         .ql-container {
@@ -838,6 +839,43 @@ const AdminNews = () => {
           background: white;
           border: 1px solid #e5e7eb;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+          border-radius: 6px;
+          max-height: 200px;
+          overflow-y: auto;
+        }
+
+        .ql-toolbar .ql-picker-item {
+          padding: 4px 8px;
+          cursor: pointer;
+        }
+
+        .ql-toolbar .ql-picker-item:hover {
+          background-color: #f3f4f6;
+        }
+
+        /* Enhanced Font Family Options */
+        .ql-font-serif { font-family: 'Georgia', serif; }
+        .ql-font-monospace { font-family: 'Monaco', 'Consolas', monospace; }
+        .ql-font-helvetica { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .ql-font-arial { font-family: Arial, sans-serif; }
+        .ql-font-georgia { font-family: Georgia, serif; }
+        .ql-font-times-new-roman { font-family: 'Times New Roman', Times, serif; }
+        .ql-font-courier-new { font-family: 'Courier New', Courier, monospace; }
+
+        /* Enhanced Color Picker */
+        .ql-color .ql-picker-options,
+        .ql-background .ql-picker-options {
+          width: 168px;
+          padding: 6px;
+        }
+
+        .ql-color .ql-picker-item,
+        .ql-background .ql-picker-item {
+          width: 16px;
+          height: 16px;
+          margin: 2px;
+          border: 1px solid #ccc;
+          border-radius: 2px;
         }
 
         /* Custom toolbar button styles */
@@ -845,6 +883,7 @@ const AdminNews = () => {
           content: "⊞";
           font-weight: bold;
           font-size: 16px;
+          color: #3b82f6;
         }
         
         .ql-toolbar .ql-pdf::before {
@@ -865,38 +904,138 @@ const AdminNews = () => {
         .ql-toolbar .ql-table:hover,
         .ql-toolbar .ql-pdf:hover,
         .ql-toolbar .ql-formula:hover {
+          background-color: #e0f2fe;
+          border-radius: 4px;
+          transform: scale(1.05);
+          transition: all 0.2s ease;
+        }
+
+        .ql-toolbar button:hover {
           background-color: #f3f4f6;
+          border-radius: 4px;
+          transition: all 0.2s ease;
+        }
+
+        .ql-toolbar button.ql-active {
+          background-color: #3b82f6 !important;
+          color: white !important;
           border-radius: 4px;
         }
 
         .katex-formula {
-          background-color: #f8f9fa;
-          padding: 2px 4px;
-          border-radius: 3px;
-          border: 1px solid #e9ecef;
+          background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+          border: 1px solid #bbdefb;
+          padding: 4px 8px;
+          border-radius: 4px;
+          margin: 0 2px;
+          display: inline-block;
         }
         
         /* Improve table styling in editor */
-        .ql-editor table {
+        .ql-editor table,
+        .ql-editor .professional-table-content {
           border-collapse: collapse;
           width: 100%;
           margin: 16px 0;
+          background: white;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .ql-editor table td, 
-        .ql-editor table th {
-          border: 1px solid #dee2e6;
-          padding: 8px 12px;
+        .ql-editor table th,
+        .ql-editor .professional-table-content td,
+        .ql-editor .professional-table-content th {
+          border: 1px solid #e5e7eb;
+          padding: 12px 16px;
           text-align: left;
+          transition: background-color 0.2s ease;
         }
         
-        .ql-editor table th {
-          background-color: #f8f9fa;
+        .ql-editor table th,
+        .ql-editor .professional-table-content th {
+          background: linear-gradient(135deg, #f9fafb, #f3f4f6);
           font-weight: 600;
+          color: #111827;
+          border-bottom: 2px solid #e5e7eb;
         }
         
-        .ql-editor table tr:nth-child(even) {
-          background-color: #f8f9fa;
+        .ql-editor table tr:nth-child(even) td,
+        .ql-editor .professional-table-content tr:nth-child(even) td {
+          background-color: #fafbfc;
+        }
+
+        .ql-editor table tr:hover td,
+        .ql-editor .professional-table-content tr:hover td {
+          background-color: #f9fafb;
+        }
+
+        /* Enhanced Link Styling */
+        .ql-editor a {
+          color: #3b82f6;
+          text-decoration: underline;
+          transition: color 0.2s ease;
+        }
+
+        .ql-editor a:hover {
+          color: #1d4ed8;
+          text-decoration: underline;
+        }
+
+        /* Enhanced Code Block Styling */
+        .ql-editor .ql-code-block-container {
+          background: #1f2937;
+          color: #e5e7eb;
+          border-radius: 8px;
+          padding: 16px;
+          margin: 16px 0;
+          font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+          position: relative;
+          overflow-x: auto;
+        }
+
+        .ql-editor .ql-code-block {
+          background: #1f2937;
+          color: #e5e7eb;
+          border-radius: 4px;
+          padding: 2px 4px;
+          font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+          font-size: 14px;
+          line-height: 1.5;
+          border: none;
+        }
+
+        /* Blockquote Enhancement */
+        .ql-editor blockquote {
+          border-left: 4px solid #3b82f6;
+          padding-left: 16px;
+          margin: 16px 0;
+          font-style: italic;
+          background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+          padding: 16px;
+          border-radius: 0 8px 8px 0;
+          color: #1e40af;
+        }
+
+        /* List Enhancement */
+        .ql-editor ul, .ql-editor ol {
+          padding-left: 1.5em;
+          margin: 16px 0;
+        }
+
+        .ql-editor li {
+          margin: 8px 0;
+          line-height: 1.6;
+        }
+
+        /* Image Enhancement */
+        .ql-editor img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 8px;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+          margin: 16px 0;
         }
       `}</style>
     </div>
