@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
+import GoogleCalendar from '../components/GoogleCalendar';
 
 const News = () => {
   const { news, fetchData, loading } = useData();
