@@ -286,8 +286,8 @@ const Projects = () => {
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                          <div className="absolute top-4 right-4">
-                            <span className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-semibold backdrop-blur-sm shadow-lg ${getStatusColor(project.status)}`}>
+                          <div className="absolute top-4 right-4 z-10">
+                            <span className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-semibold shadow-xl border border-white/20 ${getStatusColor(project.status)}`}>
                               <StatusIcon className="h-5 w-5" />
                               <span className="capitalize">{project.status || 'Unknown'}</span>
                             </span>
