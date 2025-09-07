@@ -168,9 +168,13 @@ const AdminNews = () => {
       published_date: newsItem.published_date ? newsItem.published_date.split('T')[0] : new Date().toISOString().split('T')[0],
       is_featured: newsItem.is_featured || false,
       image: newsItem.image || '',
+      image_alt: newsItem.image_alt || '',
       author: newsItem.author || '',
       tags: Array.isArray(newsItem.tags) ? newsItem.tags.join(', ') : '',
-      status: newsItem.status || 'published'
+      seo_keywords: newsItem.seo_keywords || '',
+      category: newsItem.category || 'news',
+      status: newsItem.status || 'published',
+      google_calendar_link: newsItem.google_calendar_link || ''
     });
     setShowModal(true);
   };
