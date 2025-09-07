@@ -55,10 +55,17 @@ const NewsDetail = () => {
       // Use same parameters as News.js to ensure we get the same dataset
       const allNews = await fetchData('news');
       console.log('[NewsDetail] Fetched news items:', allNews?.length || 0, 'items');
-      console.log('[NewsDetail] News IDs:', allNews?.map(n => n.id));
+      console.log('[NewsDetail] News IDs:', allNews?.map(n => `${n.id} (${n.title?.substring(0, 30)}...)`));
       
-      const item = allNews.find(news => news.id === id);
-      console.log('[NewsDetail] Found news item:', item ? item.title : 'NOT FOUND');
+      // Try to find by ID first
+      let item = allNews.find(news => news.id === id);
+      console.log('[NewsDetail] Found news item by ID:', item ? item.title : 'NOT FOUND');
+      
+      // If not found, try string comparison
+      if (!item) {
+        item = allNews.find(news => String(news.id) === String(id));
+        console.log('[NewsDetail] Found news item by string ID:', item ? item.title : 'NOT FOUND');
+      }
       
       if (!item) {
         console.log('[NewsDetail] News item not found, redirecting to /news');
