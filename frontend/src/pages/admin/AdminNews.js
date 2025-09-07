@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Plus, Edit, Trash2, Newspaper, Calendar, Search, Filter, Star, X } from 'lucide-react';
+import { ArrowLeft, Plus, Edit, Trash2, Newspaper, Calendar, Search, Filter, Star, X, Download, Copy, Image, Quote, Code } from 'lucide-react';
 import { useData } from '../../contexts/DataContext';
 import { toast } from 'react-toastify';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import 'katex/dist/katex.min.css';
+import katex from 'katex';
+window.katex = katex;
 
 const AdminNews = () => {
   const { news, fetchData, createItem, updateItem, deleteItem, loading } = useData();
