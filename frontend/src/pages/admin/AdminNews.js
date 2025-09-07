@@ -233,9 +233,13 @@ const AdminNews = () => {
                   published_date: new Date().toISOString().split('T')[0],
                   is_featured: false,
                   image: '',
+                  image_alt: '',
                   author: '',
                   tags: '',
-                  status: 'published'
+                  seo_keywords: '',
+                  category: 'news',
+                  status: 'published',
+                  google_calendar_link: ''
                 });
                 setShowModal(true);
               }}
