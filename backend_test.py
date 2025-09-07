@@ -209,22 +209,107 @@ class SESGRGAPITester:
         return success
 
     def test_news_endpoints(self):
-        """Test news endpoints"""
-        success1, _ = self.run_test(
+        """Test news endpoints - comprehensive CRUD testing"""
+        results = []
+        created_news_id = None
+        
+        # 1. Get all news
+        success1, response1 = self.run_test(
             "Get All News",
             "GET",
             "api/news",
             200
         )
+        results.append(success1)
         
+        # 2. Get featured news
         success2, _ = self.run_test(
             "Get Featured News",
             "GET",
             "api/news?featured=true&limit=5",
             200
         )
+        results.append(success2)
         
-        return success1 and success2
+        # 3. Get news by category
+        success3, _ = self.run_test(
+            "Get News by Category",
+            "GET",
+            "api/news?category=news",
+            200
+        )
+        results.append(success3)
+        
+        # 4. Create news (requires auth)
+        if self.token:
+            success4, response4 = self.run_test(
+                "Create News Article",
+                "POST",
+                "api/news",
+                200,
+                data={
+                    "title": "Test News Article",
+                    "content": "<p>This is a test news article with <strong>rich text</strong> content.</p>",
+                    "excerpt": "Test excerpt for the news article",
+                    "author": "Test Author",
+                    "published_date": "2025-01-09T10:00:00",
+                    "category": "news",
+                    "is_featured": True,
+                    "tags": ["test", "news"],
+                    "status": "published"
+                }
+            )
+            results.append(success4)
+            
+            if success4 and 'id' in response4:
+                created_news_id = response4['id']
+                print(f"   Created news ID: {created_news_id}")
+                
+                # 5. Get specific news item
+                success5, _ = self.run_test(
+                    "Get Specific News Item",
+                    "GET",
+                    f"api/news/{created_news_id}",
+                    200
+                )
+                results.append(success5)
+                
+                # 6. Update news item
+                success6, _ = self.run_test(
+                    "Update News Article",
+                    "PUT",
+                    f"api/news/{created_news_id}",
+                    200,
+                    data={
+                        "title": "Updated Test News Article",
+                        "content": "<p>This is an <em>updated</em> test news article.</p>",
+                        "excerpt": "Updated excerpt",
+                        "author": "Updated Author",
+                        "published_date": "2025-01-09T11:00:00",
+                        "category": "events",
+                        "is_featured": False,
+                        "tags": ["updated", "test"],
+                        "status": "published"
+                    }
+                )
+                results.append(success6)
+                
+                # 7. Delete news item
+                success7, _ = self.run_test(
+                    "Delete News Article",
+                    "DELETE",
+                    f"api/news/{created_news_id}",
+                    200
+                )
+                results.append(success7)
+            else:
+                print("   ⚠️  Could not test specific news operations - creation failed")
+                results.extend([False, False, False])
+        else:
+            print("   ⚠️  Skipping authenticated news tests - no token")
+            results.extend([False, False, False, False])
+        
+        return all(results)
 
     def test_events_endpoint(self):
         """Test events endpoint"""
