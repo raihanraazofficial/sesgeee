@@ -453,6 +453,53 @@ export function DataProvider({ children }) {
       console.log(`[DataContext] Fetching ${type}...`);
       dispatch({ type: 'SET_LOADING', payload: { type, loading: true } });
 
+      // For news and events, use backend API instead of direct Firestore
+      if (type === 'news' || type === 'events') {
+        try {
+          console.log(`[DataContext] Using backend API for ${type}...`);
+          const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+          
+          // Build query parameters
+          const queryParams = new URLSearchParams();
+          if (params.status) queryParams.append('status', params.status);
+          if (params.category) queryParams.append('category', params.category);
+          if (params.featured !== undefined) queryParams.append('featured', params.featured);
+          if (params.sort_by) queryParams.append('sort_by', params.sort_by);
+          if (params.sort_order) queryParams.append('sort_order', params.sort_order);
+          if (params.limit) queryParams.append('limit', params.limit);
+          
+          const apiUrl = `${backendUrl}/api/${type}${queryParams.toString() ? '?' + queryParams.toString() : ''}`;
+          console.log(`[DataContext] Calling API: ${apiUrl}`);
+          
+          const response = await fetch(apiUrl);
+          if (!response.ok) {
+            throw new Error(`API call failed: ${response.status} ${response.statusText}`);
+          }
+          
+          const data = await response.json();
+          console.log(`[DataContext] Backend API data loaded for ${type}:`, data.length, 'items');
+          
+          dispatch({
+            type: 'SET_DATA',
+            payload: { type, data },
+          });
+          
+          return data;
+          
+        } catch (apiError) {
+          console.error(`[DataContext] Backend API failed for ${type}:`, apiError);
+          
+          // Return empty array for news/events API failures
+          dispatch({
+            type: 'SET_DATA',
+            payload: { type, data: [] },
+          });
+          dispatch({ type: 'SET_LOADING', payload: { type, loading: false } });
+          return [];
+        }
+      }
+
+      // For other types, continue with Firestore
       // Map type to Firestore collection name
       let collectionName = type;
       if (type === 'researchAreas') collectionName = 'research_areas';
@@ -506,16 +553,6 @@ export function DataProvider({ children }) {
 
         console.log(`[DataContext] Firestore data loaded for ${type}:`, data.length, 'items');
         
-        // For news and events, always return Firestore data (even if empty) - no mock fallback
-        if (type === 'news' || type === 'events') {
-          console.log(`[DataContext] Firestore data loaded for ${type}:`, data.length, 'items (no mock fallback)');
-          dispatch({
-            type: 'SET_DATA',
-            payload: { type, data },
-          });
-          return data;
-        }
-
         // If Firestore returns empty data, use mock data fallback (except for people, publications, projects, news, events)
         if (data.length === 0 && type !== 'people' && type !== 'publications' && type !== 'projects') {
           console.log(`[DataContext] Firestore collection ${collectionName} is empty, using mock data`);
@@ -539,16 +576,6 @@ export function DataProvider({ children }) {
       } catch (firestoreError) {
         console.warn(`[DataContext] Firestore call failed for ${type}, using mock data:`, firestoreError.message);
 
-        // For news and events, return empty array instead of mock data
-        if (type === 'news' || type === 'events') {
-          console.log(`[DataContext] Firestore failed for ${type}, returning empty array instead of mock data`);
-          dispatch({
-            type: 'SET_DATA',
-            payload: { type, data: [] },
-          });
-          return [];
-        }
-
         // Don't use mock data for people, publications, and projects - return empty array instead
         if (type === 'people' || type === 'publications' || type === 'projects') {
           console.log(`[DataContext] Firestore failed for ${type}, returning empty array instead of mock data`);
@@ -571,17 +598,6 @@ export function DataProvider({ children }) {
       }
     } catch (error) {
       console.error(`[DataContext] Error fetching ${type}:`, error);
-
-      // For news and events, return empty array instead of mock data
-      if (type === 'news' || type === 'events') {
-        console.log(`[DataContext] General error for ${type}, returning empty array instead of mock data`);
-        dispatch({
-          type: 'SET_DATA',
-          payload: { type, data: [] },
-        });
-        dispatch({ type: 'SET_LOADING', payload: { type, loading: false } });
-        return [];
-      }
 
       // Don't use mock data for people, publications, and projects - return empty array instead
       if (type === 'people' || type === 'publications' || type === 'projects') {
