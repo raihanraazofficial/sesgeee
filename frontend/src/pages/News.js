@@ -169,10 +169,10 @@ const News = () => {
                     <select
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value)}
-                      className="border border-gray-300 rounded-md px-3 py-2 bg-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                      className="border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     >
-                      <option value="date">Sort by Date</option>
-                      <option value="title">Sort by Title</option>
+                      <option value="date" className="text-gray-900">Sort by Date</option>
+                      <option value="title" className="text-gray-900">Sort by Title</option>
                     </select>
                   </div>
                 </div>
