@@ -476,11 +476,13 @@ Department of EEE, BRAC University
               )}
             </header>
 
-            {/* Article Content */}
-            <div 
-              className="prose prose-lg max-w-none mb-10 prose-headings:text-gray-900 prose-p:text-gray-800 prose-li:text-gray-800 prose-strong:text-gray-900 prose-a:text-primary-600 prose-a:hover:text-primary-700"
-              dangerouslySetInnerHTML={{ __html: newsItem.content }}
-            />
+            {/* Article Content - Using Professional Content Renderer */}
+            <div className="mb-10">
+              <ProfessionalContentRenderer 
+                content={newsItem.content}
+                className="article-content"
+              />
+            </div>
 
             {/* Tags */}
             {newsItem.tags && newsItem.tags.length > 0 && (
