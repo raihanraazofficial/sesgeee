@@ -28,7 +28,7 @@ app.add_middleware(
         "https://localhost:3000", 
         "https://*.vercel.app",
         "https://*.emergentagent.com",
-        "https://newsblog-enhance.preview.emergentagent.com",
+        "https://content-editor-fix.preview.emergentagent.com",
         "*"  # Allow all origins for development
     ],
     allow_credentials=True,
