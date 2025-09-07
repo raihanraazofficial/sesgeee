@@ -143,7 +143,7 @@ const getMockData = (type) => {
       }
     ],
 
-    events: [{ id: 1, title: 'Smart Grid Conference 2024', date: '2024-12-15' }],
+
     researchAreas: [
       {
         id: '1',
