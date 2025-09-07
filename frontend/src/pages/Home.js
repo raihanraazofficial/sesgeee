@@ -428,15 +428,18 @@ const Home = () => {
                         <h4 className="text-gray-900 font-medium mb-2 line-clamp-2">{item.title}</h4>
                         <p className="text-gray-600 text-sm mb-2 line-clamp-1">{item.excerpt}</p>
                         <div className="flex justify-between items-center">
+                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${
+                            item.category === 'news' ? 'text-blue-800 bg-blue-100 border-blue-200' :
+                            item.category === 'events' ? 'text-green-800 bg-green-100 border-green-200' :
+                            item.category === 'upcoming_events' ? 'text-purple-800 bg-purple-100 border-purple-200' :
+                            'text-gray-800 bg-gray-100 border-gray-200'
+                          }`}>
+                            {item.category === 'upcoming_events' ? 'Upcoming Events' : 
+                             item.category?.charAt(0).toUpperCase() + item.category?.slice(1) || 'News'}
+                          </span>
                           <span className="text-xs text-gray-500">
                             {new Date(item.published_date).toLocaleDateString()}
                           </span>
-                          <Link
-                            to={`/news/${item.id}`}
-                            className="text-primary-600 hover:text-primary-700 text-sm"
-                          >
-                            Read
-                          </Link>
                         </div>
                       </div>
                     </div>
