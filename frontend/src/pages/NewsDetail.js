@@ -253,7 +253,7 @@ const NewsDetail = () => {
 
           {/* Main Content */}
           <div 
-            className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 hover:prose-a:text-primary-700 prose-blockquote:border-l-primary-500 prose-blockquote:text-gray-700"
+            className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-800 prose-li:text-gray-800 prose-strong:text-gray-900 prose-a:text-primary-600 hover:prose-a:text-primary-700 prose-blockquote:border-l-primary-500 prose-blockquote:text-gray-700 text-gray-800"
             dangerouslySetInnerHTML={{ 
               __html: article.content || '<p>Content not available.</p>' 
             }}
