@@ -103,11 +103,11 @@ const News = () => {
   };
 
   const categoryButtons = [
-    { value: 'all', label: 'All Items', color: 'bg-gray-100 text-gray-800 hover:bg-gray-200' },
-    { value: 'news', label: 'News', color: 'bg-blue-100 text-blue-800 hover:bg-blue-200' },
-    { value: 'events', label: 'Events', color: 'bg-green-100 text-green-800 hover:bg-green-200' },
-    { value: 'upcoming_events', label: 'Upcoming Events', color: 'bg-purple-100 text-purple-800 hover:bg-purple-200' },
-    { value: 'featured', label: 'Featured', color: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200' }
+    { value: 'all', label: 'All Items', color: 'bg-gray-100 text-gray-800 hover:bg-gray-200 border-gray-300' },
+    { value: 'news', label: 'News', color: 'bg-blue-100 text-blue-800 hover:bg-blue-200 border-blue-300' },
+    { value: 'events', label: 'Events', color: 'bg-green-100 text-green-800 hover:bg-green-200 border-green-300' },
+    { value: 'upcoming_events', label: 'Upcoming Events', color: 'bg-purple-100 text-purple-800 hover:bg-purple-200 border-purple-300' },
+    { value: 'featured', label: 'Featured', color: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200 border-yellow-300' }
   ];
 
   const scrollToTop = () => {
