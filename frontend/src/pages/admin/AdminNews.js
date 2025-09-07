@@ -84,10 +84,17 @@ const AdminNews = () => {
 
   const filteredNews = news.filter(item => {
     const matchesSearch = (item.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (item.excerpt || '').toLowerCase().includes(searchTerm.toLowerCase());
+                         (item.excerpt || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (item.author || '').toLowerCase().includes(searchTerm.toLowerCase());
     
     let matchesFilter = true;
-    if (selectedFilter === 'featured') {
+    if (selectedFilter === 'news') {
+      matchesFilter = item.category === 'news';
+    } else if (selectedFilter === 'events') {
+      matchesFilter = item.category === 'events';
+    } else if (selectedFilter === 'upcoming_events') {
+      matchesFilter = item.category === 'upcoming_events';
+    } else if (selectedFilter === 'featured') {
       matchesFilter = item.is_featured === true;
     } else if (selectedFilter === 'published') {
       matchesFilter = item.status === 'published';
@@ -96,6 +103,11 @@ const AdminNews = () => {
     }
     
     return matchesSearch && matchesFilter;
+  }).sort((a, b) => {
+    // Sort by published_date, latest first
+    const dateA = new Date(a.published_date || 0);
+    const dateB = new Date(b.published_date || 0);
+    return dateB - dateA;
   });
 
   const handleSubmit = async (e) => {
