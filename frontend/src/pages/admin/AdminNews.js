@@ -634,6 +634,7 @@ const AdminNews = () => {
               {!searchTerm && selectedFilter === 'all' && (
                 <button 
                   onClick={() => {
+                    setEditingNews(null);
                     resetForm();
                     setShowModal(true);
                   }}
