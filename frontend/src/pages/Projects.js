@@ -277,9 +277,9 @@ const Projects = () => {
                   {filteredProjects.map((project) => {
                     const StatusIcon = getStatusIcon(project.status);
                     return (
-                      <div key={project.id} className="group bg-white rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+                      <div key={project.id} className="group bg-white rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full">
                         {/* Project Image */}
-                        <div className="relative h-48 overflow-hidden">
+                        <div className="relative h-48 overflow-hidden flex-shrink-0">
                           <img
                             src={project.image || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxyZXNlYXJjaCUyMHByb2plY3RzfGVufDB8fHx8MTc1NjY1NDE0OXww&ixlib=rb-4.1.0&q=85"}
                             alt={project.name || 'Project image'}
@@ -302,22 +302,14 @@ const Projects = () => {
                           )}
                         </div>
 
-                        <div className="p-6">
-                          {/* Status Bar - Prominent at top of card body */}
-                          <div className="mb-4">
-                            <span className={`inline-flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold ${getStatusColor(project.status)} shadow-sm`}>
-                              <StatusIcon className="h-5 w-5" />
-                              <span className="capitalize">{project.status || 'Unknown'}</span>
-                            </span>
-                          </div>
-
+                        <div className="p-6 flex flex-col flex-grow">
                           {/* Project Title */}
                           <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-primary-600 transition-colors">
                             {project.name || 'Untitled Project'}
                           </h3>
                           
                           {/* Short Description */}
-                          <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                          <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3 flex-grow">
                             {project.description || 'No description available for this research project.'}
                           </p>
                           
@@ -351,8 +343,8 @@ const Projects = () => {
                           {/* Divider */}
                           <hr className="border-gray-200 my-4" />
                           
-                          {/* Bottom Section - Always Fixed */}
-                          <div className="flex items-center justify-between">
+                          {/* Bottom Section - Always Fixed at Bottom */}
+                          <div className="flex items-center justify-between mt-auto">
                             <div className="text-sm text-gray-600">
                               <span className="font-medium">Funded By:</span> {project.funded_by || 'Not specified'}
                             </div>
