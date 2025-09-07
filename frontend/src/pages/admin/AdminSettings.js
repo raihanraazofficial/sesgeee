@@ -28,8 +28,7 @@ const AdminSettings = () => {
           fetchData('people'),
           fetchData('publications'),
           fetchData('projects'),
-          fetchData('achievements'),
-          fetchData('news')
+          fetchData('achievements')
         ]);
       }, 1000);
       
