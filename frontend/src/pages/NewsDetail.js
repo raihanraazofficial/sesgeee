@@ -326,28 +326,6 @@ const NewsDetail = () => {
               </div>
             )}
 
-            {/* Google Calendar for Events */}
-            {(newsItem.category === 'events' || newsItem.category === 'upcoming_events') && newsItem.google_calendar_link && (
-              <div className="mb-8">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                  <Calendar className="h-5 w-5 mr-2" />
-                  Event Calendar
-                </h3>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <iframe
-                    src={newsItem.google_calendar_link}
-                    style={{ border: 0 }}
-                    width="100%"
-                    height="300"
-                    frameBorder="0"
-                    scrolling="no"
-                    title="Event Calendar"
-                    className="rounded-lg"
-                  ></iframe>
-                </div>
-              </div>
-            )}
-
             {/* Article Footer */}
             <div className="border-t border-gray-200 pt-8">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
