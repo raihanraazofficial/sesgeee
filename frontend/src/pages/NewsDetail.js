@@ -89,6 +89,20 @@ const NewsDetail = () => {
     loadNewsItem();
   }, [loadNewsItem]);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sharing && !event.target.closest('.share-dropdown')) {
+        setSharing(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [sharing]);
+
   const handlePrint = () => {
     // Add print-specific styles
     const printWindow = window.open('', '_blank');
