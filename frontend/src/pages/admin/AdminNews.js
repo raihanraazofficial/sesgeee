@@ -486,6 +486,8 @@ const AdminNews = () => {
     });
     setShowModal(false);
     setEditingNews(null);
+    setEditorReady(false);
+    setEditorKey(prev => prev + 1);
   };
 
   const handleEdit = (newsItem) => {
@@ -493,7 +495,7 @@ const AdminNews = () => {
     setFormData({
       title: newsItem.title || '',
       excerpt: newsItem.excerpt || '',
-      content: newsItem.content || '',
+      content: '', // Will be set after editor is ready
       published_date: newsItem.published_date ? newsItem.published_date.split('T')[0] : new Date().toISOString().split('T')[0],
       is_featured: newsItem.is_featured || false,
       image: newsItem.image || '',
@@ -507,6 +509,16 @@ const AdminNews = () => {
     });
     setShowModal(true);
   };
+
+  // Handle editor ready state
+  const handleEditorReady = useCallback(() => {
+    setEditorReady(true);
+  }, []);
+
+  // Handle editor content change
+  const handleEditorChange = useCallback((content) => {
+    setFormData(prev => ({ ...prev, content }));
+  }, []);
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this news article?')) {
