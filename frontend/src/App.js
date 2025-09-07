@@ -87,6 +87,10 @@ function App() {
                       <Route path="/publications" element={<Publications />} />
                       <Route path="/projects" element={<Projects />} />
                       <Route path="/achievements" element={<Achievements />} />
+                      <Route path="/news" element={<News />} />
+                      <Route path="/news/:slug" element={<NewsDetail />} />
+                      <Route path="/events/:slug" element={<NewsDetail />} />
+                      <Route path="/upcoming-events/:slug" element={<NewsDetail />} />
                       <Route path="/contact" element={<Contact />} />
                       <Route path="/gallery" element={<PhotoGallery />} />
                       <Route path="*" element={<Navigate to="/" replace />} />
