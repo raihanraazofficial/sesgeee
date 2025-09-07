@@ -158,7 +158,8 @@ const AdminNews = () => {
     'list', 'bullet', 'indent',
     'align',
     'link', 'image', 'video',
-    'formula'
+    'formula',
+    'table'
   ];
 
   const filteredNews = news.filter(item => {
