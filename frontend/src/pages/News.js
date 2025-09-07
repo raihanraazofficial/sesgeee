@@ -19,7 +19,21 @@ const News = () => {
 
   useEffect(() => {
     loadNews();
+    loadSettings();
   }, []);
+
+  const loadSettings = async () => {
+    try {
+      const settingsData = await fetchData('settings');
+      if (settingsData && settingsData.length > 0) {
+        setSettings(settingsData[0]);
+      } else if (settingsData && !Array.isArray(settingsData)) {
+        setSettings(settingsData);
+      }
+    } catch (error) {
+      console.error('Error loading settings:', error);
+    }
+  };
 
   const loadNews = async () => {
     try {
