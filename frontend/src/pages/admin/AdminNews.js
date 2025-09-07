@@ -99,16 +99,16 @@ const AdminNews = () => {
       return;
     }
     
-    // Create professional table HTML
+    // Create professional table HTML with classes that work with ProfessionalContentRenderer
     let tableHTML = `
-      <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: Arial, sans-serif;">
+      <table class="professional-table-content" style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: 'Inter', sans-serif; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e5e7eb;">
         <thead>
-          <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+          <tr style="background: linear-gradient(135deg, #f9fafb, #f3f4f6); border-bottom: 2px solid #e5e7eb;">
     `;
     
     // Add header cells
     for (let col = 1; col <= numCols; col++) {
-      tableHTML += `<th style="border: 1px solid #dee2e6; padding: 12px; text-align: left; font-weight: 600; color: #495057;">Header ${col}</th>`;
+      tableHTML += `<th class="table-header-cell" style="border: 1px solid #e5e7eb; padding: 12px 16px; text-align: left; font-weight: 600; color: #111827; background: linear-gradient(135deg, #f9fafb, #f3f4f6); position: relative;">Header ${col}</th>`;
     }
     
     tableHTML += `
@@ -119,9 +119,10 @@ const AdminNews = () => {
     
     // Add data rows
     for (let row = 1; row <= numRows; row++) {
-      tableHTML += `<tr style="${row % 2 === 0 ? 'background-color: #f8f9fa;' : ''}">`;
+      const isEven = row % 2 === 0;
+      tableHTML += `<tr style="${isEven ? 'background-color: #fafbfc;' : 'background-color: white;'}" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor='${isEven ? '#fafbfc' : 'white'}'">`;
       for (let col = 1; col <= numCols; col++) {
-        tableHTML += `<td style="border: 1px solid #dee2e6; padding: 12px; color: #495057;">Row ${row}, Col ${col}</td>`;
+        tableHTML += `<td class="table-data-cell" style="border: 1px solid #f3f4f6; padding: 12px 16px; color: #374151; transition: background-color 0.2s ease;">Row ${row}, Col ${col}</td>`;
       }
       tableHTML += `</tr>`;
     }
@@ -134,6 +135,7 @@ const AdminNews = () => {
     const range = quill.getSelection();
     if (range) {
       quill.clipboard.dangerouslyPasteHTML(range.index, tableHTML);
+      toast.success('Professional table inserted! It will display beautifully in the blog view.');
     }
   };
 
