@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Plus, Edit, Trash2, Newspaper, Calendar, Search, Filter, Star, X, Download, Copy, Image, Quote, Code, FileText, Table } from 'lucide-react';
+import { ArrowLeft, Plus, Edit, Trash2, Newspaper, Calendar, Search, Filter, Star, X } from 'lucide-react';
 import { useData } from '../../contexts/DataContext';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
