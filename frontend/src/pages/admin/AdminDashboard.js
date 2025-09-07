@@ -20,12 +20,14 @@ const AdminDashboard = () => {
     try {
       setLoading(true);
       // Fetch all data from Firestore
-      await Promise.all([
+      const [peopleData, publicationsData, projectsData, achievementsData, newsData] = await Promise.all([
         fetchData('people'),
         fetchData('publications'),
         fetchData('projects'),
-        fetchData('achievements')
+        fetchData('achievements'),
+        fetchData('news')
       ]);
+      setNews(newsData || []);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
     } finally {
