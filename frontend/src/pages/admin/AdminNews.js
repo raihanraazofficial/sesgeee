@@ -464,7 +464,7 @@ const AdminNews = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Published Date *
@@ -491,22 +491,7 @@ const AdminNews = () => {
                     <option value="draft">Draft</option>
                   </select>
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Image URL
-                </label>
-                <input
-                  type="url"
-                  value={formData.image}
-                  onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="https://example.com/image.jpg"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Author
@@ -516,10 +501,40 @@ const AdminNews = () => {
                     value={formData.author}
                     onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
                     className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="Article author"
+                    placeholder="Author name"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Featured Image URL
+                  </label>
+                  <input
+                    type="url"
+                    value={formData.image}
+                    onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    placeholder="https://example.com/image.jpg"
                   />
                 </div>
 
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Image Alt Text
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.image_alt}
+                    onChange={(e) => setFormData(prev => ({ ...prev, image_alt: e.target.value }))}
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    placeholder="Describe the image for accessibility"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Tags (comma-separated)
@@ -532,7 +547,38 @@ const AdminNews = () => {
                     placeholder="research, innovation, technology"
                   />
                 </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    SEO Keywords
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.seo_keywords}
+                    onChange={(e) => setFormData(prev => ({ ...prev, seo_keywords: e.target.value }))}
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    placeholder="SEO keywords for search optimization"
+                  />
+                </div>
               </div>
+
+              {formData.category === 'events' || formData.category === 'upcoming_events' ? (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Google Calendar Link (Optional)
+                  </label>
+                  <input
+                    type="url"
+                    value={formData.google_calendar_link}
+                    onChange={(e) => setFormData(prev => ({ ...prev, google_calendar_link: e.target.value }))}
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    placeholder="https://calendar.google.com/calendar/embed?src=..."
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Embed URL from Google Calendar to display event calendar
+                  </p>
+                </div>
+              ) : null}
 
               <div className="flex items-center">
                 <input
