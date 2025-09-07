@@ -20,6 +20,10 @@ const AdminNews = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
 
+  const [isTableDialogOpen, setIsTableDialogOpen] = useState(false);
+  const [tableConfig, setTableConfig] = useState({ rows: 3, cols: 3 });
+  const [currentQuillRef, setCurrentQuillRef] = useState(null);
+
   // Form state
   const [formData, setFormData] = useState({
     title: '',
