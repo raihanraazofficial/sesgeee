@@ -10,6 +10,316 @@ const ProfessionalContentRenderer = ({ content, className = "" }) => {
   const contentRef = useRef(null);
   const [copiedText, setCopiedText] = useState('');
 
+  const processKaTexFormulas = useCallback(() => {
+    if (!contentRef.current) return;
+    // Find all KaTeX formulas
+    const formulas = contentRef.current.querySelectorAll('.katex-formula, [data-formula]');
+    formulas.forEach(formula => {
+      try {
+        const latex = formula.textContent || formula.getAttribute('data-formula');
+        if (latex) {
+          const rendered = katex.renderToString(latex, {
+            throwOnError: false,
+            displayMode: formula.classList.contains('display-mode'),
+            output: 'html'
+          });
+          formula.innerHTML = rendered;
+          formula.classList.add('processed-formula');
+        }
+      } catch (error) {
+        console.warn('KaTeX rendering error:', error);
+        formula.classList.add('formula-error');
+        formula.title = 'Formula rendering error';
+      }
+    });
+
+    // Process inline LaTeX patterns
+    const textNodes = getTextNodes(contentRef.current);
+    textNodes.forEach(node => {
+      const text = node.textContent;
+      const latexPattern = /\\([a-zA-Z]+)(\{[^}]*\})*|\\\(([^\\)]+)\\\)|\\\[([^\]]+)\\\]/g;
+      
+      if (latexPattern.test(text)) {
+        const parent = node.parentNode;
+        const wrapper = document.createElement('span');
+        
+        let lastIndex = 0;
+        let match;
+        latexPattern.lastIndex = 0;
+        
+        while ((match = latexPattern.exec(text)) !== null) {
+          // Add text before match
+          if (match.index > lastIndex) {
+            wrapper.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+          }
+          
+          // Create formula element
+          const formulaSpan = document.createElement('span');
+          formulaSpan.className = 'inline-formula professional-formula';
+          
+          try {
+            const latex = match[0];
+            const rendered = katex.renderToString(latex, {
+              throwOnError: false,
+              displayMode: latex.startsWith('\\['),
+              output: 'html'
+            });
+            formulaSpan.innerHTML = rendered;
+          } catch (error) {
+            formulaSpan.textContent = match[0];
+            formulaSpan.className += ' formula-error';
+            formulaSpan.title = 'Formula rendering error';
+          }
+          
+          wrapper.appendChild(formulaSpan);
+          lastIndex = match.index + match[0].length;
+        }
+        
+        // Add remaining text
+        if (lastIndex < text.length) {
+          wrapper.appendChild(document.createTextNode(text.slice(lastIndex)));
+        }
+        
+        parent.replaceChild(wrapper, node);
+      }
+    });
+  }, []);
+
+  const processCodeBlocks = useCallback(() => {
+    if (!contentRef.current) return;
+    const codeBlocks = contentRef.current.querySelectorAll('pre code, .ql-code-block, code');
+    codeBlocks.forEach((block, index) => {
+      if (block.closest('.processed-code')) return;
+      
+      const isInline = block.tagName === 'CODE' && block.parentNode.tagName !== 'PRE';
+      
+      if (isInline) {
+        // Style inline code
+        block.className = 'professional-inline-code';
+        return;
+      }
+      
+      // Create wrapper for block code
+      const wrapper = document.createElement('div');
+      wrapper.className = 'professional-code-block';
+      
+      const header = document.createElement('div');
+      header.className = 'code-header';
+      
+      const language = getCodeLanguage(block);
+      const langLabel = document.createElement('span');
+      langLabel.className = 'language-label';
+      langLabel.textContent = language || 'Code';
+      
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'copy-code-btn';
+      copyBtn.innerHTML = `
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+          <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+        </svg>
+        Copy
+      `;
+      
+      copyBtn.addEventListener('click', () => copyCode(block, copyBtn, index));
+      
+      header.appendChild(langLabel);
+      header.appendChild(copyBtn);
+      
+      const codeContainer = document.createElement('div');
+      codeContainer.className = 'code-container';
+      
+      // Apply syntax highlighting
+      if (language && hljs.getLanguage(language)) {
+        try {
+          const highlighted = hljs.highlight(block.textContent, { language });
+          block.innerHTML = highlighted.value;
+          block.className = `hljs language-${language}`;
+        } catch (error) {
+          console.warn('Syntax highlighting error:', error);
+        }
+      } else {
+        block.className = 'hljs';
+      }
+      
+      codeContainer.appendChild(block.cloneNode(true));
+      wrapper.appendChild(header);
+      wrapper.appendChild(codeContainer);
+      
+      block.parentNode.replaceChild(wrapper, block);
+      wrapper.classList.add('processed-code');
+    });
+  }, []);
+
+  const processTables = useCallback(() => {
+    if (!contentRef.current) return;
+    const tables = contentRef.current.querySelectorAll('table');
+    tables.forEach(table => {
+      if (table.closest('.processed-table')) return;
+      
+      // Create wrapper
+      const wrapper = document.createElement('div');
+      wrapper.className = 'professional-table-wrapper';
+      
+      const tableContainer = document.createElement('div');
+      tableContainer.className = 'table-container';
+      
+      // Apply professional styling
+      table.className = 'professional-table';
+      
+      // Ensure proper header styling
+      const thead = table.querySelector('thead');
+      if (thead) {
+        thead.className = 'table-header';
+      }
+      
+      const tbody = table.querySelector('tbody');
+      if (tbody) {
+        tbody.className = 'table-body';
+      }
+      
+      // Style cells
+      const cells = table.querySelectorAll('td, th');
+      cells.forEach(cell => {
+        cell.className = cell.tagName === 'TH' ? 'table-header-cell' : 'table-data-cell';
+      });
+      
+      tableContainer.appendChild(table.cloneNode(true));
+      wrapper.appendChild(tableContainer);
+      
+      table.parentNode.replaceChild(wrapper, table);
+      wrapper.classList.add('processed-table');
+    });
+  }, []);
+
+  const processImages = useCallback(() => {
+    if (!contentRef.current) return;
+    const images = contentRef.current.querySelectorAll('img');
+    images.forEach(img => {
+      if (img.closest('.processed-image')) return;
+      
+      const wrapper = document.createElement('figure');
+      wrapper.className = 'professional-image-wrapper';
+      
+      const imageContainer = document.createElement('div');
+      imageContainer.className = 'image-container';
+      
+      img.className = 'professional-image';
+      img.loading = 'lazy';
+      
+      imageContainer.appendChild(img.cloneNode(true));
+      wrapper.appendChild(imageContainer);
+      
+      // Add caption if alt text exists
+      if (img.alt) {
+        const caption = document.createElement('figcaption');
+        caption.className = 'image-caption';
+        caption.textContent = img.alt;
+        wrapper.appendChild(caption);
+      }
+      
+      img.parentNode.replaceChild(wrapper, img);
+      wrapper.classList.add('processed-image');
+    });
+  }, []);
+
+  const processLinks = useCallback(() => {
+    if (!contentRef.current) return;
+    const links = contentRef.current.querySelectorAll('a');
+    links.forEach(link => {
+      if (link.closest('.processed-link')) return;
+      
+      link.className = 'professional-link';
+      
+      // Add external link icon for external links
+      if (link.hostname && link.hostname !== window.location.hostname) {
+        link.classList.add('external-link');
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        
+        const icon = document.createElement('span');
+        icon.className = 'external-link-icon';
+        icon.innerHTML = '↗';
+        link.appendChild(icon);
+      }
+      
+      link.classList.add('processed-link');
+    });
+  }, []);
+
+  const processVideos = useCallback(() => {
+    if (!contentRef.current) return;
+    const videos = contentRef.current.querySelectorAll('iframe[src*="youtube"], iframe[src*="vimeo"], video');
+    videos.forEach(video => {
+      if (video.closest('.processed-video')) return;
+      
+      const wrapper = document.createElement('div');
+      wrapper.className = 'professional-video-wrapper';
+      
+      const videoContainer = document.createElement('div');
+      videoContainer.className = 'video-container';
+      
+      if (video.tagName === 'IFRAME') {
+        video.className = 'professional-iframe';
+        videoContainer.appendChild(video.cloneNode(true));
+      } else {
+        video.className = 'professional-video';
+        video.controls = true;
+        videoContainer.appendChild(video.cloneNode(true));
+      }
+      
+      wrapper.appendChild(videoContainer);
+      video.parentNode.replaceChild(wrapper, video);
+      wrapper.classList.add('processed-video');
+    });
+  }, []);
+
+  const processPDFs = useCallback(() => {
+    if (!contentRef.current) return;
+    const pdfs = contentRef.current.querySelectorAll('iframe[src*=".pdf"], .pdf-embed');
+    pdfs.forEach(pdf => {
+      if (pdf.closest('.processed-pdf')) return;
+      
+      // PDF embeds are already styled from the rich text editor
+      pdf.classList.add('processed-pdf');
+    });
+  }, []);
+
+  const processBlockquotes = useCallback(() => {
+    if (!contentRef.current) return;
+    const blockquotes = contentRef.current.querySelectorAll('blockquote');
+    blockquotes.forEach(blockquote => {
+      if (blockquote.closest('.processed-blockquote')) return;
+      
+      blockquote.className = 'professional-blockquote';
+      
+      // Add quote icon
+      const icon = document.createElement('div');
+      icon.className = 'quote-icon';
+      icon.innerHTML = '"';
+      blockquote.insertBefore(icon, blockquote.firstChild);
+      
+      blockquote.classList.add('processed-blockquote');
+    });
+  }, []);
+
+  const processLists = useCallback(() => {
+    if (!contentRef.current) return;
+    const lists = contentRef.current.querySelectorAll('ul, ol');
+    lists.forEach(list => {
+      if (list.closest('.processed-list')) return;
+      
+      list.className = list.tagName === 'UL' ? 'professional-ul' : 'professional-ol';
+      
+      const items = list.querySelectorAll('li');
+      items.forEach(item => {
+        item.className = 'professional-list-item';
+      });
+      
+      list.classList.add('processed-list');
+    });
+  }, []);
+
   const processContent = useCallback(() => {
     if (!contentRef.current) return;
 
@@ -39,7 +349,7 @@ const ProfessionalContentRenderer = ({ content, className = "" }) => {
     
     // Process lists
     processLists();
-  }, []);
+  }, [processKaTexFormulas, processCodeBlocks, processTables, processImages, processLinks, processVideos, processPDFs, processBlockquotes, processLists]);
 
   useEffect(() => {
     if (contentRef.current && content) {
@@ -47,37 +357,6 @@ const ProfessionalContentRenderer = ({ content, className = "" }) => {
       processContent();
     }
   }, [content, processContent]);
-
-  const processContent = () => {
-    if (!contentRef.current) return;
-
-    // Process KaTeX formulas
-    processKaTexFormulas();
-    
-    // Process code blocks
-    processCodeBlocks();
-    
-    // Process tables
-    processTables();
-    
-    // Process images
-    processImages();
-    
-    // Process links
-    processLinks();
-    
-    // Process videos
-    processVideos();
-    
-    // Process PDFs
-    processPDFs();
-    
-    // Process blockquotes
-    processBlockquotes();
-    
-    // Process lists
-    processLists();
-  };
 
   const processKaTexFormulas = () => {
     // Find all KaTeX formulas
