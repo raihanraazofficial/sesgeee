@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowUp, Calendar, Clock, ExternalLink } from 'lucide-react';
+import { ArrowUp, Calendar, Clock, ExternalLink, Search, Filter, SortDesc, Download, Share2, Printer } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import { useData } from '../contexts/DataContext';
