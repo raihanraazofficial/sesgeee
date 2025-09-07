@@ -7,8 +7,10 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 const News = () => {
   const { news, fetchData, loading } = useData();
-  const [featuredNews, setFeaturedNews] = useState([]);
-  const [recentNews, setRecentNews] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('date');
+  const [filteredItems, setFilteredItems] = useState([]);
 
   useEffect(() => {
     fetchData('news');
@@ -16,12 +18,51 @@ const News = () => {
 
   useEffect(() => {
     if (news.length > 0) {
-      const featured = news.filter(item => item.is_featured);
-      const recent = news.filter(item => !item.is_featured);
-      setFeaturedNews(featured);
-      setRecentNews(recent);
+      let filtered = [...news];
+
+      // Category filter
+      if (selectedCategory !== 'all') {
+        if (selectedCategory === 'featured') {
+          filtered = filtered.filter(item => item.is_featured === true);
+        } else {
+          filtered = filtered.filter(item => item.category === selectedCategory);
+        }
+      }
+
+      // Search filter
+      if (searchTerm) {
+        const search = searchTerm.toLowerCase();
+        filtered = filtered.filter(item => 
+          (item.title || '').toLowerCase().includes(search) ||
+          (item.excerpt || '').toLowerCase().includes(search) ||
+          (item.author || '').toLowerCase().includes(search) ||
+          (Array.isArray(item.tags) ? item.tags.join(' ') : '').toLowerCase().includes(search)
+        );
+      }
+
+      // Sort
+      filtered.sort((a, b) => {
+        if (sortBy === 'date') {
+          return new Date(b.published_date || 0) - new Date(a.published_date || 0);
+        } else if (sortBy === 'title') {
+          return (a.title || '').localeCompare(b.title || '');
+        }
+        return 0;
+      });
+
+      setFilteredItems(filtered);
+    } else {
+      setFilteredItems([]);
     }
-  }, [news]);
+  }, [news, selectedCategory, searchTerm, sortBy]);
+
+  const categoryButtons = [
+    { value: 'all', label: 'All Items', color: 'bg-gray-100 text-gray-800 hover:bg-gray-200' },
+    { value: 'news', label: 'News', color: 'bg-blue-100 text-blue-800 hover:bg-blue-200' },
+    { value: 'events', label: 'Events', color: 'bg-green-100 text-green-800 hover:bg-green-200' },
+    { value: 'upcoming_events', label: 'Upcoming Events', color: 'bg-purple-100 text-purple-800 hover:bg-purple-200' },
+    { value: 'featured', label: 'Featured', color: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200' }
+  ];
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
