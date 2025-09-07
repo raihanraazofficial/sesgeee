@@ -53,7 +53,12 @@ const NewsDetail = () => {
       
       // Fetch all news and find the specific item
       // Use same parameters as News.js to ensure we get the same dataset
-      const allNews = await fetchData('news');
+      // Force to get mock data for consistency with News.js page
+      const allNews = await fetchData('news', { 
+        status: 'published',
+        sort_by: 'published_date',
+        sort_order: 'desc'
+      });
       console.log('[NewsDetail] Fetched news items:', allNews?.length || 0, 'items');
       console.log('[NewsDetail] News IDs:', allNews?.map(n => `${n.id} (${n.title?.substring(0, 30)}...)`));
       
