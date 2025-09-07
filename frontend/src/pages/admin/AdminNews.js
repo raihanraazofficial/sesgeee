@@ -89,14 +89,15 @@ const AdminNews = () => {
 
   // Custom handlers for toolbar buttons
   const insertTable = (quill) => {
-    // Professional table creation with user input
-    const rows = prompt('Enter number of rows (1-20):', '3');
-    const cols = prompt('Enter number of columns (1-10):', '3');
+    setCurrentQuillRef(quill);
+    setIsTableDialogOpen(true);
+  };
+
+  const handleInsertTable = () => {
+    if (!currentQuillRef) return;
     
-    if (!rows || !cols) return;
-    
-    const numRows = parseInt(rows);
-    const numCols = parseInt(cols);
+    const numRows = parseInt(tableConfig.rows);
+    const numCols = parseInt(tableConfig.cols);
     
     if (isNaN(numRows) || isNaN(numCols) || numRows < 1 || numRows > 20 || numCols < 1 || numCols > 10) {
       toast.error('Please enter valid numbers (Rows: 1-20, Columns: 1-10)');
@@ -112,7 +113,7 @@ const AdminNews = () => {
     
     // Add header cells
     for (let col = 1; col <= numCols; col++) {
-      tableHTML += `<th class="table-header-cell" style="border: 1px solid #e5e7eb; padding: 12px 16px; text-align: left; font-weight: 600; color: #111827; background: linear-gradient(135deg, #f9fafb, #f3f4f6); position: relative;">Header ${col}</th>`;
+      tableHTML += `<th class="table-header-cell" style="border: 1px solid #e5e7eb; padding: 12px 16px; text-align: left; font-weight: 600; color: #111827; background: linear-gradient(135deg, #f9fafb, #f3f4f6); position: relative;">Column ${col}</th>`;
     }
     
     tableHTML += `
@@ -126,7 +127,7 @@ const AdminNews = () => {
       const isEven = row % 2 === 0;
       tableHTML += `<tr style="${isEven ? 'background-color: #fafbfc;' : 'background-color: white;'}" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor='${isEven ? '#fafbfc' : 'white'}'">`;
       for (let col = 1; col <= numCols; col++) {
-        tableHTML += `<td class="table-data-cell" style="border: 1px solid #f3f4f6; padding: 12px 16px; color: #374151; transition: background-color 0.2s ease;">Row ${row}, Col ${col}</td>`;
+        tableHTML += `<td class="table-data-cell" style="border: 1px solid #f3f4f6; padding: 12px 16px; color: #374151; transition: background-color 0.2s ease;">Data ${row}-${col}</td>`;
       }
       tableHTML += `</tr>`;
     }
@@ -136,11 +137,15 @@ const AdminNews = () => {
       </table>
     `;
     
-    const range = quill.getSelection();
+    const range = currentQuillRef.getSelection();
     if (range) {
-      quill.clipboard.dangerouslyPasteHTML(range.index, tableHTML);
+      currentQuillRef.clipboard.dangerouslyPasteHTML(range.index, tableHTML);
       toast.success('Professional table inserted! It will display beautifully in the blog view.');
     }
+    
+    setIsTableDialogOpen(false);
+    setCurrentQuillRef(null);
+    setTableConfig({ rows: 3, cols: 3 });
   };
 
   const insertPDF = (quill) => {
