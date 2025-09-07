@@ -4,6 +4,7 @@ import { Search, Filter, Calendar, Clock, Eye, ArrowRight, ExternalLink } from '
 import { useData } from '../contexts/DataContext';
 import HeroSection from '../components/HeroSection';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { testFirebaseConnection, addTestNewsItem } from '../utils/firebaseDebug';
 
 const News = () => {
   const { fetchData } = useData();
