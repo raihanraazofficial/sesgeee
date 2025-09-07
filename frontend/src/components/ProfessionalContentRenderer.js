@@ -358,79 +358,7 @@ const ProfessionalContentRenderer = ({ content, className = "" }) => {
     }
   }, [content, processContent]);
 
-  const processKaTexFormulas = () => {
-    // Find all KaTeX formulas
-    const formulas = contentRef.current.querySelectorAll('.katex-formula, [data-formula]');
-    formulas.forEach(formula => {
-      try {
-        const latex = formula.textContent || formula.getAttribute('data-formula');
-        if (latex) {
-          const rendered = katex.renderToString(latex, {
-            throwOnError: false,
-            displayMode: formula.classList.contains('display-mode'),
-            output: 'html'
-          });
-          formula.innerHTML = rendered;
-          formula.classList.add('processed-formula');
-        }
-      } catch (error) {
-        console.warn('KaTeX rendering error:', error);
-        formula.classList.add('formula-error');
-        formula.title = 'Formula rendering error';
-      }
-    });
 
-    // Process inline LaTeX patterns
-    const textNodes = getTextNodes(contentRef.current);
-    textNodes.forEach(node => {
-      const text = node.textContent;
-      const latexPattern = /\\([a-zA-Z]+)(\{[^}]*\})*|\\\(([^\\)]+)\\\)|\\\[([^\]]+)\\\]/g;
-      
-      if (latexPattern.test(text)) {
-        const parent = node.parentNode;
-        const wrapper = document.createElement('span');
-        
-        let lastIndex = 0;
-        let match;
-        latexPattern.lastIndex = 0;
-        
-        while ((match = latexPattern.exec(text)) !== null) {
-          // Add text before match
-          if (match.index > lastIndex) {
-            wrapper.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
-          }
-          
-          // Create formula element
-          const formulaSpan = document.createElement('span');
-          formulaSpan.className = 'inline-formula professional-formula';
-          
-          try {
-            const latex = match[0];
-            const rendered = katex.renderToString(latex, {
-              throwOnError: false,
-              displayMode: latex.startsWith('\\['),
-              output: 'html'
-            });
-            formulaSpan.innerHTML = rendered;
-          } catch (error) {
-            formulaSpan.textContent = match[0];
-            formulaSpan.className += ' formula-error';
-            formulaSpan.title = 'Formula rendering error';
-          }
-          
-          wrapper.appendChild(formulaSpan);
-          lastIndex = match.index + match[0].length;
-        }
-        
-        // Add remaining text
-        if (lastIndex < text.length) {
-          wrapper.appendChild(document.createTextNode(text.slice(lastIndex)));
-        }
-        
-        parent.replaceChild(wrapper, node);
-      }
-    });
-  };
 
   const processCodeBlocks = () => {
     const codeBlocks = contentRef.current.querySelectorAll('pre code, .ql-code-block, code');
