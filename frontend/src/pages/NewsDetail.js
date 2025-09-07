@@ -148,40 +148,61 @@ const NewsDetail = () => {
 
   const handleDownloadPDF = async () => {
     try {
-      // Create a comprehensive PDF-style content
-      const pdfContent = `
-        ${newsItem?.title || ''}
-        
-        Author: ${newsItem?.author || ''}
-        Published: ${formatDate(newsItem?.published_date)}
-        Category: ${newsItem?.category || ''}
-        
-        ${newsItem?.excerpt || ''}
-        
-        ${newsItem?.content?.replace(/<[^>]*>/g, '') || ''}
-        
-        Tags: ${newsItem?.tags?.join(', ') || ''}
-        
-        ---
-        © SESGRG - Sustainable Energy & Smart Grid Research Group
-        ${window.location.href}
+      // Clean HTML content to plain text
+      const cleanContent = newsItem?.content?.replace(/<[^>]*>/g, '').replace(/\n\s*\n/g, '\n\n') || '';
+      
+      // Create well-formatted content
+      const articleContent = `
+SESGRG - SUSTAINABLE ENERGY & SMART GRID RESEARCH GROUP
+================================================================
+
+${newsItem?.title || 'Untitled Article'}
+
+================================================================
+
+Author: ${newsItem?.author || 'Unknown'}
+Published: ${formatDate(newsItem?.published_date)}
+Category: ${newsItem?.category?.toUpperCase() || 'NEWS'}
+
+================================================================
+
+${newsItem?.excerpt ? `SUMMARY:\n${newsItem.excerpt}\n\n================================================================\n\n` : ''}CONTENT:
+
+${cleanContent}
+
+${newsItem?.tags && newsItem.tags.length > 0 ? `\n================================================================\n\nTAGS: ${newsItem.tags.join(', ')}\n` : ''}
+================================================================
+
+Source: ${window.location.href}
+© ${new Date().getFullYear()} SESGRG - Sustainable Energy & Smart Grid Research Group
+Department of EEE, BRAC University
       `;
       
-      // Create blob and download
-      const blob = new Blob([pdfContent], { type: 'text/plain' });
+      // Create and download file
+      const blob = new Blob([articleContent], { type: 'text/plain;charset=utf-8' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.download = `${newsItem?.title?.replace(/[^a-zA-Z0-9]/g, '-') || 'article'}.txt`;
+      
+      // Create a safe filename
+      const safeTitle = newsItem?.title?.replace(/[^a-zA-Z0-9\s-]/g, '').replace(/\s+/g, '-').slice(0, 50) || 'article';
+      const date = new Date(newsItem?.published_date).toISOString().split('T')[0];
+      a.download = `SESGRG-${safeTitle}-${date}.txt`;
+      
       document.body.appendChild(a);
       a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+      
+      // Cleanup
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }, 100);
       
       toast.success('Article downloaded successfully!');
     } catch (error) {
-      toast.error('Failed to download article');
+      console.error('Download error:', error);
+      toast.error('Failed to download article. Please try again.');
     }
   };
 
