@@ -28,7 +28,7 @@ app.add_middleware(
         "https://localhost:3000", 
         "https://*.vercel.app",
         "https://*.emergentagent.com",
-        "https://event-content-admin.preview.emergentagent.com",
+        "https://site-overhaul-1.preview.emergentagent.com",
         "*"  # Allow all origins for development
     ],
     allow_credentials=True,
