@@ -463,25 +463,40 @@ export function DataProvider({ children }) {
 
       try {
         console.log(`[DataContext] Attempting Firestore query for collection: ${collectionName}`);
-        // Get data from Firestore
+        // Get data from Firestore with simplified query
         const collectionRef = collection(db, collectionName);
         let q = collectionRef;
         
-        // Apply filters from params
-        if (params.category) {
-          q = query(q, where('category', '==', params.category));
-        }
-        if (params.status) {
-          q = query(q, where('status', '==', params.status));
-        }
-        if (params.featured !== undefined) {
-          q = query(q, where('is_featured', '==', params.featured));
-        }
-        
-        // Apply ordering
-        if (params.sort_by) {
-          const direction = params.sort_order === 'asc' ? 'asc' : 'desc';
-          q = query(q, orderBy(params.sort_by, direction));
+        // For news and events, use minimal querying to avoid index issues
+        if (type === 'news' || type === 'events') {
+          // Only apply basic filtering if needed, no complex combinations
+          if (params.status && !params.category && !params.featured && !params.sort_by) {
+            q = query(q, where('status', '==', params.status));
+          } else if (params.category && !params.status && !params.featured && !params.sort_by) {
+            q = query(q, where('category', '==', params.category));
+          }
+          // Add simple ordering only if no filters
+          else if (!params.category && !params.status && !params.featured && params.sort_by) {
+            const direction = params.sort_order === 'asc' ? 'asc' : 'desc';
+            q = query(q, orderBy(params.sort_by, direction));
+          }
+        } else {
+          // Apply filters from params for other types
+          if (params.category) {
+            q = query(q, where('category', '==', params.category));
+          }
+          if (params.status) {
+            q = query(q, where('status', '==', params.status));
+          }
+          if (params.featured !== undefined) {
+            q = query(q, where('is_featured', '==', params.featured));
+          }
+          
+          // Apply ordering
+          if (params.sort_by) {
+            const direction = params.sort_order === 'asc' ? 'asc' : 'desc';
+            q = query(q, orderBy(params.sort_by, direction));
+          }
         }
         
         // Apply limit
