@@ -480,105 +480,17 @@ const NewsDetail = () => {
           </div>
         </article>
 
-        {/* Professional Action Buttons Section */}
+        {/* Article Footer Info Section */}
         <div className="mt-8 bg-white rounded-xl shadow-lg border border-gray-200 p-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-            <div className="text-sm text-gray-600">
-              <p className="mb-1">
-                <span className="font-medium text-gray-900">Published by:</span> {newsItem.author}
+          <div className="text-sm text-gray-600">
+            <p className="mb-1">
+              <span className="font-medium text-gray-900">Published by:</span> {newsItem.author}
+            </p>
+            {newsItem.updated_at && newsItem.updated_at !== newsItem.created_at && (
+              <p>
+                <span className="font-medium text-gray-900">Last updated:</span> {formatDate(newsItem.updated_at)}
               </p>
-              {newsItem.updated_at && newsItem.updated_at !== newsItem.created_at && (
-                <p>
-                  <span className="font-medium text-gray-900">Last updated:</span> {formatDate(newsItem.updated_at)}
-                </p>
-              )}
-            </div>
-            
-            <div className="flex items-center flex-wrap gap-3">
-              <button
-                onClick={handleDownloadPDF}
-                className="flex items-center space-x-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors shadow-sm"
-              >
-                <Download className="h-4 w-4" />
-                <span>Download Article</span>
-              </button>
-              
-              <div className="relative share-dropdown">
-                <button
-                  onClick={() => setSharing(!sharing)}
-                  className="flex items-center space-x-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors shadow-sm"
-                >
-                  <Share2 className="h-4 w-4" />
-                  <span>Share Article</span>
-                </button>
-                
-                {sharing && (
-                  <div className="absolute right-0 bottom-full mb-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-[60]">
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="text-sm font-medium text-gray-900">Share this article</p>
-                    </div>
-                    <button
-                      onClick={() => handleShare('facebook')}
-                      className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors"
-                    >
-                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                        <Facebook className="h-4 w-4 text-white" />
-                      </div>
-                      <span className="font-medium">Share on Facebook</span>
-                    </button>
-                    <button
-                      onClick={() => handleShare('twitter')}
-                      className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:bg-sky-50 transition-colors"
-                    >
-                      <div className="w-8 h-8 bg-sky-500 rounded-full flex items-center justify-center">
-                        <Twitter className="h-4 w-4 text-white" />
-                      </div>
-                      <span className="font-medium">Share on Twitter</span>
-                    </button>
-                    <button
-                      onClick={() => handleShare('linkedin')}
-                      className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors"
-                    >
-                      <div className="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center">
-                        <Linkedin className="h-4 w-4 text-white" />
-                      </div>
-                      <span className="font-medium">Share on LinkedIn</span>
-                    </button>
-                    <button
-                      onClick={() => handleShare('email')}
-                      className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
-                        <Mail className="h-4 w-4 text-white" />
-                      </div>
-                      <span className="font-medium">Share via Email</span>
-                    </button>
-                    <div className="border-t border-gray-100 my-1"></div>
-                    <button
-                      onClick={copyToClipboard}
-                      className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      <div className="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center">
-                        {copied ? (
-                          <CheckCircle className="h-4 w-4 text-white" />
-                        ) : (
-                          <Copy className="h-4 w-4 text-white" />
-                        )}
-                      </div>
-                      <span className="font-medium">{copied ? 'Link Copied!' : 'Copy Link'}</span>
-                    </button>
-                  </div>
-                )}
-              </div>
-              
-              <button
-                onClick={handlePrint}
-                className="flex items-center space-x-2 px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors shadow-sm"
-              >
-                <Printer className="h-4 w-4" />
-                <span>Print Article</span>
-              </button>
-            </div>
+            )}
           </div>
         </div>
 
