@@ -52,6 +52,7 @@ const NewsDetail = () => {
       console.log('[NewsDetail] Extracted ID:', id);
       
       // Fetch all news and find the specific item
+      // Use same parameters as News.js to ensure we get the same dataset
       const allNews = await fetchData('news');
       console.log('[NewsDetail] Fetched news items:', allNews?.length || 0, 'items');
       console.log('[NewsDetail] News IDs:', allNews?.map(n => n.id));
