@@ -457,7 +457,7 @@ const News = () => {
             )}
 
             {/* Upcoming Events Calendar */}
-            {(categoryFilter === 'all' || categoryFilter === 'upcoming_events') && (
+            {(categoryFilter === 'all' || categoryFilter === 'upcoming_events') && settings.google_calendar_url && (
               <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                   <Calendar className="h-6 w-6 mr-3 text-primary-600" />
@@ -465,7 +465,7 @@ const News = () => {
                 </h2>
                 <div className="bg-gray-50 rounded-lg p-4">
                   <iframe
-                    src="https://calendar.google.com/calendar/embed?height=400&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FDhaka&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&mode=AGENDA"
+                    src={settings.google_calendar_url}
                     style={{ border: 0 }}
                     width="100%"
                     height="400"
