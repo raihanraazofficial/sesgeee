@@ -512,13 +512,28 @@ const AdminNews = () => {
 
   // Handle editor ready state
   const handleEditorReady = useCallback(() => {
-    setEditorReady(true);
+    if (quillRef.current) {
+      const editor = quillRef.current.getEditor();
+      if (editor) {
+        setEditorReady(true);
+      }
+    }
   }, []);
 
   // Handle editor content change
   const handleEditorChange = useCallback((content) => {
     setFormData(prev => ({ ...prev, content }));
   }, []);
+
+  // Initialize editor after mount
+  useEffect(() => {
+    if (showModal && quillRef.current) {
+      const timer = setTimeout(() => {
+        handleEditorReady();
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [showModal, handleEditorReady]);
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this news article?')) {
