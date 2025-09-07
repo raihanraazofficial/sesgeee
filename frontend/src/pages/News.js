@@ -7,11 +7,27 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import GoogleCalendar from '../components/GoogleCalendar';
 
 const News = () => {
-  const { news, fetchData, loading } = useData();
+  const { news, fetchData, loading, settings } = useData();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('date');
   const [filteredItems, setFilteredItems] = useState([]);
+
+  // Get calendar link from settings or from an event with calendar link
+  const getCalendarLink = () => {
+    // First try to get from settings
+    if (settings?.google_calendar_link) {
+      return settings.google_calendar_link;
+    }
+    
+    // Otherwise get from any event that has a calendar link
+    const eventWithCalendar = news.find(item => 
+      (item.category === 'events' || item.category === 'upcoming_events') && 
+      item.google_calendar_link
+    );
+    
+    return eventWithCalendar?.google_calendar_link || null;
+  };
 
   useEffect(() => {
     fetchData('news');
