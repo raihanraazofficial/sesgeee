@@ -18,12 +18,7 @@ const News = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  useEffect(() => {
-    loadNews();
-    loadSettings();
-  }, []);
-
-  const loadSettings = async () => {
+  const loadSettings = useCallback(async () => {
     try {
       const settingsData = await fetchData('settings');
       if (settingsData && settingsData.length > 0) {
@@ -34,9 +29,9 @@ const News = () => {
     } catch (error) {
       console.error('Error loading settings:', error);
     }
-  };
+  }, [fetchData]);
 
-  const loadNews = async () => {
+  const loadNews = useCallback(async () => {
     try {
       setLoading(true);
       const newsData = await fetchData('news', { 
@@ -51,7 +46,12 @@ const News = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [fetchData]);
+
+  useEffect(() => {
+    loadNews();
+    loadSettings();
+  }, [loadNews, loadSettings]);
 
   // Debug function to test Firebase connection
   const debugFirebase = async () => {
