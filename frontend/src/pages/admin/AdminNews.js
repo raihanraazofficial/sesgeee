@@ -22,9 +22,13 @@ const AdminNews = () => {
     published_date: new Date().toISOString().split('T')[0],
     is_featured: false,
     image: '',
+    image_alt: '',
     author: '',
     tags: '',
-    status: 'published'
+    seo_keywords: '',
+    category: 'news', // news, events, upcoming_events
+    status: 'published',
+    google_calendar_link: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
