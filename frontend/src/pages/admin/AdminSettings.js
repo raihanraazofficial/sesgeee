@@ -192,6 +192,58 @@ const AdminSettings = () => {
             </div>
           </div>
 
+          {/* Google Calendar Integration */}
+          <div className="glass rounded-xl p-8 border border-gray-200 shadow-lg">
+            <div className="flex items-center space-x-3 mb-6">
+              <Calendar className="h-8 w-8 text-green-600" />
+              <h2 className="text-2xl font-bold text-gray-900">Google Calendar Integration</h2>
+            </div>
+            
+            <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">Events Calendar Setup</h3>
+              <p className="text-gray-600 text-sm mb-4">
+                Set up Google Calendar integration for displaying upcoming events on the News & Events page.
+              </p>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Google Calendar Embed URL
+                  </label>
+                  <input 
+                    type="url" 
+                    placeholder="https://calendar.google.com/calendar/embed?src=..."
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Get the embed URL from Google Calendar → Settings → Integrate Calendar → Embed Code
+                  </p>
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <button className="btn-primary">
+                    Save Calendar Settings
+                  </button>
+                  <button className="btn-secondary">
+                    Test Calendar
+                  </button>
+                </div>
+              </div>
+              
+              <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 className="text-sm font-semibold text-blue-900 mb-2">How to get Google Calendar embed URL:</h4>
+                <ol className="text-xs text-blue-800 space-y-1 list-decimal list-inside">
+                  <li>Go to Google Calendar and create/select your events calendar</li>
+                  <li>Click on Settings (gear icon) → Settings</li>
+                  <li>Select your calendar from the left sidebar</li>
+                  <li>Scroll down to "Integrate calendar" section</li>
+                  <li>Copy the "Embed code" URL (the src attribute of the iframe)</li>
+                  <li>Paste it above and save</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
           {/* Admin Credentials */}
           <div className="glass rounded-xl p-8 border border-gray-200 shadow-lg">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Admin Credentials</h2>
