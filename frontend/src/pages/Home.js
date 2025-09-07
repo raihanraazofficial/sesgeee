@@ -336,9 +336,6 @@ const Home = () => {
               </p>
             </div>
             <div className="flex space-x-4">
-              <button className="text-primary-600 hover:text-primary-700 font-medium">
-                Refresh
-              </button>
               <Link to="/news" className="text-primary-600 hover:text-primary-700 font-medium flex items-center space-x-1">
                 <span>View All</span>
                 <ExternalLink className="h-4 w-4" />
