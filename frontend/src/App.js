@@ -68,6 +68,7 @@ function App() {
                     <Route path="/publications" element={<AdminPublications />} />
                     <Route path="/projects" element={<AdminProjects />} />
                     <Route path="/achievements" element={<AdminAchievements />} />
+                    <Route path="/news" element={<AdminNews />} />
                     <Route path="/settings" element={<AdminSettings />} />
                   </Routes>
                 </ProtectedRoute>
