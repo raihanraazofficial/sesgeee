@@ -453,7 +453,19 @@ export function DataProvider({ children }) {
       console.log(`[DataContext] Fetching ${type}...`);
       dispatch({ type: 'SET_LOADING', payload: { type, loading: true } });
 
-      // All data types now use direct Firestore approach
+      // Force use mock data for testing - bypass Firebase
+      console.log(`[DataContext] Using mock data for ${type} (testing mode)`);
+      const mockData = getMockData(type);
+      console.log(`[DataContext] Mock data loaded for ${type}:`, mockData.length, 'items');
+      
+      dispatch({
+        type: 'SET_DATA',
+        payload: { type, data: mockData },
+      });
+
+      return mockData;
+
+      // All data types now use direct Firestore approach (DISABLED FOR TESTING)
 
       // Map type to Firestore collection name
       let collectionName = type;
