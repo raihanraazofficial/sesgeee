@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Copy, Check } from 'lucide-react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import 'katex/dist/katex.min.css';
 import katex from 'katex';
@@ -8,7 +7,6 @@ import hljs from 'highlight.js';
 
 const ProfessionalContentRenderer = ({ content, className = "" }) => {
   const contentRef = useRef(null);
-  const [copiedText, setCopiedText] = useState('');
 
   const processKaTexFormulas = useCallback(() => {
     if (!contentRef.current) return;
