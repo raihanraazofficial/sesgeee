@@ -37,10 +37,49 @@ const AdminNews = () => {
   }, [fetchData]);
 
   const filters = [
-    { value: 'all', label: 'All News' },
+    { value: 'all', label: 'All Items' },
+    { value: 'news', label: 'News' },
+    { value: 'events', label: 'Events' },
+    { value: 'upcoming_events', label: 'Upcoming Events' },
     { value: 'featured', label: 'Featured' },
     { value: 'published', label: 'Published' },
     { value: 'draft', label: 'Draft' },
+  ];
+
+  // Rich Text Editor Configuration
+  const quillModules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'font': [] }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],
+      ['blockquote', 'code-block'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],
+      [{ 'align': [] }],
+      ['link', 'image', 'video'],
+      ['formula'],
+      ['clean']
+    ],
+    formula: true,
+    imageResize: {
+      parchment: ReactQuill.Quill.import('parchment'),
+      modules: ['Resize', 'DisplaySize', 'Toolbar']
+    }
+  };
+
+  const quillFormats = [
+    'header', 'font', 'size',
+    'bold', 'italic', 'underline', 'strike',
+    'color', 'background',
+    'script',
+    'blockquote', 'code-block',
+    'list', 'bullet', 'indent',
+    'align',
+    'link', 'image', 'video',
+    'formula'
   ];
 
   const filteredNews = news.filter(item => {
