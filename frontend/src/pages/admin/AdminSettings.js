@@ -10,8 +10,10 @@ const AdminSettings = () => {
   const [initSuccess, setInitSuccess] = useState(false);
   const [initError, setInitError] = useState(null);
   const [refreshLoading, setRefreshLoading] = useState(false);
+  const [calendarUrl, setCalendarUrl] = useState('');
+  const [calendarLoading, setCalendarLoading] = useState(false);
   
-  const { fetchData } = useData();
+  const { fetchData, createItem, updateItem } = useData();
 
   const handleInitializeDatabase = async () => {
     setInitLoading(true);
