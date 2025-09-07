@@ -379,7 +379,7 @@ const Home = () => {
             <div className="animate-fade-in">
               <h2 className="text-4xl font-bold font-heading text-gray-900 mb-6">About Us</h2>
               <p className="text-gray-700 text-lg leading-relaxed mb-8 text-justified">
-                The Sustainable Energy and Smart Grid Research Group (SESGRG) is an independent research group established in 2025, 
+                The Sustainable Energy and Smart Grid Research Group (SESG Research) is an independent research group established in 2025, 
                 affiliated with the BSRM School of Engineering, BRAC University. We specialize in sustainable energy systems, 
                 smart grid technologies, and advanced power network optimization, taking a comprehensive approach that spans 
                 generation, transmission, distribution, and microgrids.
