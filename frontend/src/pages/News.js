@@ -120,7 +120,6 @@ const News = () => {
   // Pagination
   const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedNews = filteredNews.slice(startIndex, startIndex + itemsPerPage);
 
   const getCategoryBadge = (category) => {
     const categoryStyles = {
