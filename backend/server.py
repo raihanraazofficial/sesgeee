@@ -29,6 +29,7 @@ load_dotenv()
 app = FastAPI(title="SESGRG API", version="1.0.0")
 
 # CORS Configuration
+from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Allow all origins for development
