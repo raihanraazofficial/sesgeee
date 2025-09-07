@@ -182,6 +182,34 @@ const AdminNews = () => {
     fetchData('news');
   }, [fetchData]);
 
+  // Handle editor content when editing news
+  useEffect(() => {
+    if (showModal && editingNews && editorReady && quillRef.current) {
+      const editor = quillRef.current.getEditor();
+      if (editor && editingNews.content) {
+        // Small delay to ensure editor is fully ready
+        setTimeout(() => {
+          try {
+            editor.root.innerHTML = editingNews.content;
+            setFormData(prev => ({ ...prev, content: editingNews.content }));
+          } catch (error) {
+            console.log('Editor content setting error:', error);
+            // Fallback: set content directly
+            setFormData(prev => ({ ...prev, content: editingNews.content }));
+          }
+        }, 100);
+      }
+    }
+  }, [showModal, editingNews, editorReady]);
+
+  // Reset editor when modal closes
+  useEffect(() => {
+    if (!showModal) {
+      setEditorReady(false);
+      setEditorKey(prev => prev + 1); // Force re-render
+    }
+  }, [showModal]);
+
   const filters = [
     { value: 'all', label: 'All Items' },
     { value: 'news', label: 'News' },
