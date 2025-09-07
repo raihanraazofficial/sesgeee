@@ -174,6 +174,8 @@ const AdminNews = () => {
     google_calendar_link: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [editorReady, setEditorReady] = useState(false);
+  const [editorKey, setEditorKey] = useState(0); // Force re-render key
   const quillRef = useRef(null);
 
   useEffect(() => {
