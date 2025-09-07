@@ -12,6 +12,9 @@ const News = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('date');
   const [filteredItems, setFilteredItems] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [goToPage, setGoToPage] = useState('');
+  const itemsPerPage = 10;
 
   // Get calendar link from settings or from an event with calendar link
   const getCalendarLink = () => {
