@@ -6,11 +6,13 @@ import { useData } from '../../contexts/DataContext';
 const AdminDashboard = () => {
   const { logout, user } = useAuth();
   const { people, publications, projects, achievements, fetchData } = useData();
+  const [news, setNews] = useState([]);
   const [stats, setStats] = useState([
     { name: 'Total People', value: '0', icon: Users, color: 'text-blue-600' },
     { name: 'Publications', value: '0', icon: FileText, color: 'text-green-600' },
     { name: 'Projects', value: '0', icon: FolderOpen, color: 'text-purple-600' },
     { name: 'Achievements', value: '0', icon: Award, color: 'text-yellow-600' },
+    { name: 'News & Events', value: '0', icon: Calendar, color: 'text-red-600' },
   ]);
   const [loading, setLoading] = useState(true);
 
