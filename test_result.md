@@ -1,3 +1,85 @@
+# SESGRG Website - Mock Data Removal & News Detail Fixes (September 7, 2025)
+
+## Latest Task Completed: Complete Mock Data Cleanup & News Detail Bug Fixes
+
+### 🎯 **User Requirements Implemented (COMPLETED)**:
+
+#### **1. Mock Data Removal & Firestore-Only Data Fetching**:
+- ✅ **Mock Data Completely Removed**: All mock data fallbacks removed for news, events, people, publications, and projects
+- ✅ **Firestore-Only Approach**: If Firestore database is empty, shows proper "No news/events found" message instead of mock data
+- ✅ **Real Database Connection**: News page now successfully fetches data from Firestore (verified: 2 news items loaded)
+- ✅ **Empty State Handling**: When no data in database, shows appropriate empty state messages instead of hardcoded content
+
+#### **2. NewsDetail Page Duplicate Buttons Fixed**:
+- ✅ **Duplicate Buttons Removed**: Eliminated duplicate Download, Share, and Print buttons from NewsDetail page
+- ✅ **Single Button Set**: Now only shows action buttons in header, removed duplicate set from bottom
+- ✅ **Clean UI**: Streamlined user interface without confusing duplicate elements
+
+#### **3. Download Functionality Enhanced**:
+- ✅ **Working Download**: Fixed non-functioning download button - now properly downloads articles
+- ✅ **Improved File Format**: Creates well-formatted text files with proper article structure
+- ✅ **Better Naming**: Downloads with descriptive filenames like "SESGRG-article-title-2024-09-07.txt"
+- ✅ **Complete Content**: Includes title, author, content, tags, and source URL in downloadable file
+
+#### **4. Admin Settings Calendar Error Prevention**:
+- ✅ **Error Handling Added**: Added proper error handling for calendar iframe loading
+- ✅ **Load Prevention**: Prevents page blanking when calendar data is entered
+- ✅ **Console Logging**: Added logging for calendar load success/failure for debugging
+
+### 🔧 **Technical Implementation Details**:
+
+#### **DataContext Changes**:
+1. **`/app/frontend/src/contexts/DataContext.js`** - Complete mock data cleanup:
+   - Removed forced mock data usage for testing mode
+   - Added news and events to the list of types that return empty arrays instead of mock data
+   - Updated all error handling to prevent mock data fallback for core content types
+   - Now uses Firestore exclusively for news, events, people, publications, and projects
+
+#### **NewsDetail Page Fixes**:
+2. **`/app/frontend/src/pages/NewsDetail.js`** - Button and download fixes:
+   - Removed duplicate action buttons section (lines 484-583)
+   - Enhanced download functionality with proper file formatting
+   - Improved error handling for download operations
+   - Added better filename generation with date and safe title
+
+#### **News Page Calendar Protection**:
+3. **`/app/frontend/src/pages/News.js`** - Calendar iframe improvements:
+   - Added error handling for iframe loading
+   - Added load event logging for debugging
+   - Protected against page blanking when calendar loads
+
+### 📊 **Current System Status**:
+- **Firestore Connection**: ✅ Working - Successfully fetching 2 news items from database
+- **Mock Data**: ✅ Completely removed - No fallback to hardcoded content
+- **Empty States**: ✅ Proper "No news/events found" messages when database is empty
+- **Download Function**: ✅ Working - Properly downloads formatted article files
+- **UI Cleanup**: ✅ No duplicate buttons in NewsDetail pages
+- **Admin Settings**: ✅ Protected against calendar-related page blanking
+
+### ✅ **User Requirements Verification**:
+1. ✅ **Mock data removed** - No hardcoded data fallbacks, Firestore-only approach
+2. ✅ **Empty state handling** - Shows "no news/events found" when database empty
+3. ✅ **Duplicate buttons fixed** - Single set of action buttons in NewsDetail
+4. ✅ **Download functionality working** - Creates proper downloadable article files
+5. ✅ **Admin calendar protected** - Prevents page blanking when setting calendar URL
+
+### 🎨 **User Experience Improvements**:
+- **Clean Data Flow**: Users see real database content or proper empty states
+- **Better Downloads**: Enhanced download functionality with well-formatted files
+- **Simplified UI**: Removed confusing duplicate buttons
+- **Stable Admin Panel**: Calendar settings won't break the page display
+- **Consistent Behavior**: All content areas follow same database-only approach
+
+### 🔄 **Database Integration Status**:
+- **News & Events**: Firestore-only, no mock fallback
+- **People**: Firestore-only, no mock fallback  
+- **Publications**: Firestore-only, no mock fallback
+- **Projects**: Firestore-only, no mock fallback
+- **Research Areas**: Still uses mock fallback when Firestore empty (by design)
+- **Settings**: Uses Firestore with proper error handling
+
+---
+
 # SESGRG Website - News & Events Admin Functionality Removal (January 9, 2025)
 
 ## Latest Task Completed: News & Events Admin Functionality Removal
