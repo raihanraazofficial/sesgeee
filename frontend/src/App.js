@@ -15,8 +15,6 @@ import ResearchAreaDetail from './pages/ResearchAreaDetail';
 import Publications from './pages/Publications';
 import Projects from './pages/Projects';
 import Achievements from './pages/Achievements';
-import News from './pages/News';
-import NewsDetail from './pages/NewsDetail';
 import Contact from './pages/Contact';
 import PhotoGallery from './pages/PhotoGallery';
 
@@ -27,7 +25,6 @@ import AdminPeople from './pages/admin/AdminPeople';
 import AdminPublications from './pages/admin/AdminPublications';
 import AdminProjects from './pages/admin/AdminProjects';
 import AdminAchievements from './pages/admin/AdminAchievements';
-import AdminNews from './pages/admin/AdminNews';
 import AdminSettings from './pages/admin/AdminSettings';
 
 // Context
@@ -68,7 +65,6 @@ function App() {
                     <Route path="/publications" element={<AdminPublications />} />
                     <Route path="/projects" element={<AdminProjects />} />
                     <Route path="/achievements" element={<AdminAchievements />} />
-                    <Route path="/news" element={<AdminNews />} />
                     <Route path="/settings" element={<AdminSettings />} />
                   </Routes>
                 </ProtectedRoute>
@@ -87,8 +83,6 @@ function App() {
                       <Route path="/publications" element={<Publications />} />
                       <Route path="/projects" element={<Projects />} />
                       <Route path="/achievements" element={<Achievements />} />
-                      <Route path="/news" element={<News />} />
-                      <Route path="/news/:id" element={<NewsDetail />} />
                       <Route path="/contact" element={<Contact />} />
                       <Route path="/gallery" element={<PhotoGallery />} />
                       <Route path="*" element={<Navigate to="/" replace />} />

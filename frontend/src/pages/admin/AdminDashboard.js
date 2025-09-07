@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Users, FileText, FolderOpen, Award, Calendar, Settings, LogOut } from 'lucide-react';
+import { Users, FileText, FolderOpen, Award, Settings, LogOut } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useData } from '../../contexts/DataContext';
 
@@ -22,8 +22,7 @@ const AdminDashboard = () => {
         fetchData('people'),
         fetchData('publications'),
         fetchData('projects'),
-        fetchData('achievements'),
-        fetchData('news')
+        fetchData('achievements')
       ]);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
@@ -52,7 +51,6 @@ const AdminDashboard = () => {
     { name: 'Publications', href: '/admin/publications', icon: FileText },
     { name: 'Projects', href: '/admin/projects', icon: FolderOpen },
     { name: 'Achievements', href: '/admin/achievements', icon: Award },
-    { name: 'News & Events', href: '/admin/news', icon: Calendar },
     { name: 'Settings', href: '/admin/settings', icon: Settings },
   ];
 
