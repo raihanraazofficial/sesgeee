@@ -37,6 +37,9 @@ app.add_middleware(
 )
 
 # Initialize Firebase
+db = None
+firebase_initialized = False
+
 try:
     if not firebase_admin._apps:
         # Initialize Firebase with default project configuration
@@ -46,6 +49,8 @@ try:
         })
         print("Firebase initialized successfully")
     db = firestore.client()
+    firebase_initialized = True
+    print("Firestore client created successfully")
 except Exception as e:
     print(f"Firebase initialization error: {e}")
     # Use environment-based initialization as fallback
@@ -68,13 +73,17 @@ except Exception as e:
             cred = credentials.Certificate(firebase_config)
             firebase_admin.initialize_app(cred)
             db = firestore.client()
+            firebase_initialized = True
             print("Firebase initialized with service account")
         else:
             print("No Firebase credentials found, using mock data")
             db = None
+            firebase_initialized = False
     except Exception as e2:
         print(f"Fallback Firebase initialization failed: {e2}")
+        print("Firebase will be unavailable - using mock data only")
         db = None
+        firebase_initialized = False
 
 # Security
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
