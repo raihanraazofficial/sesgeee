@@ -364,6 +364,12 @@ const AdminNews = () => {
                           {newsItem.tags && Array.isArray(newsItem.tags) && newsItem.tags.length > 0 && (
                             <span><strong>Tags:</strong> {newsItem.tags.join(', ')}</span>
                           )}
+                          {newsItem.seo_keywords && (
+                            <span><strong>SEO:</strong> {newsItem.seo_keywords}</span>
+                          )}
+                          {newsItem.google_calendar_link && (
+                            <span className="text-blue-600"><strong>Calendar:</strong> Linked</span>
+                          )}
                         </div>
                       </div>
                       <div className="flex items-center space-x-2 ml-4">
