@@ -4,8 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
-import firebase_admin
-from firebase_admin import credentials, firestore, auth, storage
 import os
 from datetime import datetime, timedelta
 import uuid
@@ -14,6 +12,17 @@ from passlib.context import CryptContext
 from jose import JWTError, jwt
 import requests
 from dotenv import load_dotenv
+
+# Try to import Firebase, but don't fail if it's not available
+try:
+    import firebase_admin
+    from firebase_admin import credentials, firestore, auth, storage
+    FIREBASE_AVAILABLE = True
+except ImportError as e:
+    print(f"Firebase not available: {e}")
+    FIREBASE_AVAILABLE = False
+    firebase_admin = None
+    firestore = None
 
 load_dotenv()
 
