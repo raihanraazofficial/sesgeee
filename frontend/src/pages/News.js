@@ -83,145 +83,188 @@ const News = () => {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading.news ? (
-            <LoadingSpinner text="Loading news..." />
-          ) : news.length === 0 ? (
-            <div className="text-center py-16">
-              <div className="glass rounded-xl p-12 border border-gray-200 shadow-lg">
-                <h2 className="text-4xl font-bold font-heading text-gray-900 mb-6">
-                  News & Events Portal
-                </h2>
-                <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                  Our comprehensive news and events system is currently under development. 
-                  This will feature real-time updates, event calendars, and blog-style articles 
-                  with rich text editing capabilities.
-                </p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                  <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                    <h3 className="text-gray-900 font-semibold mb-2">Latest News</h3>
-                    <p className="text-gray-600 text-sm">Real-time updates on research developments</p>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                    <h3 className="text-gray-900 font-semibold mb-2">Event Calendar</h3>
-                    <p className="text-gray-600 text-sm">Interactive calendar for upcoming events</p>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                    <h3 className="text-gray-900 font-semibold mb-2">Rich Content</h3>
-                    <p className="text-gray-600 text-sm">WordPress-style editor with LaTeX support</p>
-                  </div>
-                </div>
-
-                <p className="text-gray-600 mb-8">
-                  Meanwhile, please check our other sections for research updates and contact us for the latest information.
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button className="btn-primary">
-                    Subscribe for Updates
-                  </button>
-                  <Link to="/contact" className="btn-secondary">
-                    Contact Us
-                  </Link>
+            <LoadingSpinner text="Loading news and events..." />
+          ) : (
+            <>
+              {/* Category Buttons */}
+              <div className="mb-8">
+                <div className="flex flex-wrap gap-3 justify-center">
+                  {categoryButtons.map((category) => (
+                    <button
+                      key={category.value}
+                      onClick={() => setSelectedCategory(category.value)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        selectedCategory === category.value 
+                          ? category.color.replace('hover:', '') 
+                          : category.color
+                      } ${selectedCategory === category.value ? 'ring-2 ring-offset-2 ring-primary-500' : ''}`}
+                    >
+                      {category.label}
+                    </button>
+                  ))}
                 </div>
               </div>
-            </div>
-          ) : (
-            <div className="space-y-16">
-              {/* Featured News */}
-              {featuredNews.length > 0 && (
-                <div>
-                  <h2 className="text-3xl font-bold font-heading text-gray-900 mb-8">Featured News</h2>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {featuredNews.map((item) => (
-                      <div key={item.id} className="research-card border border-gray-200 shadow-lg">
-                        <div className="relative h-64">
-                          <img
-                            src={item.image || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwyfHxuZXdzJTIwZXZlbnRzfGVufDB8fHx8MTc1NjY1NDE0OXww&ixlib=rb-4.1.0&q=85"}
-                            alt={item.title}
-                            className="w-full h-full object-cover"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                          <div className="absolute top-4 left-4">
-                            <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                              Featured
-                            </span>
+
+              {/* Search and Filter Bar */}
+              <div className="mb-8 bg-gray-50 rounded-xl p-6 border border-gray-200">
+                <div className="flex flex-col lg:flex-row gap-4">
+                  <div className="flex-1 relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    <input
+                      type="text"
+                      placeholder="Search news, events, or author..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white"
+                    />
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <SortDesc className="text-gray-400 h-5 w-5" />
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                      className="border border-gray-300 rounded-md px-3 py-2 bg-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    >
+                      <option value="date">Sort by Date</option>
+                      <option value="title">Sort by Title</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Results */}
+              {filteredItems.length === 0 ? (
+                <div className="text-center py-16">
+                  <div className="glass rounded-xl p-12 border border-gray-200 shadow-lg">
+                    <h2 className="text-3xl font-bold font-heading text-gray-900 mb-6">
+                      {news.length === 0 ? 'No News & Events Found' : 'No Results Found'}
+                    </h2>
+                    <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                      {news.length === 0 
+                        ? 'There are currently no news articles or events published. Please check back later for updates.'
+                        : searchTerm || selectedCategory !== 'all'
+                          ? 'No items match your current search criteria. Try adjusting your filters or search terms.'
+                          : 'No items found in the selected category.'
+                      }
+                    </p>
+                    
+                    {(searchTerm || selectedCategory !== 'all') && (
+                      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button 
+                          onClick={() => {
+                            setSearchTerm('');
+                            setSelectedCategory('all');
+                          }}
+                          className="btn-primary"
+                        >
+                          Clear Filters
+                        </button>
+                        <Link to="/contact" className="btn-secondary">
+                          Contact Us
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {filteredItems.map((item) => (
+                    <div key={item.id} className="glass rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+                      <div className="flex flex-col lg:flex-row">
+                        {item.image && (
+                          <div className="lg:w-1/3 h-64 lg:h-auto">
+                            <img
+                              src={item.image}
+                              alt={item.image_alt || item.title}
+                              className="w-full h-full object-cover"
+                            />
                           </div>
-                        </div>
-                        <div className="p-6">
-                          <h3 className="text-xl font-semibold text-gray-900 mb-3">{item.title}</h3>
-                          <p className="text-gray-600 mb-4 line-clamp-3">{item.excerpt}</p>
-                          <div className="flex justify-between items-center">
-                            <div className="flex items-center space-x-4 text-sm text-gray-500">
-                              <div className="flex items-center space-x-1">
-                                <Calendar className="h-4 w-4" />
-                                <span>{new Date(item.published_date).toLocaleDateString()}</span>
+                        )}
+                        <div className={`p-6 ${item.image ? 'lg:w-2/3' : 'w-full'}`}>
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-3 mb-3">
+                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                                  item.category === 'news' ? 'text-blue-800 bg-blue-100 border-blue-200' :
+                                  item.category === 'events' ? 'text-green-800 bg-green-100 border-green-200' :
+                                  item.category === 'upcoming_events' ? 'text-purple-800 bg-purple-100 border-purple-200' :
+                                  'text-gray-800 bg-gray-100 border-gray-200'
+                                }`}>
+                                  {item.category === 'upcoming_events' ? 'Upcoming Events' : 
+                                   item.category?.charAt(0).toUpperCase() + item.category?.slice(1) || 'News'}
+                                </span>
+                                {item.is_featured && (
+                                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-yellow-800 bg-yellow-100 border border-yellow-200">
+                                    Featured
+                                  </span>
+                                )}
+                              </div>
+                              <h3 className="text-2xl font-bold text-gray-900 mb-3 hover:text-primary-600 transition-colors">
+                                <Link to={`/news/${item.id}`}>
+                                  {item.title}
+                                </Link>
+                              </h3>
+                              <p className="text-gray-600 mb-4 line-clamp-3">{item.excerpt}</p>
+                              <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+                                <span className="flex items-center">
+                                  <Calendar className="h-4 w-4 mr-1" />
+                                  {new Date(item.published_date).toLocaleDateString()}
+                                </span>
+                                {item.author && (
+                                  <span>By {item.author}</span>
+                                )}
+                                {item.tags && Array.isArray(item.tags) && item.tags.length > 0 && (
+                                  <span>Tags: {item.tags.slice(0, 3).join(', ')}{item.tags.length > 3 ? '...' : ''}</span>
+                                )}
+                              </div>
+                              <div className="flex items-center space-x-4">
+                                <Link
+                                  to={`/news/${item.id}`}
+                                  className="text-primary-600 hover:text-primary-700 font-medium flex items-center space-x-1"
+                                >
+                                  <span>Read More</span>
+                                  <ExternalLink className="h-4 w-4" />
+                                </Link>
+                                <button className="text-gray-500 hover:text-gray-700 flex items-center space-x-1">
+                                  <Share2 className="h-4 w-4" />
+                                  <span>Share</span>
+                                </button>
                               </div>
                             </div>
-                            <Link
-                              to={`/news/${item.id}`}
-                              className="text-primary-600 hover:text-primary-700 font-medium flex items-center space-x-1"
-                            >
-                              <span>Read More</span>
-                              <ExternalLink className="h-4 w-4" />
-                            </Link>
                           </div>
                         </div>
                       </div>
-                    ))}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Google Calendar Integration for Events */}
+              {(selectedCategory === 'events' || selectedCategory === 'upcoming_events' || selectedCategory === 'all') && (
+                <div className="mt-16">
+                  <h2 className="text-3xl font-bold font-heading text-gray-900 mb-8 text-center">Upcoming Events Calendar</h2>
+                  <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                    <div className="text-center text-gray-600">
+                      <Calendar className="h-16 w-16 mx-auto mb-4 text-gray-400" />
+                      <p className="text-lg mb-4">Interactive events calendar will be displayed here</p>
+                      <p className="text-sm">Calendar integration managed through admin panel</p>
+                    </div>
                   </div>
                 </div>
               )}
 
-              {/* Recent News */}
-              {recentNews.length > 0 && (
-                <div>
-                  <h2 className="text-3xl font-bold font-heading text-gray-900 mb-8">Recent News</h2>
-                  <div className="space-y-6">
-                    {recentNews.map((item) => (
-                      <div key={item.id} className="glass rounded-xl p-6 card-hover border border-gray-200 shadow-lg">
-                        <div className="flex space-x-6">
-                          <img
-                            src={item.image || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwyfHxuZXdzJTIwZXZlbnRzfGVufDB8fHx8MTc1NjY1NDE0OXww&ixlib=rb-4.1.0&q=85"}
-                            alt={item.title}
-                            className="w-32 h-24 object-cover rounded-lg flex-shrink-0"
-                          />
-                          <div className="flex-1">
-                            <h3 className="text-xl font-semibold text-gray-900 mb-2">{item.title}</h3>
-                            <p className="text-gray-600 mb-3 line-clamp-2">{item.excerpt}</p>
-                            <div className="flex justify-between items-center">
-                              <div className="flex items-center space-x-4 text-sm text-gray-500">
-                                <div className="flex items-center space-x-1">
-                                  <Clock className="h-4 w-4" />
-                                  <span>{new Date(item.published_date).toLocaleDateString()}</span>
-                                </div>
-                              </div>
-                              <Link
-                                to={`/news/${item.id}`}
-                                className="text-primary-600 hover:text-primary-700 font-medium"
-                              >
-                                Read More
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+              {/* Back to Top */}
+              <div className="mt-12 text-center">
+                <button
+                  onClick={scrollToTop}
+                  className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors mx-auto"
+                >
+                  <span>Back to Top</span>
+                  <ArrowUp className="h-4 w-4" />
+                </button>
+              </div>
+            </>
           )}
-
-          {/* Back to Top */}
-          <div className="mt-12 text-center">
-            <button
-              onClick={scrollToTop}
-              className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors mx-auto"
-            >
-              <span>Back to Top</span>
-              <ArrowUp className="h-4 w-4" />
-            </button>
-          </div>
         </div>
       </section>
     </div>
