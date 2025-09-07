@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Plus, Search, Filter, Edit2, Trash2, Eye, Calendar, ExternalLink } from 'lucide-react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { Plus, Search, Edit2, Trash2, Calendar } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useData } from '../../contexts/DataContext';
 import ReactQuill from 'react-quill';
