@@ -72,10 +72,35 @@ const News = () => {
       });
 
       setFilteredItems(filtered);
+      setCurrentPage(1); // Reset to first page when filters change
     } else {
       setFilteredItems([]);
     }
   }, [news, selectedCategory, searchTerm, sortBy]);
+
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = filteredItems.slice(startIndex, endIndex);
+  
+  // Separate featured and regular news for display
+  const featuredNews = currentItems.filter(item => item.is_featured === true);
+  const regularNews = currentItems.filter(item => item.is_featured !== true);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleGoToPage = (e) => {
+    e.preventDefault();
+    const page = parseInt(goToPage);
+    if (page >= 1 && page <= totalPages) {
+      handlePageChange(page);
+      setGoToPage('');
+    }
+  };
 
   const categoryButtons = [
     { value: 'all', label: 'All Items', color: 'bg-gray-100 text-gray-800 hover:bg-gray-200' },
