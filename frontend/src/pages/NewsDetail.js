@@ -21,6 +21,7 @@ import {
 import { toast } from 'react-toastify';
 import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ProfessionalContentRenderer from '../components/ProfessionalContentRenderer';
 
 const NewsDetail = () => {
   const { slug } = useParams();
