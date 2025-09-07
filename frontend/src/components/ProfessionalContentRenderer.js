@@ -544,33 +544,42 @@ const ProfessionalContentRenderer = ({ content, className = "" }) => {
           margin: 2rem 0;
           background: white;
           border-radius: 12px;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
           overflow: hidden;
           border: 1px solid #e5e7eb;
+          position: relative;
         }
 
         .table-container {
           overflow-x: auto;
+          position: relative;
         }
 
-        .professional-table {
+        .professional-table,
+        .professional-table-content {
           width: 100%;
           border-collapse: collapse;
           font-size: 0.875rem;
           background: white;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        .table-header-cell {
+        .table-header-cell,
+        .professional-table th,
+        .professional-table-content th {
           background: linear-gradient(135deg, #f9fafb, #f3f4f6);
           color: #111827;
           font-weight: 600;
-          padding: 1rem;
+          padding: 1rem 1.25rem;
           text-align: left;
           border-bottom: 2px solid #e5e7eb;
           position: relative;
+          border-right: 1px solid #e5e7eb;
         }
 
-        .table-header-cell::after {
+        .table-header-cell::after,
+        .professional-table th::after,
+        .professional-table-content th::after {
           content: '';
           position: absolute;
           bottom: 0;
@@ -580,19 +589,46 @@ const ProfessionalContentRenderer = ({ content, className = "" }) => {
           background: linear-gradient(90deg, #3b82f6, #1d4ed8);
         }
 
-        .table-data-cell {
-          padding: 0.875rem 1rem;
+        .table-data-cell,
+        .professional-table td,
+        .professional-table-content td {
+          padding: 0.875rem 1.25rem;
           border-bottom: 1px solid #f3f4f6;
+          border-right: 1px solid #f3f4f6;
           color: #374151;
-          transition: background-color 0.2s ease;
+          transition: all 0.2s ease;
+          line-height: 1.6;
         }
 
-        .professional-table tbody tr:hover .table-data-cell {
+        .professional-table tbody tr:hover .table-data-cell,
+        .professional-table tbody tr:hover td,
+        .professional-table-content tbody tr:hover td {
           background-color: #f9fafb;
+          transform: scale(1.001);
         }
 
-        .professional-table tbody tr:nth-child(even) .table-data-cell {
+        .professional-table tbody tr:nth-child(even) .table-data-cell,
+        .professional-table tbody tr:nth-child(even) td,
+        .professional-table-content tbody tr:nth-child(even) td {
           background-color: #fafbfc;
+        }
+
+        /* Table responsiveness */
+        @media (max-width: 768px) {
+          .professional-table-wrapper {
+            margin: 1rem -1rem;
+            border-radius: 0;
+          }
+          
+          .table-header-cell,
+          .professional-table th,
+          .professional-table-content th,
+          .table-data-cell,
+          .professional-table td,
+          .professional-table-content td {
+            padding: 0.75rem 0.5rem;
+            font-size: 0.8125rem;
+          }
         }
 
         /* Professional Code Blocks */
