@@ -372,11 +372,20 @@ const Home = () => {
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                      <div className="absolute top-4 left-4">
-                        <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                          Featured
-                        </span>
-                      </div>
+                              <div className="flex items-center space-x-3 mb-3">
+                                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${
+                                  featuredNews[0].category === 'news' ? 'text-blue-800 bg-blue-100 border-blue-200' :
+                                  featuredNews[0].category === 'events' ? 'text-green-800 bg-green-100 border-green-200' :
+                                  featuredNews[0].category === 'upcoming_events' ? 'text-purple-800 bg-purple-100 border-purple-200' :
+                                  'text-gray-800 bg-gray-100 border-gray-200'
+                                }`}>
+                                  {featuredNews[0].category === 'upcoming_events' ? 'Upcoming Events' : 
+                                   featuredNews[0].category?.charAt(0).toUpperCase() + featuredNews[0].category?.slice(1) || 'News'}
+                                </span>
+                                <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                  Featured
+                                </span>
+                              </div>
                     </div>
                     <div className="p-6">
                       <h3 className="text-2xl font-semibold text-gray-900 mb-3">{featuredNews[0].title}</h3>
