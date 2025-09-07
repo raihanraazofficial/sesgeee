@@ -53,6 +53,24 @@ const News = () => {
     }
   };
 
+  // Debug function to test Firebase connection
+  const debugFirebase = async () => {
+    console.log('🔧 Starting Firebase debug test...');
+    const result = await testFirebaseConnection();
+    console.log('🔧 Firebase test result:', result);
+    
+    if (result.success && result.newsCount === 0) {
+      console.log('📝 No news found, adding test item...');
+      const addResult = await addTestNewsItem();
+      console.log('📝 Add test result:', addResult);
+      
+      if (addResult.success) {
+        console.log('🔄 Reloading news after adding test item...');
+        setTimeout(() => loadNews(), 2000);
+      }
+    }
+  };
+
   // Filter and sort news
   const filteredNews = useMemo(() => {
     let filtered = news.filter(item => {
