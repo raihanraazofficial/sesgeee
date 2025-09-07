@@ -48,21 +48,105 @@ const AdminNews = () => {
 
   // Rich Text Editor Configuration
   const quillModules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-      [{ 'font': [] }],
-      [{ 'size': ['small', false, 'large', 'huge'] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'color': [] }, { 'background': [] }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],
-      ['blockquote', 'code-block'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'indent': '-1'}, { 'indent': '+1' }],
-      [{ 'align': [] }],
-      ['link', 'image', 'video'],
-      ['formula'],
-      ['clean']
-    ]
+    toolbar: {
+      container: [
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'font': [] }],
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+        ['blockquote', 'code-block'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'indent': '-1'}, { 'indent': '+1' }],
+        [{ 'align': [] }],
+        ['link', 'image', 'video'],
+        ['formula'],
+        ['insertTable', 'insertPDF'],
+        ['clean']
+      ],
+      handlers: {
+        insertTable: function() {
+          const tableHtml = `
+            <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+              <thead>
+                <tr style="background-color: #f8f9fa;">
+                  <th style="border: 1px solid #dee2e6; padding: 8px; text-align: left;">Header 1</th>
+                  <th style="border: 1px solid #dee2e6; padding: 8px; text-align: left;">Header 2</th>
+                  <th style="border: 1px solid #dee2e6; padding: 8px; text-align: left;">Header 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border: 1px solid #dee2e6; padding: 8px;">Row 1, Cell 1</td>
+                  <td style="border: 1px solid #dee2e6; padding: 8px;">Row 1, Cell 2</td>
+                  <td style="border: 1px solid #dee2e6; padding: 8px;">Row 1, Cell 3</td>
+                </tr>
+                <tr>
+                  <td style="border: 1px solid #dee2e6; padding: 8px;">Row 2, Cell 1</td>
+                  <td style="border: 1px solid #dee2e6; padding: 8px;">Row 2, Cell 2</td>
+                  <td style="border: 1px solid #dee2e6; padding: 8px;">Row 2, Cell 3</td>
+                </tr>
+              </tbody>
+            </table>
+          `;
+          const range = this.quill.getSelection(true);
+          this.quill.clipboard.dangerouslyPasteHTML(range.index, tableHtml);
+        },
+        insertPDF: function() {
+          const pdfUrl = prompt('Enter PDF URL:');
+          if (pdfUrl) {
+            const pdfEmbed = `
+              <div style="border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin: 10px 0; background-color: #f8f9fa;">
+                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                  <svg style="width: 20px; height: 20px; margin-right: 8px; color: #dc3545;" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M4 18h12V6h-4V2H4v16zm-2 1V1a1 1 0 011-1h8.414a1 1 0 01.707.293l4.586 4.586A1 1 0 0117 5.828V19a1 1 0 01-1 1H3a1 1 0 01-1-1z"/>
+                  </svg>
+                  <strong>PDF Document</strong>
+                </div>
+                <p><a href="${pdfUrl}" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;">Click here to view PDF</a></p>
+                <iframe src="${pdfUrl}" width="100%" height="500" style="border: none; border-radius: 4px;"></iframe>
+              </div>
+            `;
+            const range = this.quill.getSelection(true);
+            this.quill.clipboard.dangerouslyPasteHTML(range.index, pdfEmbed);
+          }
+        }
+      }
+    },
+    keyboard: {
+      bindings: {
+        // LaTeX shortcut: Ctrl+Shift+L
+        latex: {
+          key: 'L',
+          ctrlKey: true,
+          shiftKey: true,
+          handler: function() {
+            const latex = prompt('Enter LaTeX formula (e.g., E = mc^2):');
+            if (latex) {
+              const range = this.quill.getSelection(true);
+              this.quill.insertEmbed(range.index, 'formula', latex);
+            }
+          }
+        },
+        // Bold shortcut
+        bold: {
+          key: 'B',
+          ctrlKey: true,
+          handler: function() {
+            this.quill.format('bold', !this.quill.getFormat().bold);
+          }
+        },
+        // Italic shortcut  
+        italic: {
+          key: 'I',
+          ctrlKey: true,
+          handler: function() {
+            this.quill.format('italic', !this.quill.getFormat().italic);
+          }
+        }
+      }
+    }
   };
 
   const quillFormats = [
