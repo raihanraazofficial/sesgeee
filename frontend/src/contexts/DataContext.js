@@ -534,6 +534,16 @@ export function DataProvider({ children }) {
       } catch (firestoreError) {
         console.warn(`[DataContext] Firestore call failed for ${type}, using mock data:`, firestoreError.message);
 
+        // For news and events, return empty array instead of mock data
+        if (type === 'news' || type === 'events') {
+          console.log(`[DataContext] Firestore failed for ${type}, returning empty array instead of mock data`);
+          dispatch({
+            type: 'SET_DATA',
+            payload: { type, data: [] },
+          });
+          return [];
+        }
+
         // Don't use mock data for people, publications, and projects - return empty array instead
         if (type === 'people' || type === 'publications' || type === 'projects') {
           console.log(`[DataContext] Firestore failed for ${type}, returning empty array instead of mock data`);
