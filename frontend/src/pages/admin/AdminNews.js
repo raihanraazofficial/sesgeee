@@ -206,22 +206,34 @@ const AdminNews = () => {
   };
 
   const insertFormula = (quill) => {
-    const formula = prompt('Enter LaTeX formula (e.g., E = mc^2):');
-    if (formula) {
-      try {
-        const katexHTML = katex.renderToString(formula, {
-          throwOnError: false,
-          displayMode: false
-        });
-        
-        const formulaHTML = `<span class="katex-formula">${katexHTML}</span>`;
-        const range = quill.getSelection();
-        if (range) {
-          quill.clipboard.dangerouslyPasteHTML(range.index, formulaHTML);
-        }
-      } catch (error) {
-        toast.error('Invalid LaTeX formula');
+    const formula = prompt('Enter LaTeX formula (e.g., E = mc^2, \\frac{a}{b}, \\sqrt{x^2+y^2}):');
+    if (!formula) return;
+    
+    try {
+      // Test the formula first
+      const katexHTML = katex.renderToString(formula, {
+        throwOnError: false,
+        displayMode: false,
+        output: 'html'
+      });
+      
+      // Create professional formula wrapper
+      const formulaHTML = `
+        <span style="display: inline-block; background: linear-gradient(135deg, #e3f2fd, #f3e5f5); border: 1px solid #bbdefb; border-radius: 6px; padding: 8px 12px; margin: 4px; font-family: 'Times New Roman', serif; position: relative;">
+          <span class="katex-formula" style="font-size: 16px;">${katexHTML}</span>
+          <span style="position: absolute; top: -8px; right: -8px; background: #2196f3; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">fx</span>
+        </span>
+      `;
+      
+      const range = quill.getSelection();
+      if (range) {
+        quill.clipboard.dangerouslyPasteHTML(range.index, formulaHTML);
       }
+      
+      toast.success('Formula inserted successfully!');
+    } catch (error) {
+      console.error('Formula error:', error);
+      toast.error('Invalid LaTeX formula. Please check your syntax.');
     }
   };
 
