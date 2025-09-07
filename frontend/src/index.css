@@ -122,9 +122,9 @@ code {
   @apply inline-block w-6 h-6 border-2 border-gray-300 border-t-primary-600 rounded-full animate-spin;
 }
 
-/* Rich text editor styles */
+/* Enhanced Rich text editor styles */
 .ql-toolbar {
-  @apply border-gray-300 bg-white;
+  @apply border-gray-300 bg-gradient-to-r from-gray-50 to-gray-100;
 }
 
 .ql-container {
@@ -137,6 +137,156 @@ code {
 
 .ql-editor.ql-blank::before {
   @apply text-gray-500;
+}
+
+/* Enhanced Editor Button Styles */
+.ql-toolbar .ql-formats {
+  margin-right: 15px;
+}
+
+.ql-toolbar button {
+  border: 1px solid transparent !important;
+  border-radius: 6px !important;
+  padding: 6px !important;
+  margin: 2px !important;
+  transition: all 0.2s ease !important;
+}
+
+.ql-toolbar button:hover {
+  background-color: #e5e7eb !important;
+  border-color: #d1d5db !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.ql-toolbar button.ql-active {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Custom button icons */
+.ql-toolbar .ql-insertTable:before {
+  content: '⊞' !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+.ql-toolbar .ql-insertPDF:before {
+  content: '📄' !important;
+  font-size: 14px !important;
+}
+
+.ql-toolbar .ql-insertCodeBlock:before {
+  content: '💻' !important;
+  font-size: 14px !important;
+}
+
+.ql-toolbar .ql-insertFileDownload:before {
+  content: '📁' !important;
+  font-size: 14px !important;
+}
+
+.ql-toolbar .ql-undo:before {
+  content: '↶' !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+.ql-toolbar .ql-redo:before {
+  content: '↷' !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+/* Enhanced dropdowns */
+.ql-picker-options {
+  background-color: white !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+  z-index: 9999 !important;
+  max-height: 200px !important;
+  overflow-y: auto !important;
+}
+
+.ql-snow .ql-tooltip {
+  z-index: 9999 !important;
+  background: white !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+  padding: 12px !important;
+}
+
+/* Custom embedded content styles */
+.pdf-embed {
+  display: block !important;
+  margin: 16px 0 !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.code-block-wrapper {
+  margin: 16px 0 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.code-block-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  background-color: #f8f9fa !important;
+  padding: 8px 12px !important;
+  border-radius: 6px 6px 0 0 !important;
+  border: 1px solid #e9ecef !important;
+  border-bottom: none !important;
+}
+
+/* File download button styles */
+.file-download-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 8px 12px !important;
+  background-color: #28a745 !important;
+  color: white !important;
+  text-decoration: none !important;
+  border-radius: 4px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  margin: 0 4px !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.file-download-button:hover {
+  background-color: #218838 !important;
+  text-decoration: none !important;
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Custom glassmorphism */
