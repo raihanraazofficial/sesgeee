@@ -200,7 +200,7 @@ const AdminSettings = () => {
             <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Events Calendar Setup</h3>
               <p className="text-gray-600 text-sm mb-4">
-                Set up Google Calendar integration for displaying upcoming events on the News & Events page.
+                Set up Google Calendar integration for displaying upcoming events.
               </p>
               
               <div className="space-y-4">
