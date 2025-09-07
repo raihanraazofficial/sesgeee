@@ -11,11 +11,7 @@ const LatestNewsSection = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadLatestNews();
-  }, []);
-
-  const loadLatestNews = async () => {
+  const loadLatestNews = useCallback(async () => {
     try {
       setLoading(true);
       const newsData = await fetchData('news', { 
@@ -31,7 +27,11 @@ const LatestNewsSection = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [fetchData]);
+
+  useEffect(() => {
+    loadLatestNews();
+  }, [loadLatestNews]);
 
   const getCategoryBadge = (category) => {
     const categoryStyles = {
