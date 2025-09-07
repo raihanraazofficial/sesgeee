@@ -192,15 +192,15 @@ const News = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
+      {/* Hero Section - No Animations */}
       <HeroSection
         title="News & Events"
-        description="Stay updated with the latest news, research developments, and upcoming events from SESGRG."
+        description="Stay updated with the latest news, research developments, and upcoming events from SESGRG. Discover our groundbreaking research, academic achievements, and community engagement activities."
         backgroundImage="https://images.unsplash.com/photo-1504711434969-e33886168f5c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwxfHxuZXdzJTIwZXZlbnRzfGVufDB8fHx8MTc1NjUzNTE2OHww&ixlib=rb-4.1.0&q=85"
         height="h-[40vh]"
         showScrollIndicator={false}
         buttons={[]}
-        enableAnimations={true}
+        enableAnimations={false}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -490,7 +490,7 @@ const News = () => {
 
             {/* Upcoming Events Calendar */}
             {(categoryFilter === 'all' || categoryFilter === 'upcoming_events') && settings.google_calendar_url && (
-              <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                   <Calendar className="h-6 w-6 mr-3 text-primary-600" />
                   Upcoming Events Calendar
