@@ -62,12 +62,7 @@ const AdminNews = () => {
       ['link', 'image', 'video'],
       ['formula'],
       ['clean']
-    ],
-    formula: true,
-    imageResize: {
-      parchment: ReactQuill.Quill.import('parchment'),
-      modules: ['Resize', 'DisplaySize', 'Toolbar']
-    }
+    ]
   };
 
   const quillFormats = [
