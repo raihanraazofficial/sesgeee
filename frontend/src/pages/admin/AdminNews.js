@@ -180,7 +180,7 @@ const AdminNews = () => {
     'script',
     'blockquote', 'code-block',
     'list', 'bullet', 'indent',
-    'align',
+    'direction', 'align',
     'link', 'image', 'video',
     'formula',
     'table'
