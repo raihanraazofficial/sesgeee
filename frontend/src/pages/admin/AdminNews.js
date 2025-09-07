@@ -571,50 +571,62 @@ const AdminNews = () => {
                     (Professional WordPress-style editor with all formatting options)
                   </span>
                 </label>
-                <div className="border border-gray-300 rounded-md relative bg-white">
+                <div className="border border-gray-300 rounded-md relative bg-white" style={{ zIndex: 1 }}>
                   <ReactQuill
                     value={formData.content}
                     onChange={(content) => setFormData(prev => ({ ...prev, content }))}
                     modules={quillModules}
                     formats={quillFormats}
                     placeholder="Write your content using the rich text editor. Use toolbar buttons or keyboard shortcuts..."
-                    style={{ minHeight: '400px' }}
+                    style={{ minHeight: '400px', position: 'relative', zIndex: 1 }}
                     theme="snow"
+                    readOnly={false}
                   />
                   <style dangerouslySetInnerHTML={{
                     __html: `
                       .ql-toolbar {
                         border-bottom: 1px solid #e5e7eb !important;
                         padding: 12px !important;
-                        background-color: #f9fafb;
+                        background-color: #f9fafb !important;
+                        position: relative !important;
+                        z-index: 2 !important;
                       }
                       .ql-container {
                         border: none !important;
-                        font-size: 14px;
-                        min-height: 300px;
+                        font-size: 14px !important;
+                        min-height: 300px !important;
+                        position: relative !important;
+                        z-index: 1 !important;
                       }
                       .ql-editor {
                         min-height: 300px !important;
                         padding: 16px !important;
-                        line-height: 1.6;
+                        line-height: 1.6 !important;
+                        background-color: white !important;
+                        position: relative !important;
+                        z-index: 1 !important;
+                        pointer-events: auto !important;
+                        user-select: text !important;
                       }
                       .ql-editor.ql-blank::before {
-                        font-style: italic;
-                        color: #9ca3af;
+                        font-style: italic !important;
+                        color: #9ca3af !important;
+                        pointer-events: none !important;
                       }
                       .ql-toolbar .ql-insertTable:before {
-                        content: '⊞';
-                        font-size: 18px;
-                        font-weight: bold;
+                        content: '⊞' !important;
+                        font-size: 18px !important;
+                        font-weight: bold !important;
                       }
                       .ql-toolbar .ql-insertPDF:before {
-                        content: '📄';
-                        font-size: 16px;
+                        content: '📄' !important;
+                        font-size: 16px !important;
                       }
                       .ql-toolbar button {
                         padding: 6px !important;
                         margin: 2px !important;
                         border-radius: 4px !important;
+                        pointer-events: auto !important;
                       }
                       .ql-toolbar button:hover {
                         background-color: #e5e7eb !important;
@@ -627,10 +639,15 @@ const AdminNews = () => {
                         margin-right: 15px !important;
                       }
                       .ql-picker-options {
-                        background-color: white;
-                        border: 1px solid #d1d5db;
-                        border-radius: 6px;
-                        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                        background-color: white !important;
+                        border: 1px solid #d1d5db !important;
+                        border-radius: 6px !important;
+                        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+                        z-index: 9999 !important;
+                        position: absolute !important;
+                      }
+                      .ql-snow .ql-tooltip {
+                        z-index: 9999 !important;
                       }
                     `
                   }} />
