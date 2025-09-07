@@ -693,8 +693,20 @@ async def delete_achievement(achievement_id: str, current_user: dict = Depends(g
     return delete_document("achievements", achievement_id)
 
 @app.get("/api/news")
-async def get_news(featured: Optional[bool] = None, limit: Optional[int] = None):
-    filters = [("is_featured", "==", featured)] if featured is not None else None
+async def get_news(
+    featured: Optional[bool] = None, 
+    category: Optional[str] = None,
+    status: Optional[str] = None,
+    limit: Optional[int] = None
+):
+    filters = []
+    if featured is not None:
+        filters.append(("is_featured", "==", featured))
+    if category:
+        filters.append(("category", "==", category))
+    if status:
+        filters.append(("status", "==", status))
+        
     if db:
         order_by = ("published_date", firestore.Query.DESCENDING)
     else:
@@ -702,6 +714,34 @@ async def get_news(featured: Optional[bool] = None, limit: Optional[int] = None)
     
     news = get_collection_data("news", filters=filters, order_by=order_by, limit=limit)
     return news
+
+@app.get("/api/news/{news_id}")
+async def get_news_item(news_id: str):
+    try:
+        if db is None:
+            # Mock behavior - find from in-memory storage
+            news_item = next((item for item in in_memory_db["news"] if item["id"] == news_id), None)
+            if not news_item:
+                raise HTTPException(status_code=404, detail="News item not found")
+            return news_item
+        
+        doc_ref = db.collection("news").document(news_id)
+        doc = doc_ref.get()
+        if not doc.exists:
+            raise HTTPException(status_code=404, detail="News item not found")
+        
+        news_data = doc.to_dict()
+        news_data['id'] = doc.id
+        # Convert datetime objects to ISO strings
+        for key, value in news_data.items():
+            if hasattr(value, 'isoformat'):
+                news_data[key] = value.isoformat()
+        return news_data
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error fetching news item: {e}")
+        raise HTTPException(status_code=500, detail="Error fetching news item")
 
 @app.post("/api/news")
 async def create_news(news: NewsCreate, current_user: dict = Depends(get_current_user)):
