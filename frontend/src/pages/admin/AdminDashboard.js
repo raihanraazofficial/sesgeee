@@ -46,9 +46,10 @@ const AdminDashboard = () => {
       { name: 'Publications', value: publications.length.toString(), icon: FileText, color: 'text-green-600' },
       { name: 'Projects', value: projects.length.toString(), icon: FolderOpen, color: 'text-purple-600' },
       { name: 'Achievements', value: achievements.length.toString(), icon: Award, color: 'text-yellow-600' },
+      { name: 'News & Events', value: news.length.toString(), icon: Calendar, color: 'text-red-600' },
     ]);
     setLoading(false);
-  }, [people, publications, projects, achievements]);
+  }, [people, publications, projects, achievements, news]);
 
   const quickActions = [
     { name: 'Manage People', href: '/admin/people', icon: Users },
