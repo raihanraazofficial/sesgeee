@@ -51,7 +51,7 @@ const AdminNews = () => {
         [{ 'align': [] }],
         ['blockquote', 'code-block'],
         ['link', 'image', 'video'],
-        ['table', 'pdf', 'formula'],
+        [{ 'table': 'table' }, { 'pdf': 'pdf' }, { 'formula': 'formula' }],
         ['clean']
       ],
       handlers: {
