@@ -179,14 +179,14 @@ const News = () => {
               </div>
 
               {/* Results */}
-              {filteredItems.length === 0 ? (
+              {currentItems.length === 0 ? (
                 <div className="text-center py-16">
                   <div className="glass rounded-xl p-12 border border-gray-200 shadow-lg">
                     <h2 className="text-3xl font-bold font-heading text-gray-900 mb-6">
-                      {news.length === 0 ? 'No News & Events Found' : 'No Results Found'}
+                      {filteredItems.length === 0 ? 'No News & Events Found' : 'No Results Found'}
                     </h2>
                     <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                      {news.length === 0 
+                      {filteredItems.length === 0 
                         ? 'There are currently no news articles or events published. Please check back later for updates.'
                         : searchTerm || selectedCategory !== 'all'
                           ? 'No items match your current search criteria. Try adjusting your filters or search terms.'
@@ -213,24 +213,26 @@ const News = () => {
                   </div>
                 </div>
               ) : (
-                <div className="space-y-6">
-                  {filteredItems.map((item) => (
-                    <div key={item.id} className="glass rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
-                      <div className="flex flex-col lg:flex-row">
-                        {item.image && (
-                          <div className="lg:w-1/3 h-64 lg:h-auto">
-                            <img
-                              src={item.image}
-                              alt={item.image_alt || item.title}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                        )}
-                        <div className={`p-6 ${item.image ? 'lg:w-2/3' : 'w-full'}`}>
-                          <div className="flex items-start justify-between mb-4">
-                            <div className="flex-1">
+                <div className="space-y-12">
+                  {/* Featured News - Large Cards */}
+                  {featuredNews.length > 0 && (
+                    <div className="space-y-8">
+                      <h2 className="text-2xl font-bold text-gray-900 border-b-2 border-primary-500 pb-2">Featured News</h2>
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        {featuredNews.map((item) => (
+                          <div key={item.id} className="glass rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+                            {item.image && (
+                              <div className="h-64">
+                                <img
+                                  src={item.image}
+                                  alt={item.image_alt || item.title}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            )}
+                            <div className="p-6">
                               <div className="flex items-center space-x-3 mb-3">
-                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${
                                   item.category === 'news' ? 'text-blue-800 bg-blue-100 border-blue-200' :
                                   item.category === 'events' ? 'text-green-800 bg-green-100 border-green-200' :
                                   item.category === 'upcoming_events' ? 'text-purple-800 bg-purple-100 border-purple-200' :
@@ -239,11 +241,9 @@ const News = () => {
                                   {item.category === 'upcoming_events' ? 'Upcoming Events' : 
                                    item.category?.charAt(0).toUpperCase() + item.category?.slice(1) || 'News'}
                                 </span>
-                                {item.is_featured && (
-                                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-yellow-800 bg-yellow-100 border border-yellow-200">
-                                    Featured
-                                  </span>
-                                )}
+                                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-yellow-800 bg-yellow-100 border border-yellow-200">
+                                  Featured
+                                </span>
                               </div>
                               <h3 className="text-2xl font-bold text-gray-900 mb-3 hover:text-primary-600 transition-colors">
                                 <Link to={`/news/${item.id}`}>
@@ -259,17 +259,14 @@ const News = () => {
                                 {item.author && (
                                   <span>By {item.author}</span>
                                 )}
-                                {item.tags && Array.isArray(item.tags) && item.tags.length > 0 && (
-                                  <span>Tags: {item.tags.slice(0, 3).join(', ')}{item.tags.length > 3 ? '...' : ''}</span>
-                                )}
                               </div>
                               <div className="flex items-center space-x-4">
                                 <Link
                                   to={`/news/${item.id}`}
-                                  className="text-primary-600 hover:text-primary-700 font-medium flex items-center space-x-1"
+                                  className="inline-flex items-center px-4 py-2 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors"
                                 >
-                                  <span>Read More</span>
-                                  <ExternalLink className="h-4 w-4" />
+                                  <span>Read Full Story</span>
+                                  <span className="ml-1">→</span>
                                 </Link>
                                 <button className="text-gray-500 hover:text-gray-700 flex items-center space-x-1">
                                   <Share2 className="h-4 w-4" />
@@ -278,10 +275,158 @@ const News = () => {
                               </div>
                             </div>
                           </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Regular News - Small Cards */}
+                  {regularNews.length > 0 && (
+                    <div className="space-y-8">
+                      {featuredNews.length > 0 && <h2 className="text-2xl font-bold text-gray-900 border-b-2 border-gray-300 pb-2">Latest News</h2>}
+                      <div className="space-y-6">
+                        {regularNews.map((item) => (
+                          <div key={item.id} className="glass rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+                            <div className="flex flex-col lg:flex-row">
+                              {item.image && (
+                                <div className="lg:w-1/4 h-48 lg:h-auto">
+                                  <img
+                                    src={item.image}
+                                    alt={item.image_alt || item.title}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                              )}
+                              <div className={`p-6 ${item.image ? 'lg:w-3/4' : 'w-full'}`}>
+                                <div className="flex items-start justify-between">
+                                  <div className="flex-1">
+                                    <div className="flex items-center space-x-3 mb-3">
+                                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                                        item.category === 'news' ? 'text-blue-800 bg-blue-100 border-blue-200' :
+                                        item.category === 'events' ? 'text-green-800 bg-green-100 border-green-200' :
+                                        item.category === 'upcoming_events' ? 'text-purple-800 bg-purple-100 border-purple-200' :
+                                        'text-gray-800 bg-gray-100 border-gray-200'
+                                      }`}>
+                                        {item.category === 'upcoming_events' ? 'Upcoming Events' : 
+                                         item.category?.charAt(0).toUpperCase() + item.category?.slice(1) || 'News'}
+                                      </span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-gray-900 mb-3 hover:text-primary-600 transition-colors">
+                                      <Link to={`/news/${item.id}`}>
+                                        {item.title}
+                                      </Link>
+                                    </h3>
+                                    <p className="text-gray-600 mb-4 line-clamp-2">{item.excerpt}</p>
+                                    <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+                                      <span className="flex items-center">
+                                        <Calendar className="h-4 w-4 mr-1" />
+                                        {new Date(item.published_date).toLocaleDateString()}
+                                      </span>
+                                      {item.author && (
+                                        <span>By {item.author}</span>
+                                      )}
+                                    </div>
+                                    <div className="flex items-center space-x-4">
+                                      <Link
+                                        to={`/news/${item.id}`}
+                                        className="text-primary-600 hover:text-primary-700 font-medium flex items-center space-x-1"
+                                      >
+                                        <span>Read Full Story</span>
+                                        <span>→</span>
+                                      </Link>
+                                      <button className="text-gray-500 hover:text-gray-700 flex items-center space-x-1">
+                                        <Share2 className="h-4 w-4" />
+                                        <span>Share</span>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Pagination */}
+                  {totalPages > 1 && (
+                    <div className="flex flex-col sm:flex-row items-center justify-between bg-gray-50 px-6 py-4 rounded-xl border border-gray-200">
+                      <div className="flex items-center space-x-2 mb-4 sm:mb-0">
+                        <span className="text-sm text-gray-700">
+                          Showing {startIndex + 1} to {Math.min(endIndex, filteredItems.length)} of {filteredItems.length} results
+                        </span>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        {/* Go to Page */}
+                        <form onSubmit={handleGoToPage} className="flex items-center space-x-2">
+                          <span className="text-sm text-gray-700">Go to Page:</span>
+                          <input
+                            type="number"
+                            min="1"
+                            max={totalPages}
+                            value={goToPage}
+                            onChange={(e) => setGoToPage(e.target.value)}
+                            className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center text-gray-900"
+                            placeholder={currentPage.toString()}
+                          />
+                          <button
+                            type="submit"
+                            className="px-3 py-1 bg-primary-600 text-white text-sm rounded hover:bg-primary-700 transition-colors"
+                          >
+                            Go
+                          </button>
+                        </form>
+                        
+                        {/* Pagination Buttons */}
+                        <div className="flex items-center space-x-1">
+                          <button
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className="p-2 rounded border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            <ChevronLeft className="h-4 w-4" />
+                          </button>
+                          
+                          {/* Page Numbers */}
+                          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                            let pageNum;
+                            if (totalPages <= 5) {
+                              pageNum = i + 1;
+                            } else if (currentPage <= 3) {
+                              pageNum = i + 1;
+                            } else if (currentPage >= totalPages - 2) {
+                              pageNum = totalPages - 4 + i;
+                            } else {
+                              pageNum = currentPage - 2 + i;
+                            }
+                            
+                            return (
+                              <button
+                                key={pageNum}
+                                onClick={() => handlePageChange(pageNum)}
+                                className={`px-3 py-1 rounded border text-sm ${
+                                  currentPage === pageNum
+                                    ? 'bg-primary-600 text-white border-primary-600'
+                                    : 'border-gray-300 hover:bg-gray-100 text-gray-900'
+                                }`}
+                              >
+                                {pageNum}
+                              </button>
+                            );
+                          })}
+                          
+                          <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                            className="p-2 rounded border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            <ChevronRight className="h-4 w-4" />
+                          </button>
                         </div>
                       </div>
                     </div>
-                  ))}
+                  )}
                 </div>
               )}
 
