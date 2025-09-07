@@ -389,7 +389,8 @@ const getMockData = (type) => {
       department_name: 'Department of EEE',
       contact_email: 'sesg@bracu.ac.bd',
       contact_phone: '+880-2-9844051-4',
-      address: 'BRAC University, 66 Mohakhali, Dhaka 1212, Bangladesh'
+      address: 'BRAC University, 66 Mohakhali, Dhaka 1212, Bangladesh',
+      google_calendar_url: 'https://calendar.google.com/calendar/embed?height=400&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FDhaka&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&mode=AGENDA'
     },
   };
   return mock[type] || [];
