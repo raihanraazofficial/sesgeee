@@ -107,11 +107,10 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
 
-# Helper functions for Firebase operations
 def get_collection_data(collection_name, filters=None, order_by=None, limit=None):
     """Get data from Firestore collection with optional filtering"""
     try:
-        if db is None:
+        if db is None or not firebase_initialized:
             return get_mock_data(collection_name)
         
         ref = db.collection(collection_name)
@@ -124,7 +123,8 @@ def get_collection_data(collection_name, filters=None, order_by=None, limit=None
         # Apply ordering
         if order_by:
             field, direction = order_by
-            ref = ref.order_by(field, direction=direction)
+            if FIREBASE_AVAILABLE and firestore:
+                ref = ref.order_by(field, direction=direction)
         
         # Apply limit
         if limit:
