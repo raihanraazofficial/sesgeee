@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Filter, Calendar, Clock, Eye, ArrowRight, ExternalLink } from 'lucide-react';
+import { Search, Calendar, Clock, ArrowRight, ExternalLink } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import HeroSection from '../components/HeroSection';
 import LoadingSpinner from '../components/LoadingSpinner';
