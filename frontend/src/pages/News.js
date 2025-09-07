@@ -8,6 +8,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 const News = () => {
   const { fetchData } = useData();
   const [news, setNews] = useState([]);
+  const [settings, setSettings] = useState({});
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
