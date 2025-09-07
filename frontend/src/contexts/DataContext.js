@@ -453,51 +453,7 @@ export function DataProvider({ children }) {
       console.log(`[DataContext] Fetching ${type}...`);
       dispatch({ type: 'SET_LOADING', payload: { type, loading: true } });
 
-      // For news and events, use backend API instead of direct Firestore
-      if (type === 'news' || type === 'events') {
-        try {
-          console.log(`[DataContext] Using backend API for ${type}...`);
-          const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
-          
-          // Build query parameters
-          const queryParams = new URLSearchParams();
-          if (params.status) queryParams.append('status', params.status);
-          if (params.category) queryParams.append('category', params.category);
-          if (params.featured !== undefined) queryParams.append('featured', params.featured);
-          if (params.sort_by) queryParams.append('sort_by', params.sort_by);
-          if (params.sort_order) queryParams.append('sort_order', params.sort_order);
-          if (params.limit) queryParams.append('limit', params.limit);
-          
-          const apiUrl = `${backendUrl}/api/${type}${queryParams.toString() ? '?' + queryParams.toString() : ''}`;
-          console.log(`[DataContext] Calling API: ${apiUrl}`);
-          
-          const response = await fetch(apiUrl);
-          if (!response.ok) {
-            throw new Error(`API call failed: ${response.status} ${response.statusText}`);
-          }
-          
-          const data = await response.json();
-          console.log(`[DataContext] Backend API data loaded for ${type}:`, data.length, 'items');
-          
-          dispatch({
-            type: 'SET_DATA',
-            payload: { type, data },
-          });
-          
-          return data;
-          
-        } catch (apiError) {
-          console.error(`[DataContext] Backend API failed for ${type}:`, apiError);
-          
-          // Return empty array for news/events API failures
-          dispatch({
-            type: 'SET_DATA',
-            payload: { type, data: [] },
-          });
-          dispatch({ type: 'SET_LOADING', payload: { type, loading: false } });
-          return [];
-        }
-      }
+      // All data types now use direct Firestore approach
 
       // For other types, continue with Firestore
       // Map type to Firestore collection name
