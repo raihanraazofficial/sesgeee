@@ -1054,7 +1054,7 @@ const AdminNews = () => {
       )}
 
       {/* Custom Styles for the Editor */}
-      <style jsx>{`
+      <style>{`
         .ql-toolbar {
           border-top: 1px solid #e5e7eb !important;
           border-left: 1px solid #e5e7eb !important;
