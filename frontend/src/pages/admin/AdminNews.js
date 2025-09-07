@@ -838,11 +838,63 @@ const AdminNews = () => {
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
+        /* Custom toolbar button styles */
+        .ql-toolbar .ql-table::before {
+          content: "⊞";
+          font-weight: bold;
+          font-size: 16px;
+        }
+        
+        .ql-toolbar .ql-pdf::before {
+          content: "📄";
+          font-size: 14px;
+        }
+        
+        .ql-toolbar .ql-formula::before {
+          content: "fx";
+          font-weight: bold;
+          font-size: 12px;
+          background: #2196f3;
+          color: white;
+          border-radius: 3px;
+          padding: 2px 4px;
+        }
+        
+        .ql-toolbar .ql-table:hover,
+        .ql-toolbar .ql-pdf:hover,
+        .ql-toolbar .ql-formula:hover {
+          background-color: #f3f4f6;
+          border-radius: 4px;
+        }
+
         .katex-formula {
           background-color: #f8f9fa;
           padding: 2px 4px;
           border-radius: 3px;
           border: 1px solid #e9ecef;
+        }
+        
+        /* Improve table styling in editor */
+        .ql-editor table {
+          border-collapse: collapse;
+          width: 100%;
+          margin: 16px 0;
+        }
+        
+        .ql-editor table td, 
+        .ql-editor table th {
+          border: 1px solid #dee2e6;
+          padding: 8px 12px;
+          text-align: left;
+        }
+        
+        .ql-editor table th {
+          background-color: #f8f9fa;
+          font-weight: 600;
+        }
+        
+        .ql-editor table tr:nth-child(even) {
+          background-color: #f8f9fa;
         }
       `}</style>
     </div>
