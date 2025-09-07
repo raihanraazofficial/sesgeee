@@ -494,16 +494,21 @@ const News = () => {
                     Upcoming Events Calendar
                   </h2>
                   <div className="bg-gray-50 rounded-lg p-4">
-                    <iframe
-                      src={settings.google_calendar_url}
-                      style={{ border: 0 }}
-                      width="100%"
-                      height="400"
-                      frameBorder="0"
-                      scrolling="no"
-                      title="Upcoming Events Calendar"
-                      className="rounded-lg"
-                    ></iframe>
+                    <div className="relative">
+                      <iframe
+                        src={settings.google_calendar_url}
+                        style={{ border: 0 }}
+                        width="100%"
+                        height="400"
+                        frameBorder="0"
+                        scrolling="no"
+                        title="Upcoming Events Calendar"
+                        className="rounded-lg"
+                        onError={() => console.error('Calendar iframe failed to load')}
+                        onLoad={() => console.log('Calendar iframe loaded successfully')}
+                      ></iframe>
+                      <div className="absolute inset-0 pointer-events-none bg-transparent rounded-lg" style={{zIndex: 1}}></div>
+                    </div>
                     <p className="text-sm text-gray-600 mt-3 text-center">
                       Stay updated with our latest events and workshops. 
                       <a 
