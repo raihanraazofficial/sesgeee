@@ -237,11 +237,7 @@ const AdminNews = () => {
     }
   };
 
-  useEffect(() => {
-    loadNews();
-  }, []);
-
-  const loadNews = async () => {
+  const loadNews = useCallback(async () => {
     try {
       setLoading(true);
       const newsData = await fetchData('news');
@@ -253,7 +249,11 @@ const AdminNews = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [fetchData]);
+
+  useEffect(() => {
+    loadNews();
+  }, [loadNews]);
 
   const filteredNews = useMemo(() => {
     return news.filter(item => {
