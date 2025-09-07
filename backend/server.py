@@ -15,17 +15,13 @@ from dotenv import load_dotenv
 
 # Try to import Firebase, but don't fail if it's not available
 try:
-    import firebase_admin
-    from firebase_admin import credentials, firestore
-    from google.cloud import firestore as gcloud_firestore
+    from google.cloud import firestore
     FIREBASE_AVAILABLE = True
-    print("Firebase libraries imported successfully")
+    print("Google Cloud Firestore imported successfully")
 except ImportError as e:
     print(f"Firebase not available: {e}")
     FIREBASE_AVAILABLE = False
-    firebase_admin = None
     firestore = None
-    gcloud_firestore = None
 
 load_dotenv()
 
@@ -47,32 +43,15 @@ firebase_initialized = False
 
 if FIREBASE_AVAILABLE:
     try:
-        if not firebase_admin._apps:
-            # Try direct initialization without service account for public database
-            project_id = "sesgrg-website"
-            cred = credentials.ApplicationDefault()
-            firebase_admin.initialize_app(cred, {
-                'projectId': project_id
-            })
-            print("Firebase initialized with Application Default Credentials")
-        
-        db = firestore.client()
+        # Try direct client initialization
+        db = firestore.Client(project="sesgrg-website")
         firebase_initialized = True
-        print("Firestore client created successfully")
-        
+        print("Direct Firestore client created successfully")
     except Exception as e:
-        print(f"Application Default Credentials failed: {e}")
-        # Try with direct client initialization
-        try:
-            from google.cloud import firestore as gcloud_firestore
-            db = gcloud_firestore.Client(project="sesgrg-website")
-            firebase_initialized = True
-            print("Direct Firestore client created successfully")
-        except Exception as e2:
-            print(f"Direct Firestore client failed: {e2}")
-            print("Firebase will be unavailable - using mock data only")
-            db = None
-            firebase_initialized = False
+        print(f"Direct Firestore client failed: {e}")
+        print("Firebase will be unavailable - using mock data only")
+        db = None
+        firebase_initialized = False
 else:
     print("Firebase libraries not available - using mock data only")
     db = None
