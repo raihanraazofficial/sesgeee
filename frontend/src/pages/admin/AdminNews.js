@@ -220,7 +220,7 @@ const AdminNews = () => {
               </Link>
               <div>
                 <h1 className="text-3xl font-bold text-gray-900">Manage News & Events</h1>
-                <p className="text-gray-600 mt-1">Add, edit, and manage news articles and events</p>
+                <p className="text-gray-600 mt-1">Create and manage news, events, and upcoming events with rich content</p>
               </div>
             </div>
             <button 
