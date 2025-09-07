@@ -85,26 +85,48 @@ const AdminNews = () => {
 
   // Custom handlers for toolbar buttons
   const insertTable = (quill) => {
-    const tableHTML = `
-      <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+    // Professional table creation with user input
+    const rows = prompt('Enter number of rows (1-20):', '3');
+    const cols = prompt('Enter number of columns (1-10):', '3');
+    
+    if (!rows || !cols) return;
+    
+    const numRows = parseInt(rows);
+    const numCols = parseInt(cols);
+    
+    if (isNaN(numRows) || isNaN(numCols) || numRows < 1 || numRows > 20 || numCols < 1 || numCols > 10) {
+      toast.error('Please enter valid numbers (Rows: 1-20, Columns: 1-10)');
+      return;
+    }
+    
+    // Create professional table HTML
+    let tableHTML = `
+      <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: Arial, sans-serif;">
         <thead>
-          <tr style="background-color: #f8f9fa;">
-            <th style="border: 1px solid #dee2e6; padding: 12px; text-align: left;">Header 1</th>
-            <th style="border: 1px solid #dee2e6; padding: 12px; text-align: left;">Header 2</th>
-            <th style="border: 1px solid #dee2e6; padding: 12px; text-align: left;">Header 3</th>
+          <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+    `;
+    
+    // Add header cells
+    for (let col = 1; col <= numCols; col++) {
+      tableHTML += `<th style="border: 1px solid #dee2e6; padding: 12px; text-align: left; font-weight: 600; color: #495057;">Header ${col}</th>`;
+    }
+    
+    tableHTML += `
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style="border: 1px solid #dee2e6; padding: 12px;">Cell 1</td>
-            <td style="border: 1px solid #dee2e6; padding: 12px;">Cell 2</td>
-            <td style="border: 1px solid #dee2e6; padding: 12px;">Cell 3</td>
-          </tr>
-          <tr>
-            <td style="border: 1px solid #dee2e6; padding: 12px;">Cell 4</td>
-            <td style="border: 1px solid #dee2e6; padding: 12px;">Cell 5</td>
-            <td style="border: 1px solid #dee2e6; padding: 12px;">Cell 6</td>
-          </tr>
+    `;
+    
+    // Add data rows
+    for (let row = 1; row <= numRows; row++) {
+      tableHTML += `<tr style="${row % 2 === 0 ? 'background-color: #f8f9fa;' : ''}">`;
+      for (let col = 1; col <= numCols; col++) {
+        tableHTML += `<td style="border: 1px solid #dee2e6; padding: 12px; color: #495057;">Row ${row}, Col ${col}</td>`;
+      }
+      tableHTML += `</tr>`;
+    }
+    
+    tableHTML += `
         </tbody>
       </table>
     `;
