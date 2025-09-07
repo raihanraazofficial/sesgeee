@@ -865,7 +865,6 @@ const AdminNews = () => {
                     ref={quillRef}
                     value={formData.content}
                     onChange={handleEditorChange}
-                    onReady={handleEditorReady}
                     modules={quillModules}
                     formats={quillFormats}
                     placeholder="Start writing your amazing content... Use the toolbar above or keyboard shortcuts for formatting!"
