@@ -690,7 +690,7 @@ const AdminNews = () => {
                     type="url"
                     value={formData.google_calendar_link}
                     onChange={(e) => setFormData({ ...formData, google_calendar_link: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 bg-white"
                     placeholder="https://calendar.google.com/calendar/embed?src=..."
                   />
                   <p className="mt-1 text-sm text-gray-500">
