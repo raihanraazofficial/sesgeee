@@ -94,7 +94,7 @@ const AdminSettings = () => {
               <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">Initialize Database</h3>
                 <p className="text-gray-600 text-sm mb-4">
-                  Create admin user and populate database with sample data for People, Publications, Projects, Achievements, and News.
+                  Create admin user and populate database with sample data for People, Publications, Projects, and Achievements.
                 </p>
                 
                 {initSuccess && (
