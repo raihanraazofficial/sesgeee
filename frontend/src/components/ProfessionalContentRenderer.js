@@ -434,6 +434,27 @@ const ProfessionalContentRenderer = ({ content, className = "" }) => {
       />
       
       <style jsx global>{`
+        /* Preserve ReactQuill colors and styling */
+        .rendered-content [style*="color"] {
+          color: inherit !important;
+        }
+        
+        .rendered-content [style*="background-color"] {
+          background-color: inherit !important;
+        }
+        
+        .rendered-content [style*="font-size"] {
+          font-size: inherit !important;
+        }
+        
+        .rendered-content [style*="font-family"] {
+          font-family: inherit !important;
+        }
+        
+        .rendered-content [style*="text-align"] {
+          text-align: inherit !important;
+        }
+
         /* Professional Content Renderer Styles */
         .professional-content-renderer {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
