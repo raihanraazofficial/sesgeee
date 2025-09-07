@@ -32,25 +32,7 @@ const NewsDetail = () => {
   const [sharing, setSharing] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    loadNewsItem();
-  }, [slug]);
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (sharing && !event.target.closest('.share-dropdown')) {
-        setSharing(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [sharing]);
-
-  const loadNewsItem = async () => {
+  const loadNewsItem = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -101,7 +83,11 @@ const NewsDetail = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [slug, fetchData, navigate]);
+
+  useEffect(() => {
+    loadNewsItem();
+  }, [loadNewsItem]);
 
   const handlePrint = () => {
     // Add print-specific styles
