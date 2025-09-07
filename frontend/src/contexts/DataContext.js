@@ -455,11 +455,11 @@ export function DataProvider({ children }) {
 
       // All data types now use direct Firestore approach
 
-      // For other types, continue with Firestore
       // Map type to Firestore collection name
       let collectionName = type;
       if (type === 'researchAreas') collectionName = 'research_areas';
       if (type === 'photoGallery') collectionName = 'photo_gallery';
+      // news and events use their own collection names
 
       try {
         console.log(`[DataContext] Attempting Firestore query for collection: ${collectionName}`);
