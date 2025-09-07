@@ -42,7 +42,7 @@ const HeroSection = ({
                   Sustainable Energy &
                 </span>
                 <br />
-                <span className="bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-400 bg-clip-text text-transparent animate-gradient-x glow-text">
+                <span className="bg-clip-text text-transparent animate-gradient-x" style={{ color: '#4FE1BF' }}>
                   Smart Grid Research
                 </span>
               </>
