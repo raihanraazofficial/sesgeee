@@ -542,7 +542,7 @@ const AdminNews = () => {
                     type="datetime-local"
                     value={formData.published_date}
                     onChange={(e) => setFormData({ ...formData, published_date: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 bg-white"
                   />
                 </div>
 
