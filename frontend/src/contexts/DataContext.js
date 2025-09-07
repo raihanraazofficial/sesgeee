@@ -486,7 +486,12 @@ export function DataProvider({ children }) {
           q = query(q, firestoreLimit(params.limit));
         }
 
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await Promise.race([
+          getDocs(q),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Firestore query timeout after 10 seconds')), 10000)
+          )
+        ]);
         const data = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
