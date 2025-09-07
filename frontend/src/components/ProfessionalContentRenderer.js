@@ -162,24 +162,36 @@ const ProfessionalContentRenderer = ({ content, className = "" }) => {
       const tableContainer = document.createElement('div');
       tableContainer.className = 'table-container';
       
-      // Apply professional styling
-      table.className = 'professional-table';
+      // Keep existing classes if they exist, otherwise add default ones
+      if (!table.className || table.className.trim() === '') {
+        table.className = 'professional-table';
+      } else if (!table.className.includes('professional-table')) {
+        table.className += ' professional-table';
+      }
       
       // Ensure proper header styling
       const thead = table.querySelector('thead');
       if (thead) {
-        thead.className = 'table-header';
+        if (!thead.className.includes('table-header')) {
+          thead.className = thead.className ? thead.className + ' table-header' : 'table-header';
+        }
       }
       
       const tbody = table.querySelector('tbody');
       if (tbody) {
-        tbody.className = 'table-body';
+        if (!tbody.className.includes('table-body')) {
+          tbody.className = tbody.className ? tbody.className + ' table-body' : 'table-body';
+        }
       }
       
-      // Style cells
+      // Style cells - preserve existing classes and add new ones if needed
       const cells = table.querySelectorAll('td, th');
       cells.forEach(cell => {
-        cell.className = cell.tagName === 'TH' ? 'table-header-cell' : 'table-data-cell';
+        const isHeader = cell.tagName === 'TH';
+        const targetClass = isHeader ? 'table-header-cell' : 'table-data-cell';
+        if (!cell.className.includes(targetClass)) {
+          cell.className = cell.className ? cell.className + ' ' + targetClass : targetClass;
+        }
       });
       
       tableContainer.appendChild(table.cloneNode(true));
