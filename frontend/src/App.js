@@ -17,6 +17,8 @@ import Projects from './pages/Projects';
 import Achievements from './pages/Achievements';
 import Contact from './pages/Contact';
 import PhotoGallery from './pages/PhotoGallery';
+import News from './pages/News';
+import NewsDetail from './pages/NewsDetail';
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -25,6 +27,7 @@ import AdminPeople from './pages/admin/AdminPeople';
 import AdminPublications from './pages/admin/AdminPublications';
 import AdminProjects from './pages/admin/AdminProjects';
 import AdminAchievements from './pages/admin/AdminAchievements';
+import AdminNews from './pages/admin/AdminNews';
 import AdminSettings from './pages/admin/AdminSettings';
 
 // Context
