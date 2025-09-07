@@ -15,6 +15,64 @@ const AdminSettings = () => {
   
   const { fetchData, createItem, updateItem } = useData();
 
+  useEffect(() => {
+    loadSettings();
+  }, []);
+
+  const loadSettings = async () => {
+    try {
+      const settings = await fetchData('settings');
+      if (settings && settings.length > 0) {
+        const settingsData = settings[0];
+        setCalendarUrl(settingsData.google_calendar_url || '');
+      }
+    } catch (error) {
+      console.error('Error loading settings:', error);
+    }
+  };
+
+  const handleSaveCalendar = async () => {
+    if (!calendarUrl.trim()) {
+      toast.error('Please enter a valid Google Calendar URL');
+      return;
+    }
+
+    setCalendarLoading(true);
+    try {
+      const settings = await fetchData('settings');
+      const settingsData = {
+        google_calendar_url: calendarUrl.trim(),
+        updated_at: new Date().toISOString()
+      };
+
+      if (settings && settings.length > 0) {
+        // Update existing settings
+        await updateItem('settings', settings[0].id, settingsData);
+      } else {
+        // Create new settings
+        await createItem('settings', settingsData);
+      }
+
+      toast.success('Google Calendar settings saved successfully!');
+    } catch (error) {
+      console.error('Error saving calendar settings:', error);
+      toast.error('Failed to save calendar settings');
+    } finally {
+      setCalendarLoading(false);
+    }
+  };
+
+  const handleTestCalendar = () => {
+    if (!calendarUrl.trim()) {
+      toast.error('Please enter a Google Calendar URL first');
+      return;
+    }
+    
+    // Open calendar in new tab to test
+    window.open(calendarUrl, '_blank');
+    toast.info('Calendar opened in new tab for testing');
+  };
+
   const handleInitializeDatabase = async () => {
     setInitLoading(true);
     setInitError(null);
