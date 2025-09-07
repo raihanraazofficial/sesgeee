@@ -399,23 +399,41 @@ const AdminNews = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Title *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.title}
-                  onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="Enter news article title"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Title *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.title}
+                    onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    placeholder="Enter article title"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Category *
+                  </label>
+                  <select
+                    required
+                    value={formData.category}
+                    onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  >
+                    <option value="news">News</option>
+                    <option value="events">Events</option>
+                    <option value="upcoming_events">Upcoming Events</option>
+                  </select>
+                </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Excerpt *
+                  Excerpt/Summary *
                 </label>
                 <textarea
                   required
@@ -423,21 +441,27 @@ const AdminNews = () => {
                   value={formData.excerpt}
                   onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
                   className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="Brief summary of the news article"
+                  placeholder="Brief summary for preview and SEO"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Content
+                  Rich Content *
+                  <span className="text-xs text-gray-500 ml-2">
+                    (Supports formatting, images, videos, math formulas, code blocks, tables)
+                  </span>
                 </label>
-                <textarea
-                  rows="8"
-                  value={formData.content}
-                  onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="Full content of the news article"
-                />
+                <div className="border border-gray-300 rounded-md">
+                  <ReactQuill
+                    value={formData.content}
+                    onChange={(content) => setFormData(prev => ({ ...prev, content }))}
+                    modules={quillModules}
+                    formats={quillFormats}
+                    placeholder="Write your content using the rich text editor..."
+                    style={{ height: '300px', marginBottom: '50px' }}
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
