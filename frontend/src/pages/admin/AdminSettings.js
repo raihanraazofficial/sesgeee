@@ -15,11 +15,7 @@ const AdminSettings = () => {
   
   const { fetchData, createItem, updateItem } = useData();
 
-  useEffect(() => {
-    loadSettings();
-  }, []);
-
-  const loadSettings = async () => {
+  const loadSettings = useCallback(async () => {
     try {
       const settings = await fetchData('settings');
       if (settings && settings.length > 0) {
@@ -29,7 +25,11 @@ const AdminSettings = () => {
     } catch (error) {
       console.error('Error loading settings:', error);
     }
-  };
+  }, [fetchData]);
+
+  useEffect(() => {
+    loadSettings();
+  }, [loadSettings]);
 
   const handleSaveCalendar = async () => {
     if (!calendarUrl.trim()) {
