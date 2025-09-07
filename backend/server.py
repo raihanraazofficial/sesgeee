@@ -16,13 +16,16 @@ from dotenv import load_dotenv
 # Try to import Firebase, but don't fail if it's not available
 try:
     import firebase_admin
-    from firebase_admin import credentials, firestore, auth, storage
+    from firebase_admin import credentials, firestore
+    from google.cloud import firestore as gcloud_firestore
     FIREBASE_AVAILABLE = True
+    print("Firebase libraries imported successfully")
 except ImportError as e:
     print(f"Firebase not available: {e}")
     FIREBASE_AVAILABLE = False
     firebase_admin = None
     firestore = None
+    gcloud_firestore = None
 
 load_dotenv()
 
