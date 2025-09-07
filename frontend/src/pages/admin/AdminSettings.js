@@ -46,7 +46,6 @@ const AdminSettings = () => {
         fetchData('publications'),
         fetchData('projects'),
         fetchData('achievements'),
-        fetchData('news'),
         fetchData('researchAreas')
       ]);
       setRefreshLoading(false);
