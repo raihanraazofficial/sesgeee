@@ -121,12 +121,15 @@ const People = () => {
                       
                       {/* Content Below Photo */}
                       <div className="p-6 flex flex-col flex-grow">
+                        {/* Bio Section - Dynamic height */}
                         <div className="flex-grow">
-                          {/* Bio - Now with more space */}
                           <p className="text-gray-600 text-sm leading-relaxed mb-4">
                             {person.bio}
                           </p>
-                          
+                        </div>
+                        
+                        {/* Fixed positioning sections at bottom */}
+                        <div className="mt-auto">
                           {/* Research Interest - Fixed positioning */}
                           <div className="mb-4" style={{ minHeight: '80px' }}>
                             {person.research_interests && person.research_interests.length > 0 && (
