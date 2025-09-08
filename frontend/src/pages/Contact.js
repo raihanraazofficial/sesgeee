@@ -47,7 +47,7 @@ const Contact = () => {
       link: 'mailto:sesg.eee@bracu.ac.bd'
     },
     {
-      icon: Phone,
+      icon: Clock,
       title: 'Office Hours',
       details: 'Sunday - Thursday: 9:00 AM - 5:00 PM',
       link: null
