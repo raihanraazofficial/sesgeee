@@ -187,7 +187,6 @@ const People = () => {
                           </div>
                         </div>
                       </div>
-                      </div>
                     </div>
                   ))}
                 </div>
