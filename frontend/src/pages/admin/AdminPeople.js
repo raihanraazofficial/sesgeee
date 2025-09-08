@@ -19,6 +19,7 @@ const AdminPeople = () => {
     image: '',
     email: '',
     website: '',
+    display_order: '',
     social_links: {
       google_scholar: '',
       researchgate: '',
