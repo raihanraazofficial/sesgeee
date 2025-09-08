@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, ArrowUp } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, ArrowUp, Clock } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import { toast } from 'react-toastify';
 
