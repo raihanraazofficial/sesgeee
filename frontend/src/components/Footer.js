@@ -72,7 +72,7 @@ const Footer = () => {
                 <span className="text-gray-300 text-sm">sesg.eee@bracu.ac.bd</span>
               </div>
               <div className="flex items-start space-x-3">
-                <Phone className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
+                <Clock className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
                 <span className="text-gray-300 text-sm">Sunday - Thursday: 9:00 AM - 5:00 PM</span>
               </div>
               <div className="flex items-start space-x-3">
