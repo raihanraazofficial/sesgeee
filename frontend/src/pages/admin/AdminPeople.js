@@ -376,6 +376,24 @@ const AdminPeople = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Display Order (ID for sorting)
+                </label>
+                <input
+                  type="number"
+                  name="display_order"
+                  value={formData.display_order}
+                  onChange={handleInputChange}
+                  className="form-input"
+                  placeholder="Enter order number (1, 2, 3...)"
+                  min="1"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Lower numbers appear first. Leave empty for default ordering.
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Bio
                 </label>
                 <textarea
