@@ -93,6 +93,7 @@ const AdminPeople = () => {
     setFormData({
       ...person,
       research_interests: person.research_interests || [],
+      display_order: person.display_order || '',
       social_links: person.social_links || {
         google_scholar: '',
         researchgate: '',
