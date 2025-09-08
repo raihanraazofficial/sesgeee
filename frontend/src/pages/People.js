@@ -17,12 +17,27 @@ const People = () => {
   useEffect(() => {
     if (people.length > 0) {
       const filtered = people.filter(person => person.category === activeCategory);
-      // Sort by creation date (newest first) or by order in array
+      // Sort by display_order first (ascending), then by creation date for those without display_order
       const sorted = filtered.sort((a, b) => {
+        const orderA = a.display_order;
+        const orderB = b.display_order;
+        
+        // Both have display_order
+        if (orderA !== null && orderA !== undefined && orderB !== null && orderB !== undefined) {
+          return orderA - orderB;
+        }
+        // Only A has display_order (A comes first)
+        if (orderA !== null && orderA !== undefined) {
+          return -1;
+        }
+        // Only B has display_order (B comes first)
+        if (orderB !== null && orderB !== undefined) {
+          return 1;
+        }
+        // Neither has display_order, sort by creation date
         if (a.created_at && b.created_at) {
           return new Date(b.created_at) - new Date(a.created_at);
         }
-        // If no creation date, maintain order (newly added will be at end, so reverse)
         return filtered.indexOf(b) - filtered.indexOf(a);
       });
       setFilteredPeople(sorted);
