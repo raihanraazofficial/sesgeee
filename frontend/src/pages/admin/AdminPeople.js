@@ -56,6 +56,13 @@ const AdminPeople = () => {
         ...prev,
         research_interests: interests
       }));
+    } else if (name === 'display_order') {
+      // Handle number input for display_order
+      const numValue = value === '' ? null : parseInt(value, 10);
+      setFormData(prev => ({
+        ...prev,
+        display_order: numValue
+      }));
     } else {
       setFormData(prev => ({
         ...prev,
