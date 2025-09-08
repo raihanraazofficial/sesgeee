@@ -127,45 +127,50 @@ const People = () => {
                             {person.bio}
                           </p>
                           
-                          {person.research_interests && person.research_interests.length > 0 && (
-                            <div className="mb-4">
-                              <h4 className="text-gray-900 font-medium text-sm mb-2">Research Interest:</h4>
-                              <div className="flex flex-wrap gap-2">
-                                {person.research_interests.map((interest, index) => (
-                                  <span
-                                    key={index}
-                                    className="bg-primary-100 text-primary-700 px-2 py-1 rounded text-xs border border-primary-200"
-                                  >
-                                    {interest}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
+                          {/* Research Interest - Fixed positioning */}
+                          <div className="mb-4" style={{ minHeight: '80px' }}>
+                            {person.research_interests && person.research_interests.length > 0 && (
+                              <>
+                                <h4 className="text-gray-900 font-medium text-sm mb-2">Research Interest:</h4>
+                                <div className="flex flex-wrap gap-2">
+                                  {person.research_interests.map((interest, index) => (
+                                    <span
+                                      key={index}
+                                      className="bg-primary-100 text-primary-700 px-2 py-1 rounded text-xs border border-primary-200"
+                                    >
+                                      {interest}
+                                    </span>
+                                  ))}
+                                </div>
+                              </>
+                            )}
+                          </div>
                           
-                          {/* Social/Research Links */}
-                          <div className="flex flex-wrap gap-3 mb-4">
-                            <a href={person.social_links?.google_scholar || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlescholar.svg" alt="Scholar" className="w-full h-full" />
-                            </a>
-                            <a href={person.social_links?.researchgate || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/researchgate.svg" alt="RG" className="w-full h-full" />
-                            </a>
-                            <a href={person.social_links?.orcid || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/orcid.svg" alt="ORCID" className="w-full h-full" />
-                            </a>
-                            <a href={person.social_links?.linkedin || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" className="w-full h-full" />
-                            </a>
-                            <a href={person.social_links?.github || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" className="w-full h-full" />
-                            </a>
-                            <a href={person.social_links?.ieee || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ieee.svg" alt="IEEE" className="w-full h-full" />
-                            </a>
-                            <a href={`mailto:${person.email || 'example@email.com'}`} className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/maildotru.svg" alt="Email" className="w-full h-full" />
-                            </a>
+                          {/* Social/Research Links - Fixed positioning */}
+                          <div className="mb-4" style={{ minHeight: '32px' }}>
+                            <div className="flex flex-wrap gap-3">
+                              <a href={person.social_links?.google_scholar || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlescholar.svg" alt="Scholar" className="w-full h-full" />
+                              </a>
+                              <a href={person.social_links?.researchgate || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/researchgate.svg" alt="RG" className="w-full h-full" />
+                              </a>
+                              <a href={person.social_links?.orcid || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/orcid.svg" alt="ORCID" className="w-full h-full" />
+                              </a>
+                              <a href={person.social_links?.linkedin || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" className="w-full h-full" />
+                              </a>
+                              <a href={person.social_links?.github || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" className="w-full h-full" />
+                              </a>
+                              <a href={person.social_links?.ieee || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ieee.svg" alt="IEEE" className="w-full h-full" />
+                              </a>
+                              <a href={`mailto:${person.email || 'example@email.com'}`} className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
+                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/maildotru.svg" alt="Email" className="w-full h-full" />
+                              </a>
+                            </div>
                           </div>
                         </div>
                         
