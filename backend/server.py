@@ -368,6 +368,7 @@ class PersonCreate(BaseModel):
     image: Optional[str] = None
     email: Optional[str] = None
     social_links: Dict[str, str] = {}
+    display_order: Optional[int] = None
 
 class PublicationCreate(BaseModel):
     title: str
