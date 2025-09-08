@@ -22,12 +22,24 @@
       "dest": "/backend/server.py"
     },
     {
-      "src": "/admin/(.*)",
-      "dest": "/frontend/index.html"
+      "src": "/static/(.*)",
+      "dest": "/frontend/static/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/frontend/favicon.ico"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/frontend/manifest.json"
+    },
+    {
+      "src": "/logo(.*)",
+      "dest": "/frontend/logo$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/$1"
+      "dest": "/frontend/index.html"
     }
   ],
   "env": {
