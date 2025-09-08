@@ -175,7 +175,6 @@ const People = () => {
                               </a>
                             </div>
                           </div>
-                        </div>
                           
                           {/* Fixed Know More Button at Bottom */}
                           <div>
@@ -187,6 +186,7 @@ const People = () => {
                             </button>
                           </div>
                         </div>
+                      </div>
                       </div>
                     </div>
                   ))}
