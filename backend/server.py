@@ -530,7 +530,21 @@ async def get_research_area(area_id: str):
 @app.get("/api/people")
 async def get_people(category: Optional[str] = None):
     filters = [("category", "==", category)] if category else None
-    return get_collection_data("people", filters=filters)
+    # Get data and apply custom ordering based on display_order
+    people_data = get_collection_data("people", filters=filters)
+    
+    # Sort by display_order (ascending), then by created_at for those without display_order
+    def sort_key(person):
+        display_order = person.get('display_order')
+        if display_order is not None:
+            return (0, display_order)  # Priority 0 for items with display_order
+        else:
+            # Priority 1 for items without display_order, then by creation time
+            created_at = person.get('created_at', '1970-01-01T00:00:00')
+            return (1, created_at)
+    
+    people_data.sort(key=sort_key)
+    return people_data
 
 @app.post("/api/people")
 async def create_person(person: PersonCreate, current_user: dict = Depends(get_current_user)):
