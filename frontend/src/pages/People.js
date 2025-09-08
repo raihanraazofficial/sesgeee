@@ -176,15 +176,16 @@ const People = () => {
                             </div>
                           </div>
                         </div>
-                        
-                        {/* Fixed Know More Button at Bottom */}
-                        <div className="mt-auto">
-                          <button 
-                            onClick={() => person.website && window.open(person.website, '_blank')}
-                            className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-lg transition-colors border border-gray-300"
-                          >
-                            Know More
-                          </button>
+                          
+                          {/* Fixed Know More Button at Bottom */}
+                          <div>
+                            <button 
+                              onClick={() => person.website && window.open(person.website, '_blank')}
+                              className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-lg transition-colors border border-gray-300"
+                            >
+                              Know More
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
