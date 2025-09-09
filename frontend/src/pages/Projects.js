@@ -339,15 +339,24 @@ const Projects = () => {
                           <hr className="border-gray-200 my-4" />
                           
                           {/* Bottom Section - Always Fixed at Bottom */}
-                          <div className="flex items-center justify-between mt-auto">
-                            <div className="text-sm text-gray-600">
-                              <span className="font-medium">Funded By:</span> {project.funded_by || 'Not specified'}
-                            </div>
-                            <div className="flex items-center space-x-1 text-sm">
-                              <Users className="h-4 w-4 text-primary-500" />
-                              <span className="text-gray-600 font-medium">
-                                {project.total_members || project.team_members?.length || 0} Members
-                              </span>
+                          <div className="space-y-2 mt-auto">
+                            {/* Funding Information - Only show if funding_amount exists */}
+                            {project.funding_amount && (
+                              <div className="text-sm text-gray-600">
+                                <span className="font-medium">Funding:</span> {project.funding_amount} {project.currency || 'BDT'}
+                              </div>
+                            )}
+                            
+                            <div className="flex items-center justify-between">
+                              <div className="text-sm text-gray-600">
+                                <span className="font-medium">Funded By:</span> {project.funded_by || 'Not specified'}
+                              </div>
+                              <div className="flex items-center space-x-1 text-sm">
+                                <Users className="h-4 w-4 text-primary-500" />
+                                <span className="text-gray-600 font-medium">
+                                  {project.total_members || project.team_members?.length || 0} Members
+                                </span>
+                              </div>
                             </div>
                           </div>
                           
