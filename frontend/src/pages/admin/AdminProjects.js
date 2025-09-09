@@ -502,6 +502,12 @@ const AdminProjects = () => {
                         <Users className="h-4 w-4" />
                         <span>{project.total_members || 'N/A'} members</span>
                       </div>
+                      {project.funding_amount && (
+                        <div className="flex items-center space-x-2">
+                          <span className="font-medium">Funding:</span>
+                          <span>{project.funding_amount} {project.currency || 'BDT'}</span>
+                        </div>
+                      )}
                       {project.funded_by && (
                         <div className="flex items-center space-x-2">
                           <Building className="h-4 w-4" />
