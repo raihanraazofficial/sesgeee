@@ -84,8 +84,6 @@ const Projects = () => {
         return CheckCircle;
       case 'ongoing':
         return Clock;
-      case 'planning':
-        return Target;
       default:
         return FolderOpen;
     }
@@ -97,11 +95,18 @@ const Projects = () => {
         return 'text-green-700 bg-green-100 border-green-300';
       case 'ongoing':
         return 'text-amber-700 bg-amber-100 border-amber-300';
-      case 'planning':
-        return 'text-blue-700 bg-blue-100 border-blue-300';
       default:
         return 'text-gray-700 bg-gray-100 border-gray-300';
     }
+  };
+
+  const truncateDescription = (description, wordLimit = 100) => {
+    if (!description) return 'No description available for this research project.';
+    
+    const words = description.split(' ');
+    if (words.length <= wordLimit) return description;
+    
+    return words.slice(0, wordLimit).join(' ') + '...';
   };
 
   const formatDate = (dateString) => {
