@@ -48,6 +48,7 @@ const AdminProjects = () => {
       const projectData = {
         ...formData,
         total_members: formData.total_members ? parseInt(formData.total_members) : 0,
+        funding_amount: formData.funding_amount ? parseFloat(formData.funding_amount) : null,
         team_members: formData.team_members ? formData.team_members.split(',').map(member => member.trim()).filter(member => member) : [],
         start_date: formData.start_date ? new Date(formData.start_date).toISOString() : null,
         end_date: formData.end_date ? new Date(formData.end_date).toISOString() : null,
