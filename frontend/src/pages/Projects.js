@@ -34,13 +34,16 @@ const Projects = () => {
         );
       }
       
-      // Sort projects
+      // Sort projects - prioritize by start_date (newest first), then by created_at
       filtered = [...filtered].sort((a, b) => {
         let comparison = 0;
         
         switch (sortBy) {
           case 'latest':
-            comparison = new Date(b.created_at || b.start_date) - new Date(a.created_at || a.start_date);
+            // First try to sort by start_date, then fallback to created_at
+            const aDate = new Date(a.start_date || a.created_at || 0);
+            const bDate = new Date(b.start_date || b.created_at || 0);
+            comparison = bDate - aDate; // newest first
             break;
           case 'category':
             comparison = (a.status || '').localeCompare(b.status || '');
