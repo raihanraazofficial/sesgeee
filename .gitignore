@@ -293,3 +293,7 @@ firebase-debug.*.log*
 # Environment files
 *.env
 *.env.*
+-e 
+# Environment files
+*.env
+*.env.*
