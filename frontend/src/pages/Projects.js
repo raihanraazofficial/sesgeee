@@ -249,13 +249,13 @@ const Projects = () => {
                         </div>
 
                         <div className="p-6 flex flex-col flex-grow">
-                          {/* Project Title - Show full title */}
-                          <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors">
+                          {/* Project Title - Show full title with justified text */}
+                          <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors text-justify">
                             {project.name || 'Untitled Project'}
                           </h3>
                           
-                          {/* Description - Truncated to 100 words */}
-                          <p className="text-gray-600 mb-4 leading-relaxed flex-grow">
+                          {/* Description - Truncated to 100 words with justified text */}
+                          <p className="text-gray-600 mb-4 leading-relaxed flex-grow text-justify">
                             {truncateDescription(project.description)}
                           </p>
                           
