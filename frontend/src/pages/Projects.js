@@ -67,9 +67,8 @@ const Projects = () => {
     const total = projects.length;
     const ongoing = projects.filter(p => p.status === 'ongoing').length;
     const completed = projects.filter(p => p.status === 'completed').length;
-    const planning = projects.filter(p => p.status === 'planning').length;
     
-    return { total, ongoing, completed, planning };
+    return { total, ongoing, completed };
   }, [projects]);
 
   const scrollToTop = () => {
