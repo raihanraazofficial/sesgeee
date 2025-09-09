@@ -120,9 +120,9 @@ const Projects = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <HeroSection
-        title="Projects"
+        title="Research Projects"
         backgroundImage="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxyZXNlYXJjaCUyMHByb2plY3RzfGVufDB8fHx8MTc1NjY1NDE0OXww&ixlib=rb-4.1.0&q=85"
-        height="h-64"
+        height="h-80"
       />
 
       {/* Search and Filter Section */}
