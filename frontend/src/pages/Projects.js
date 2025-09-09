@@ -65,15 +65,6 @@ const Projects = () => {
     }
   }, [projects, activeTab, searchTerm, sortBy, sortOrder]);
 
-  // Calculate project statistics
-  const projectStats = useMemo(() => {
-    const total = projects.length;
-    const ongoing = projects.filter(p => p.status === 'ongoing').length;
-    const completed = projects.filter(p => p.status === 'completed').length;
-    
-    return { total, ongoing, completed };
-  }, [projects]);
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
