@@ -181,22 +181,87 @@ class SESGRGAPITester:
         return success1 and success2 and success3
 
     def test_projects_endpoints(self):
-        """Test projects endpoints"""
-        success1, _ = self.run_test(
+        """Test projects endpoints with new requirements"""
+        results = []
+        
+        # 1. Get all projects
+        success1, projects_response = self.run_test(
             "Get All Projects",
             "GET",
             "api/projects",
             200
         )
+        results.append(success1)
         
+        if success1 and projects_response:
+            # Check if any planning projects exist (should be none)
+            planning_projects = [p for p in projects_response if p.get('status') == 'planning']
+            if planning_projects:
+                print(f"   ⚠️  Found {len(planning_projects)} planning projects (should be 0)")
+                results.append(False)
+            else:
+                print("   ✅ No planning projects found (as expected)")
+                results.append(True)
+            
+            # Check if projects have funding fields
+            projects_with_funding = [p for p in projects_response if 'funding_amount' in p or 'currency' in p]
+            print(f"   📊 Projects with funding fields: {len(projects_with_funding)}/{len(projects_response)}")
+        
+        # 2. Get projects by ongoing status
         success2, _ = self.run_test(
-            "Get Projects by Status",
+            "Get Ongoing Projects",
             "GET",
-            "api/projects?status=active",
+            "api/projects?status=ongoing",
             200
         )
+        results.append(success2)
         
-        return success1 and success2
+        # 3. Get projects by completed status
+        success3, _ = self.run_test(
+            "Get Completed Projects", 
+            "GET",
+            "api/projects?status=completed",
+            200
+        )
+        results.append(success3)
+        
+        # 4. Test creating project with funding (requires auth)
+        if self.token:
+            success4, created_project = self.run_test(
+                "Create Project with Funding",
+                "POST",
+                "api/projects",
+                200,
+                data={
+                    "name": "Test Project with Funding",
+                    "description": "This is a test project to verify funding fields work correctly. " * 20,  # Long description to test truncation
+                    "start_date": "2024-01-15",
+                    "end_date": "2025-12-31",
+                    "team_leader": "Test Leader",
+                    "team_members": "Member 1, Member 2, Member 3",
+                    "funded_by": "Test Funding Agency",
+                    "funding_amount": 250000,
+                    "currency": "USD",
+                    "total_members": 5,
+                    "status": "ongoing",
+                    "research_area": "Test Research Area"
+                }
+            )
+            results.append(success4)
+            
+            if success4 and created_project:
+                # Verify funding fields are saved correctly
+                if created_project.get('funding_amount') == 250000 and created_project.get('currency') == 'USD':
+                    print("   ✅ Funding fields saved correctly")
+                    results.append(True)
+                else:
+                    print(f"   ❌ Funding fields not saved correctly: amount={created_project.get('funding_amount')}, currency={created_project.get('currency')}")
+                    results.append(False)
+        else:
+            print("   ⚠️  Skipping authenticated project tests - no token")
+            results.extend([False, False])
+        
+        return all(results)
 
     def test_achievements_endpoint(self):
         """Test achievements endpoint"""
