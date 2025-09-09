@@ -134,54 +134,6 @@ const Projects = () => {
         height="h-64"
       />
 
-      {/* Summary Cards Section */}
-      <section className="py-12 bg-gradient-to-br from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            {/* Total Projects Card */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-6 hover:shadow-xl transition-all duration-300">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1">Total Projects</p>
-                  <p className="text-3xl font-bold text-gray-900">{projectStats.total}</p>
-                </div>
-                <div className="p-3 bg-blue-100 rounded-lg">
-                  <BarChart3 className="h-8 w-8 text-blue-600" />
-                </div>
-              </div>
-            </div>
-
-            {/* Ongoing Projects Card */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-6 hover:shadow-xl transition-all duration-300">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1">Ongoing Projects</p>
-                  <p className="text-3xl font-bold text-yellow-600">{projectStats.ongoing}</p>
-                </div>
-                <div className="p-3 bg-yellow-100 rounded-lg">
-                  <Clock className="h-8 w-8 text-yellow-600" />
-                </div>
-              </div>
-            </div>
-
-            {/* Completed Projects Card */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-6 hover:shadow-xl transition-all duration-300">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1">Completed Projects</p>
-                  <p className="text-3xl font-bold text-green-600">{projectStats.completed}</p>
-                </div>
-                <div className="p-3 bg-green-100 rounded-lg">
-                  <CheckCircle className="h-8 w-8 text-green-600" />
-                </div>
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-      </section>
-
       {/* Search and Filter Section */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
