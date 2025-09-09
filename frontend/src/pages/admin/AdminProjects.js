@@ -29,8 +29,28 @@ const AdminProjects = () => {
   });
 
   useEffect(() => {
-    fetchData('projects');
-  }, [fetchData]);
+    const loadAndCleanProjects = async () => {
+      await fetchData('projects');
+      
+      // Delete any existing planning projects
+      const planningProjects = projects.filter(p => p.status === 'planning');
+      if (planningProjects.length > 0) {
+        for (const project of planningProjects) {
+          try {
+            await deleteItem('projects', project.id);
+            console.log(`Deleted planning project: ${project.name}`);
+          } catch (error) {
+            console.error(`Error deleting planning project ${project.id}:`, error);
+          }
+        }
+        // Refresh data after cleanup
+        await fetchData('projects');
+        toast.info(`Removed ${planningProjects.length} planning project(s) as per new requirements.`);
+      }
+    };
+    
+    loadAndCleanProjects();
+  }, [fetchData, projects.length, deleteItem]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
