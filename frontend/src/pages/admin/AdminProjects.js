@@ -217,7 +217,6 @@ const AdminProjects = () => {
                     onChange={handleInputChange}
                     className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   >
-                    <option value="planning">Planning</option>
                     <option value="ongoing">Ongoing</option>
                     <option value="completed">Completed</option>
                   </select>
