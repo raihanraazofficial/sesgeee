@@ -101,6 +101,8 @@ const AdminProjects = () => {
       team_members: Array.isArray(project.team_members) ? project.team_members.join(', ') : project.team_members || '',
       start_date: project.start_date ? project.start_date.split('T')[0] : '',
       end_date: project.end_date ? project.end_date.split('T')[0] : '',
+      funding_amount: project.funding_amount || '',
+      currency: project.currency || 'BDT',
     });
     setShowForm(true);
   };
