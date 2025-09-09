@@ -19,8 +19,10 @@ const AdminProjects = () => {
     team_leader: '',
     team_members: '',
     funded_by: '',
+    funding_amount: '',
+    currency: 'BDT',
     total_members: '',
-    status: 'planning',
+    status: 'ongoing',
     research_area: '',
     project_link: '',
     image: ''
