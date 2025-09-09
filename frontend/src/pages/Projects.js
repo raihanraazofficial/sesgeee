@@ -298,14 +298,14 @@ const Projects = () => {
                         </div>
 
                         <div className="p-6 flex flex-col flex-grow">
-                          {/* Project Title */}
-                          <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-primary-600 transition-colors">
+                          {/* Project Title - Show full title */}
+                          <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors">
                             {project.name || 'Untitled Project'}
                           </h3>
                           
-                          {/* Short Description */}
-                          <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3 flex-grow">
-                            {project.description || 'No description available for this research project.'}
+                          {/* Description - Truncated to 100 words */}
+                          <p className="text-gray-600 mb-4 leading-relaxed flex-grow">
+                            {truncateDescription(project.description)}
                           </p>
                           
                           {/* Project Meta Information */}
