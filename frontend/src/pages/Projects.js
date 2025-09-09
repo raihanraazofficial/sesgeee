@@ -178,18 +178,7 @@ const Projects = () => {
               </div>
             </div>
 
-            {/* Planning Projects Card */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-6 hover:shadow-xl transition-all duration-300">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1">Planning Projects</p>
-                  <p className="text-3xl font-bold text-blue-600">{projectStats.planning}</p>
-                </div>
-                <div className="p-3 bg-blue-100 rounded-lg">
-                  <Target className="h-8 w-8 text-blue-600" />
-                </div>
-              </div>
-            </div>
+
           </div>
         </div>
       </section>
