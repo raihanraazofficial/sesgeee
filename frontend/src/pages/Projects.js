@@ -188,7 +188,7 @@ const Projects = () => {
                   <button
                     onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
                     className={`px-4 py-2 border rounded-md transition-colors text-sm font-medium min-w-[120px] ${
-                      sortOrder === 'desc' 
+                      sortOrder === 'asc' 
                         ? 'bg-primary-600 text-white border-primary-600 hover:bg-primary-700' 
                         : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
                     }`}
