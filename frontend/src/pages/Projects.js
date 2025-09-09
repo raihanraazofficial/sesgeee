@@ -207,8 +207,7 @@ const Projects = () => {
                 {[
                   { id: 'all', name: 'All Projects' },
                   { id: 'ongoing', name: 'Ongoing' },
-                  { id: 'completed', name: 'Completed' },
-                  { id: 'planning', name: 'Planning' }
+                  { id: 'completed', name: 'Completed' }
                 ].map((tab) => (
                   <button
                     key={tab.id}
