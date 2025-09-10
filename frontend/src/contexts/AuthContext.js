@@ -67,61 +67,23 @@ export function AuthProvider({ children }) {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       
-      // Check credentials in Firestore first
-      try {
-        const usersRef = collection(db, 'users');
-        const q = query(
-          usersRef, 
-          where('username', '==', credentials.username),
-          where('role', '==', 'admin')
-        );
-        
-        const querySnapshot = await getDocs(q);
-        
-        if (!querySnapshot.empty) {
-          // User found in Firestore, validate password
-          const userDoc = querySnapshot.docs[0];
-          const userData = userDoc.data();
-          
-          // Simple password check (in production, passwords should be hashed)
-          if (userData.password !== credentials.password) {
-            throw new Error('Invalid password');
-          }
-          
-          const user = {
-            uid: userDoc.id,
-            username: userData.username,
-            email: userData.email || `${userData.username}@sesgrg.com`,
-            role: userData.role
-          };
-          
-          const sessionToken = `session-${Date.now()}`;
-          
-          // Store in localStorage
-          localStorage.setItem('admin_user', JSON.stringify(user));
-          localStorage.setItem('admin_session', sessionToken);
-          
-          dispatch({
-            type: 'LOGIN_SUCCESS',
-            payload: { user, token: sessionToken }
-          });
-          
-          return { success: true };
-        }
-      } catch (firestoreError) {
-        console.warn('Firestore authentication failed, trying hardcoded credentials:', firestoreError.message);
-      }
+      // Use backend API for authentication
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://f1d2a470-a61f-4dc9-918e-6a6ffe76d93f.preview.emergentagent.com';
       
-      // Fallback to hardcoded admin credentials if Firestore fails
-      if (credentials.username === 'admin' && credentials.password === '@dminsesg705') {
+      const response = await axios.post(`${backendUrl}/api/auth/login`, {
+        username: credentials.username,
+        password: credentials.password
+      });
+      
+      if (response.data && response.data.access_token) {
         const user = {
-          uid: 'hardcoded-admin',
-          username: 'admin',
-          email: 'admin@sesgrg.com',
-          role: 'admin'
+          uid: 'api-admin',
+          username: credentials.username,
+          email: `${credentials.username}@sesgrg.com`,
+          role: response.data.user_role || 'admin'
         };
         
-        const sessionToken = `session-${Date.now()}`;
+        const sessionToken = response.data.access_token;
         
         // Store in localStorage
         localStorage.setItem('admin_user', JSON.stringify(user));
@@ -134,19 +96,21 @@ export function AuthProvider({ children }) {
         
         return { success: true };
       } else {
-        throw new Error('Invalid credentials');
+        throw new Error('Invalid response from server');
       }
       
     } catch (error) {
       dispatch({ type: 'SET_LOADING', payload: false });
       let errorMessage = 'Login failed';
       
-      if (error.message.includes('Invalid')) {
+      if (error.response && error.response.status === 401) {
+        errorMessage = 'Invalid username or password';
+      } else if (error.response && error.response.data && error.response.data.detail) {
+        errorMessage = error.response.data.detail;
+      } else if (error.message) {
         errorMessage = error.message;
-      } else if (error.code === 'permission-denied') {
-        errorMessage = 'Access denied. Please check your credentials.';
       } else {
-        errorMessage = 'Unable to connect to database. Please try again.';
+        errorMessage = 'Unable to connect to server. Please try again.';
       }
       
       return {
