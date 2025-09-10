@@ -204,29 +204,7 @@ Best regards,
         enableAnimations={false}
       />
 
-      {/* Statistics Section */}
-      <section className="py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-primary-50 rounded-lg p-4 text-center border border-primary-200">
-              <div className="text-3xl font-bold text-primary-600 mb-1">{stats.totalPublications}</div>
-              <div className="text-sm text-gray-600">Total Publications</div>
-            </div>
-            <div className="bg-secondary-50 rounded-lg p-4 text-center border border-secondary-200">
-              <div className="text-3xl font-bold text-secondary-600 mb-1">{stats.totalCitations}</div>
-              <div className="text-sm text-gray-600">Total Citations</div>
-            </div>
-            <div className="bg-green-50 rounded-lg p-4 text-center border border-green-200">
-              <div className="text-3xl font-bold text-green-600 mb-1">{stats.latestYear}</div>
-              <div className="text-sm text-gray-600">Latest Year</div>
-            </div>
-            <div className="bg-blue-50 rounded-lg p-4 text-center border border-blue-200">
-              <div className="text-3xl font-bold text-blue-600 mb-1">{stats.researchAreas}</div>
-              <div className="text-sm text-gray-600">Research Areas</div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Category Filter Buttons */}
       <section className="py-6 bg-gray-50">
