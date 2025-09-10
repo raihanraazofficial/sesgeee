@@ -662,8 +662,8 @@ export function DataProvider({ children }) {
       if (type === 'researchAreas') collectionName = 'research_areas';
       if (type === 'photoGallery') collectionName = 'photo_gallery';
 
-      // Clean data to remove undefined values
-      const cleanedData = cleanData(data);
+      // Clean data for updates - keep empty strings to clear fields
+      const cleanedData = cleanData(data, true);
       
       const itemData = {
         ...cleanedData,
