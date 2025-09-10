@@ -631,18 +631,26 @@ export function DataProvider({ children }) {
     }
   };
 
-  const cleanData = (data) => {
+  const cleanData = (data, isUpdate = false) => {
     const cleaned = {};
     Object.keys(data).forEach(key => {
-      if (data[key] !== undefined && data[key] !== null && data[key] !== '') {
-        // Handle arrays - only include if not empty
+      if (data[key] !== undefined && data[key] !== null) {
+        // Handle arrays
         if (Array.isArray(data[key])) {
-          if (data[key].length > 0) {
-            cleaned[key] = data[key];
-          }
-        } else {
           cleaned[key] = data[key];
+        } else if (data[key] === '' && isUpdate) {
+          // For updates, explicitly set empty strings to clear fields
+          cleaned[key] = '';
+        } else if (data[key] !== '') {
+          // For non-empty values
+          cleaned[key] = data[key];
+        } else if (isUpdate) {
+          // For updates, include empty strings to clear fields
+          cleaned[key] = '';
         }
+      } else if (isUpdate && data[key] === null) {
+        // For updates, explicitly set null values
+        cleaned[key] = null;
       }
     });
     return cleaned;
