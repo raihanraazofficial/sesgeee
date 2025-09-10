@@ -68,7 +68,7 @@ export function AuthProvider({ children }) {
       dispatch({ type: 'SET_LOADING', payload: true });
       
       // Use backend API for authentication
-      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://f1d2a470-a61f-4dc9-918e-6a6ffe76d93f.preview.emergentagent.com';
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://tagline-cleanup.preview.emergentagent.com';
       
       const response = await axios.post(`${backendUrl}/api/auth/login`, {
         username: credentials.username,
