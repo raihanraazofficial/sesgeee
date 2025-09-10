@@ -433,7 +433,7 @@ def main():
     print("=" * 50)
     
     # Setup
-    tester = SESGRGAPITester("http://localhost:8001")
+    tester = SESGRGAPITester("https://f1d2a470-a61f-4dc9-918e-6a6ffe76d93f.preview.emergentagent.com")
     
     # Run tests in order
     test_results = []
