@@ -5,6 +5,10 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    // Log for debugging
+    console.log('ScrollToTop: Route changed to:', pathname);
+    console.log('ScrollToTop: Current scroll position before reset:', window.pageYOffset);
+    
     // Multiple approaches to ensure scroll to top works
     
     // Method 1: Immediate scroll
@@ -15,6 +19,7 @@ function ScrollToTop() {
       window.scrollTo(0, 0);
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
+      console.log('ScrollToTop: After timeout reset, scroll position:', window.pageYOffset);
     }, 0);
     
     // Method 3: Use requestAnimationFrame for better performance
@@ -24,6 +29,7 @@ function ScrollToTop() {
         left: 0,
         behavior: 'instant'
       });
+      console.log('ScrollToTop: After requestAnimationFrame reset, scroll position:', window.pageYOffset);
     });
     
   }, [pathname]);
