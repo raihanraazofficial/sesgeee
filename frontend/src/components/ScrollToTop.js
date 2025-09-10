@@ -6,7 +6,14 @@ function ScrollToTop() {
 
   useEffect(() => {
     // Scroll to top whenever the route changes
-    window.scrollTo(0, 0);
+    // Use requestAnimationFrame to ensure DOM is updated first
+    requestAnimationFrame(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'instant'
+      });
+    });
   }, [pathname]);
 
   return null;
