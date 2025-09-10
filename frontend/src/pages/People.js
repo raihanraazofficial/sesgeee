@@ -61,7 +61,6 @@ const People = () => {
       {/* Hero Section */}
       <HeroSection
         title="People"
-        description="Meet the dedicated researchers, advisors, and collaborators who are advancing sustainable energy and smart grid technologies at our research lab."
         backgroundImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHx0ZWFtJTIwY29sbGFib3JhdGlvbnxlbnwwfHx8fDE3NTY2NTQxNDl8MA&ixlib=rb-4.1.0&q=85"
         height="h-96"
         enableAnimations={false}

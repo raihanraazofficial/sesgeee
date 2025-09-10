@@ -51,7 +51,6 @@ const ResearchAreas = () => {
       {/* Hero Section */}
       <HeroSection
         title="Research Areas"
-        description="Explore our comprehensive research domains that are driving innovation in sustainable energy and smart grid technologies."
         backgroundImage="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxyZXNlYXJjaCUyMGxhYm9yYXRvcnl8ZW58MHx8fHwxNzU2NjU0MTQ5fDA&ixlib=rb-4.1.0&q=85"
         height="h-96"
         enableAnimations={false}

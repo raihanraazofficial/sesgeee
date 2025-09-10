@@ -199,7 +199,6 @@ Best regards,
       {/* Hero Section */}
       <HeroSection
         title="Publications"
-        description="Explore our research publications in sustainable energy and smart grid technologies. Discover cutting-edge research that's shaping the future of energy systems."
         backgroundImage="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxwdWJsaWNhdGlvbnN8ZW58MHx8fHwxNzU2NjU0MTQ5fDA&ixlib=rb-4.1.0&q=85"
         height="h-96"
         enableAnimations={false}
