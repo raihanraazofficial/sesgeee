@@ -68,7 +68,7 @@ export function AuthProvider({ children }) {
       dispatch({ type: 'SET_LOADING', payload: true });
       
       // Use backend API for authentication
-      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://scrollfix-2.preview.emergentagent.com';
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://footer-redesign-3.preview.emergentagent.com';
       
       const response = await axios.post(`${backendUrl}/api/auth/login`, {
         username: credentials.username,
