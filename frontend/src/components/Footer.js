@@ -13,7 +13,7 @@ const Footer = () => {
   return (
     <footer className="bg-slate-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* SESG Research Info */}
           <div className="col-span-1">
             <div className="flex items-center space-x-3 mb-6">
@@ -31,7 +31,7 @@ const Footer = () => {
             </div>
             <p className="text-gray-300 text-sm mb-6 leading-relaxed">
               Pioneering Research in Clean Energy, 
-              Renewable Integration and Next-Generation 
+              Renewable Integration, and Next-Generation 
               Smart Grid Systems.
             </p>
           </div>
@@ -73,16 +73,23 @@ const Footer = () => {
                   <div>Merul Badda, Dhaka-1212, Bangladesh</div>
                 </div>
               </div>
-              <div className="mt-4">
-                <a 
-                  href="https://www.google.com/maps?ll=23.773206,90.42482&z=17&t=m&hl=en-US&gl=US&mapclient=embed&cid=17006099574402660853" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-cyan-400 hover:text-cyan-300 transition-colors text-sm"
-                >
-                  View on Map →
-                </a>
-              </div>
+            </div>
+          </div>
+
+          {/* Map */}
+          <div>
+            <h4 className="text-lg font-semibold text-white mb-6">Location</h4>
+            <div className="w-full h-32 rounded-lg overflow-hidden shadow-lg border border-gray-700">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.0906415649384!2d90.42482!3d23.773206!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xec0c4aa9b5a9d7e5!2sBRAC%20University!5e0!3m2!1sen!2sbd!4v1703920000000!5m2!1sen!2sbd"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="BRAC University Location"
+              />
             </div>
           </div>
         </div>
