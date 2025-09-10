@@ -3,7 +3,7 @@ import sys
 from datetime import datetime
 
 class SESGRGAPITester:
-    def __init__(self, base_url="http://localhost:8001"):
+    def __init__(self, base_url="https://f1d2a470-a61f-4dc9-918e-6a6ffe76d93f.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.tests_run = 0
