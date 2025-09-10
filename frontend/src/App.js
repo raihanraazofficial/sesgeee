@@ -43,6 +43,7 @@ function App() {
     <AuthProvider>
       <DataProvider>
         <Router>
+          <ScrollToTop />
           <div className="App min-h-screen bg-dark-900 text-white">
             <ToastContainer
               position="top-right"
