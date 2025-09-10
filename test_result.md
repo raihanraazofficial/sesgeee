@@ -109,6 +109,100 @@ function ScrollToTop() {
 
 ---
 
+## Testing Agent Verification (September 10, 2025) - Scroll-to-Top Navigation Testing
+
+### SESGRG Website Scroll-to-Top Navigation Testing Results
+
+**COMPREHENSIVE TESTING COMPLETED**: All scroll-to-top navigation functionality has been thoroughly tested using Playwright browser automation as requested in the review.
+
+**Testing Results**:
+
+#### ✅ **ALL TESTS PASSED - SCROLL-TO-TOP FUNCTIONALITY WORKING PERFECTLY**:
+
+1. **Homepage Loading & Scrolling**:
+   - ✅ Homepage loads successfully: "SESG Research - Sustainable Energy & Smart Grid Research"
+   - ✅ Successfully scrolled down to 800px position to test below-the-fold content
+   - ✅ Navigation links all found and clickable
+
+2. **People Page Navigation**:
+   - ✅ Navigation from homepage to People page successful
+   - ✅ **SCROLL TO TOP: WORKING** - People page scroll position after navigation: **0px**
+   - ✅ Hero section visible at top of page
+   - ✅ Successfully scrolled down to 1000px to test scroll behavior
+
+3. **Publications Page Navigation**:
+   - ✅ Navigation from People page to Publications page successful
+   - ✅ **SCROLL TO TOP: WORKING** - Publications page scroll position after navigation: **0px**
+   - ✅ Hero section visible at top of page
+   - ✅ Successfully scrolled down to 1000px to test scroll behavior
+
+4. **Projects Page Navigation**:
+   - ✅ Navigation from Publications page to Projects page successful
+   - ✅ **SCROLL TO TOP: WORKING** - Projects page scroll position after navigation: **0px**
+   - ✅ Hero section visible at top of page
+
+5. **Home Page Return Navigation**:
+   - ✅ Navigation from Projects page back to Home page successful
+   - ✅ **SCROLL TO TOP: WORKING** - Home page scroll position after navigation: **0px**
+   - ✅ Hero section visible at top of page
+
+6. **Additional Verification - Research Areas Page**:
+   - ✅ Navigation to Research Areas page successful
+   - ✅ **SCROLL TO TOP: WORKING** - Research Areas page scroll position after navigation: **0px**
+   - ✅ Hero section visible at top of page
+
+#### 📊 **TECHNICAL VERIFICATION**:
+
+1. **ScrollToTop Component Implementation**:
+   - ✅ Component properly integrated in App.js at line 46
+   - ✅ Uses useLocation hook to detect pathname changes
+   - ✅ Multiple scroll methods implemented for reliability:
+     - Immediate scroll: `window.scrollTo(0, 0)`
+     - DOM ready fallback: `setTimeout` with multiple scroll methods
+     - Performance optimized: `requestAnimationFrame` with `behavior: 'instant'`
+
+2. **Navigation Testing**:
+   - ✅ All navbar links functional and accessible
+   - ✅ React Router navigation working correctly
+   - ✅ URL changes properly reflected in browser
+   - ✅ No JavaScript errors detected during navigation
+
+3. **User Experience Verification**:
+   - ✅ **Original Problem Solved**: Pages no longer maintain previous scroll position
+   - ✅ **Hero Sections Visible**: All pages show from the top after navigation
+   - ✅ **No Blank Pages**: All pages load content correctly
+   - ✅ **No 404 Errors**: All navigation routes working properly
+   - ✅ **Existing Functionality Intact**: All website features remain functional
+
+#### 🎯 **USER REQUIREMENTS SATISFACTION**:
+
+**All requested test scenarios completed successfully**:
+1. ✅ Load homepage and scroll down - **PASSED**
+2. ✅ Navigate to People page, verify scroll to top - **PASSED** (0px scroll position)
+3. ✅ Scroll down on People page, navigate to Publications - **PASSED** (0px scroll position)
+4. ✅ Scroll down on Publications page, navigate to Projects - **PASSED** (0px scroll position)
+5. ✅ Navigate back to Home page, verify scroll to top - **PASSED** (0px scroll position)
+
+**Expected behavior verified**:
+- ✅ ScrollToTop component automatically scrolls to top on navigation
+- ✅ Hero sections visible on all pages after navigation
+- ✅ No blank pages or 404 errors
+- ✅ All existing functionality remains intact
+
+#### 🚀 **FINAL STATUS**:
+
+**SCROLL-TO-TOP NAVIGATION FUNCTIONALITY**: ✅ **WORKING PERFECTLY**
+
+The user's original problem has been completely resolved. The ScrollToTop component successfully ensures that:
+- Every page navigation via navbar automatically scrolls to the top (scroll position = 0)
+- Users see the hero section of each page immediately after navigation
+- The previous scroll position issue no longer occurs
+- All navigation flows work seamlessly without any errors
+
+**Status**: ✅ **TESTING COMPLETED SUCCESSFULLY** - All functionality working as expected, user problem completely solved
+
+---
+
 # SESGRG Website - Publications & Projects Pages Modification (September 10, 2025)
 
 ## Latest Task Completed: Publications Statistics Removal & Projects Hero Section Fix
