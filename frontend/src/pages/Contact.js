@@ -65,7 +65,6 @@ const Contact = () => {
       {/* Hero Section */}
       <HeroSection
         title="Contact Us"
-        description="Get in touch with our research team. We welcome collaborations, inquiries, and partnerships in sustainable energy and smart grid research."
         backgroundImage="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxjb250YWN0JTIwdXN8ZW58MHx8fHwxNzU2NjU0MTQ5fDA&ixlib=rb-4.1.0&q=85"
         height="h-96"
       />

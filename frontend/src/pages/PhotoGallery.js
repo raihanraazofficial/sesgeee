@@ -70,7 +70,6 @@ const PhotoGallery = () => {
       {/* Hero Section */}
       <HeroSection
         title="Photo Gallery"
-        description="Glimpses of our research activities, laboratory work, and sustainable energy installations showcasing our commitment to innovation."
         backgroundImage="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxyZXNlYXJjaCUyMGxhYm9yYXRvcnl8ZW58MHx8fHwxNzU2NjU0MTQ5fDA&ixlib=rb-4.1.0&q=85"
         height="h-96"
       />

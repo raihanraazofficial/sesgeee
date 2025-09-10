@@ -58,7 +58,6 @@ const Achievements = () => {
       {/* Hero Section */}
       <HeroSection
         title="Achievements"
-        description="Celebrating our research milestones, awards, recognitions, and contributions to the sustainable energy and smart grid research community."
         backgroundImage="https://images.unsplash.com/photo-1553484771-371a605b060b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxhY2hpZXZlbWVudHN8ZW58MHx8fHwxNzU2NjU0MTQ5fDA&ixlib=rb-4.1.0&q=85"
         height="h-96"
         enableAnimations={false}

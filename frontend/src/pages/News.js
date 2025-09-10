@@ -193,7 +193,6 @@ const News = () => {
       {/* Hero Section - Fixed like other pages */}
       <HeroSection
         title="News & Events"
-        description="Stay updated with the latest news, research developments, and upcoming events from SESGRG. Discover our groundbreaking research, academic achievements, and community engagement activities."
         backgroundImage="https://images.unsplash.com/photo-1504711434969-e33886168f5c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwxfHxuZXdzJTIwZXZlbnRzfGVufDB8fHx8MTc1NjUzNTE2OHww&ixlib=rb-4.1.0&q=85"
         height="h-96"
       />
