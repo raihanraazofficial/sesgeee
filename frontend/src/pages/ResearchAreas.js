@@ -16,36 +16,6 @@ const ResearchAreas = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const impactAreas = [
-    {
-      title: "Grid Modernization",
-      description: "Upgrading infrastructure for 21st century energy needs",
-      icon: Network
-    },
-    {
-      title: "Clean Energy Transition", 
-      description: "Accelerating adoption of renewable energy sources",
-      icon: Zap
-    },
-    {
-      title: "AI-Driven Optimization",
-      description: "Intelligent systems for maximum efficiency",
-      icon: Cpu
-    },
-    {
-      title: "Energy Security",
-      description: "Protecting critical infrastructure from threats",
-      icon: Shield
-    }
-  ];
-
-  const disciplines = [
-    "Electrical Engineering",
-    "Computer Science", 
-    "Environmental Science",
-    "Policy & Economics"
-  ];
-
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
