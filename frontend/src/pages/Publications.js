@@ -160,18 +160,7 @@ Best regards,
     return filtered;
   }, [publications, searchTerm, categoryFilter, yearFilter, areaFilter, sortBy, sortOrder]);
 
-  // Calculate statistics
-  const stats = useMemo(() => {
-    const totalCitations = publications.reduce((sum, pub) => sum + (pub.citations || 0), 0);
-    const latestYear = publications.length > 0 ? Math.max(...publications.map(pub => pub.year)) : new Date().getFullYear();
-    
-    return {
-      totalPublications: publications.length,
-      totalCitations,
-      latestYear,
-      researchAreas: 7
-    };
-  }, [publications]);
+  // Filter and sort publications
 
   // Pagination
   const totalPages = Math.ceil(filteredPublications.length / itemsPerPage);
