@@ -3,7 +3,7 @@ import sys
 from datetime import datetime
 
 class SESGRGAPITester:
-    def __init__(self, base_url="https://footer-redesign-3.preview.emergentagent.com"):
+    def __init__(self, base_url="https://clean-energy-web-fix.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.tests_run = 0
@@ -433,7 +433,7 @@ def main():
     print("=" * 50)
     
     # Setup
-    tester = SESGRGAPITester("https://footer-redesign-3.preview.emergentagent.com")
+    tester = SESGRGAPITester("https://clean-energy-web-fix.preview.emergentagent.com")
     
     # Run tests in order
     test_results = []
