@@ -601,7 +601,7 @@ export function DataProvider({ children }) {
       if (type === 'photoGallery') collectionName = 'photo_gallery';
 
       // Clean data to remove undefined values
-      const cleanedData = cleanData(data);
+      const cleanedData = cleanData(data, false);
 
       // Add timestamps
       const itemData = {
