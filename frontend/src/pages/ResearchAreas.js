@@ -159,31 +159,7 @@ const ResearchAreas = () => {
 
 
 
-      {/* Interdisciplinary Approach */}
-      <section className="py-20 bg-gradient-to-r from-blue-50 via-green-50 to-purple-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">
-              Interdisciplinary Approach
-            </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-              Our research combines expertise from multiple disciplines to tackle complex energy challenges 
-              through innovative, holistic solutions.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {disciplines.map((discipline, index) => (
-              <div key={index} className="text-center transform hover:scale-105 transition-transform duration-300">
-                <div className="w-24 h-24 bg-gradient-to-br from-blue-500 via-green-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <span className="text-white font-bold text-xl">{discipline.split(' ')[0][0]}</span>
-                </div>
-                <h3 className="text-gray-900 font-semibold text-lg">{discipline}</h3>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Back to Top */}
       <section className="py-12 bg-white">
