@@ -16,24 +16,19 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* SESG Research Info */}
           <div className="col-span-1">
-            <div className="flex items-center space-x-3 mb-6">
+            <div className="flex flex-col items-center text-center mb-6">
               <img 
                 src={settings.logo || "https://customer-assets.emergentagent.com/job_da31abd5-8dec-452e-a49e-9beda777d1d4/artifacts/ii07ct2o_Logo.jpg"} 
                 alt="SESG Research Logo" 
-                className="h-16 w-16 object-contain"
+                className="h-24 w-24 object-contain mb-4"
               />
               <div>
-                <h3 className="text-lg font-bold text-cyan-400">
+                <h3 className="text-xl font-bold text-cyan-400 mb-2">
                   SESG Research
                 </h3>
-                <p className="text-sm text-gray-300">Sustainable Energy & Smart Grid</p>
+                <p className="text-base text-gray-300">Sustainable Energy & Smart Grid</p>
               </div>
             </div>
-            <p className="text-gray-300 text-sm mb-6 leading-relaxed">
-              Pioneering Research in Clean Energy, 
-              Renewable Integration, and Next-Generation 
-              Smart Grid Systems.
-            </p>
           </div>
 
           {/* Quick Links */}
