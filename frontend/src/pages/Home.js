@@ -527,9 +527,6 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
           <div className="text-center">
             <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">Photo Gallery</h2>
-            <p className="text-xl text-gray-600">
-              Glimpses of our research activities, laboratory work, and sustainable energy installations.
-            </p>
           </div>
         </div>
 
