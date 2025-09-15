@@ -26,7 +26,7 @@ const Footer = () => {
                 <h3 className="text-xl font-bold text-cyan-400 mb-2">
                   SESG Research
                 </h3>
-                <p className="text-base text-gray-300">Sustainable Energy & Smart Grid</p>
+                <p className="text-base text-gray-300">Sustainable Energy & Smart Grid Research</p>
               </div>
             </div>
           </div>
