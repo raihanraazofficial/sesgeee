@@ -215,32 +215,6 @@ const People = () => {
               )}
             </>
           )}
-
-          {/* Join Our Team Section */}
-          <div className="mt-20 text-center glass rounded-xl p-12 border border-gray-200">
-            <h3 className="text-3xl font-bold font-heading text-gray-900 mb-4">
-              Join Our Research Team
-            </h3>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Interested in contributing to sustainable energy and smart grid research? 
-              We welcome collaborations with researchers, students, and industry partners.
-            </p>
-            
-            <Link to="/contact" className="btn-primary">
-              Get In Touch
-            </Link>
-          </div>
-
-          {/* Back to Top */}
-          <div className="mt-12 text-center">
-            <button
-              onClick={scrollToTop}
-              className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors mx-auto"
-            >
-              <span>Back to Top</span>
-              <ArrowUp className="h-4 w-4" />
-            </button>
-          </div>
         </div>
       </section>
     </div>
