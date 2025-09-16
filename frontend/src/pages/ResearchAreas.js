@@ -55,42 +55,16 @@ const ResearchAreas = () => {
                     {/* Content Section - Redesigned */}
                     <div className="lg:col-span-3 p-8 lg:p-10 flex flex-col justify-between bg-gradient-to-br from-white to-gray-50/50">
                       <div className="flex-grow">
-                        <div className="mb-4">
-                          <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3 group-hover:text-primary-700 transition-colors duration-300">
+                        <div className="mb-6">
+                          <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-6 group-hover:text-primary-700 transition-colors duration-300">
                             {area.title}
                           </h3>
-                          
-                          {/* Research Focus Badge */}
-                          <div className="mb-6">
-                            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200 rounded-full">
-                              <div className="w-2 h-2 bg-primary-500 rounded-full mr-2 animate-pulse"></div>
-                              <span className="text-primary-700 font-medium text-sm">Active Research Area</span>
-                            </div>
-                          </div>
                         </div>
                         
                         <div className="mb-8">
-                          <p className="text-gray-600 text-lg leading-relaxed line-clamp-4">
+                          <p className="text-gray-600 text-lg leading-relaxed">
                             {area.detailed_description || area.description}
                           </p>
-                        </div>
-
-                        {/* Enhanced Key Highlights */}
-                        <div className="mb-6">
-                          <h4 className="text-gray-900 font-semibold mb-4 flex items-center">
-                            <div className="w-1 h-5 bg-gradient-to-b from-primary-500 to-secondary-500 rounded-full mr-2"></div>
-                            Key Research Focus
-                          </h4>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-100 hover:border-primary-200 transition-colors">
-                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                              <span className="text-gray-700 text-sm font-medium">Advanced Technologies</span>
-                            </div>
-                            <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-100 hover:border-primary-200 transition-colors">
-                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                              <span className="text-gray-700 text-sm font-medium">Sustainable Solutions</span>
-                            </div>
-                          </div>
                         </div>
                       </div>
                       
