@@ -59,51 +59,11 @@ const ResearchAreas = () => {
                           {area.detailed_description || area.description}
                         </p>
                         
-                        {/* Stats Row */}
-                        <div className="flex items-center space-x-6 mb-6 text-sm">
-                          <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-                            <span className="text-gray-500">0 Projects</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-secondary-500 rounded-full"></div>
-                            <span className="text-gray-500">0 Papers</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                            <span className="text-gray-500">Multiple Researchers</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
-                            <span className="text-gray-500 text-xs">Real-time data</span>
-                          </div>
-                        </div>
-
-                        {/* Research Team Preview */}
+                        {/* Research Focus Badge */}
                         <div className="mb-6">
-                          <h4 className="text-gray-900 font-medium mb-3">Research Team:</h4>
-                          <div className="flex items-center space-x-2">
-                            {/* Mock team member images */}
-                            <img 
-                              src="https://raw.githubusercontent.com/raihanraazofficial/SESGRG_v2/refs/heads/main/imgdirectory/Shameem%20Ahmad.jpg"
-                              alt="Team member"
-                              className="w-10 h-10 rounded-full border-2 border-primary-500"
-                            />
-                            <img 
-                              src="https://i.ibb.co.com/mVjdfL22/Nazmul-sir.jpg"
-                              alt="Team member"
-                              className="w-10 h-10 rounded-full border-2 border-secondary-500"
-                            />
-                            <img 
-                              src="https://raw.githubusercontent.com/raihanraazofficial/SESGRG_v2/refs/heads/main/imgdirectory/Amirul%20Islam.jpg"
-                              alt="Team member"
-                              className="w-10 h-10 rounded-full border-2 border-green-500"
-                            />
-                            {index % 2 === 0 && (
-                              <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-medium border border-gray-300">
-                                +{Math.floor(Math.random() * 3) + 1}
-                              </div>
-                            )}
+                          <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200 rounded-full">
+                            <div className="w-2 h-2 bg-primary-500 rounded-full mr-2 animate-pulse"></div>
+                            <span className="text-primary-700 font-medium text-sm">Active Research Area</span>
                           </div>
                         </div>
                       </div>
