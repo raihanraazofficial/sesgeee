@@ -1,13 +1,19 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import os
+from dotenv import load_dotenv
 
-app = FastAPI()
+load_dotenv()
 
+# Initialize FastAPI
+app = FastAPI(title="SESGRG API", version="1.0.0")
+
+# Models
 class LoginRequest(BaseModel):
     username: str
     password: str
 
+# Endpoints
 @app.get("/")
 async def root():
     return {"message": "SESG Research API", "status": "online"}
@@ -21,15 +27,16 @@ async def login(request: LoginRequest):
     admin_username = os.getenv("ADMIN_USERNAME", "admin")
     admin_password = os.getenv("ADMIN_PASSWORD", "@dminsesg705")
     
-    print(f"Login attempt - Username: {request.username}, Expected: {admin_username}")
+    print(f"Login attempt - Username: '{request.username}', Password length: {len(request.password)}")
+    print(f"Expected - Username: '{admin_username}', Password: '{admin_password}'")
     
     if request.username == admin_username and request.password == admin_password:
-        print("Login successful!")
+        print("✅ Login successful!")
         return {
-            "access_token": "mock-token-success",
+            "access_token": "valid-admin-token-12345",
             "token_type": "bearer", 
             "user_role": "admin"
         }
     else:
-        print("Login failed!")
+        print("❌ Login failed!")
         raise HTTPException(status_code=401, detail="Incorrect username or password")
