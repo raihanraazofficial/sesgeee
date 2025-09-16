@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import axios from 'axios';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 
 const AuthContext = createContext();
 
@@ -42,78 +43,125 @@ export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
-    // Check for existing session on app load
-    const userData = localStorage.getItem('admin_user');
-    const sessionToken = localStorage.getItem('admin_session');
-    
-    if (userData && sessionToken) {
-      try {
-        const user = JSON.parse(userData);
-        dispatch({
-          type: 'LOGIN_SUCCESS',
-          payload: { user, token: sessionToken }
-        });
-      } catch (error) {
-        console.error('Error parsing stored user data:', error);
+    // Check for existing Firebase auth state
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        // Check if this is the admin user
+        const adminEmail = 'admin@sesgrg.com';
+        if (firebaseUser.email === adminEmail) {
+          const token = await firebaseUser.getIdToken();
+          const user = {
+            uid: firebaseUser.uid,
+            username: 'admin',
+            email: firebaseUser.email,
+            role: 'admin'
+          };
+          
+          // Store in localStorage
+          localStorage.setItem('admin_user', JSON.stringify(user));
+          localStorage.setItem('admin_session', token);
+          
+          dispatch({
+            type: 'LOGIN_SUCCESS',
+            payload: { user, token }
+          });
+        } else {
+          // Not admin, sign out
+          await signOut(auth);
+          dispatch({ type: 'LOGOUT' });
+        }
+      } else {
+        // No user signed in
         localStorage.removeItem('admin_user');
         localStorage.removeItem('admin_session');
+        dispatch({ type: 'LOGOUT' });
       }
-    }
-    
-    dispatch({ type: 'SET_LOADING', payload: false });
+      
+      dispatch({ type: 'SET_LOADING', payload: false });
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const login = async (credentials) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       
-      // Use backend API for authentication
-      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://network-fix-3.preview.emergentagent.com';
+      // Check admin credentials
+      const adminUsername = process.env.REACT_APP_ADMIN_USERNAME || 'admin';
+      const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD || '@dminsesg705';
       
-      console.log('🔍 Backend URL being used:', backendUrl);
-      console.log('🔍 Environment variable REACT_APP_BACKEND_URL:', process.env.REACT_APP_BACKEND_URL);
+      console.log('🔍 Login attempt:', { username: credentials.username });
+      console.log('🔍 Expected credentials:', { username: adminUsername });
       
-      const response = await axios.post(`${backendUrl}/api/auth/login`, {
-        username: credentials.username,
-        password: credentials.password
-      });
+      if (credentials.username !== adminUsername || credentials.password !== adminPassword) {
+        throw new Error('Invalid username or password');
+      }
       
-      if (response.data && response.data.access_token) {
+      // Create admin email for Firebase
+      const adminEmail = 'admin@sesgrg.com';
+      
+      try {
+        // Try to sign in with existing account
+        const userCredential = await signInWithEmailAndPassword(auth, adminEmail, credentials.password);
+        console.log('✅ Signed in with existing account');
+        
+        const token = await userCredential.user.getIdToken();
         const user = {
-          uid: 'api-admin',
+          uid: userCredential.user.uid,
           username: credentials.username,
-          email: `${credentials.username}@sesgrg.com`,
-          role: response.data.user_role || 'admin'
+          email: adminEmail,
+          role: 'admin'
         };
         
-        const sessionToken = response.data.access_token;
-        
-        // Store in localStorage
-        localStorage.setItem('admin_user', JSON.stringify(user));
-        localStorage.setItem('admin_session', sessionToken);
-        
-        dispatch({
-          type: 'LOGIN_SUCCESS',
-          payload: { user, token: sessionToken }
-        });
-        
         return { success: true };
-      } else {
-        throw new Error('Invalid response from server');
+        
+      } catch (signInError) {
+        console.log('🔍 Sign in failed, trying to create account:', signInError.code);
+        
+        if (signInError.code === 'auth/user-not-found' || signInError.code === 'auth/wrong-password') {
+          // Try to create the admin account
+          try {
+            const userCredential = await createUserWithEmailAndPassword(auth, adminEmail, credentials.password);
+            console.log('✅ Created new admin account');
+            
+            const token = await userCredential.user.getIdToken();
+            const user = {
+              uid: userCredential.user.uid,
+              username: credentials.username,
+              email: adminEmail,
+              role: 'admin'
+            };
+            
+            return { success: true };
+            
+          } catch (createError) {
+            console.error('❌ Failed to create admin account:', createError);
+            throw createError;
+          }
+        } else {
+          throw signInError;
+        }
       }
       
     } catch (error) {
       dispatch({ type: 'SET_LOADING', payload: false });
+      console.error('❌ Login error:', error);
+      
       let errorMessage = 'Login failed';
       
-      if (error.response && error.response.status === 401) {
+      if (error.code === 'auth/invalid-email') {
+        errorMessage = 'Invalid email format';
+      } else if (error.code === 'auth/user-disabled') {
+        errorMessage = 'This account has been disabled';
+      } else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
         errorMessage = 'Invalid username or password';
-      } else if (error.response && error.response.data && error.response.data.detail) {
-        errorMessage = error.response.data.detail;
+      } else if (error.code === 'auth/too-many-requests') {
+        errorMessage = 'Too many failed attempts. Please try again later';
+      } else if (error.code === 'auth/network-request-failed') {
+        errorMessage = 'Network error. Please check your connection';
       } else if (error.message) {
         errorMessage = error.message;
-      } else {
-        errorMessage = 'Unable to connect to server. Please try again.';
       }
       
       return {
@@ -123,10 +171,15 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('admin_user');
-    localStorage.removeItem('admin_session');
-    dispatch({ type: 'LOGOUT' });
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      localStorage.removeItem('admin_user');
+      localStorage.removeItem('admin_session');
+      dispatch({ type: 'LOGOUT' });
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   const value = {

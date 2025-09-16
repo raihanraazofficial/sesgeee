@@ -14,6 +14,12 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID || "G-DT31MZ5G0Q"
 };
 
+console.log('🔥 Firebase Config:', {
+  apiKey: firebaseConfig.apiKey ? '✅ Set' : '❌ Missing',
+  authDomain: firebaseConfig.authDomain,
+  projectId: firebaseConfig.projectId
+});
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
@@ -21,6 +27,16 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
-export const analytics = getAnalytics(app);
 
+// Initialize Analytics only if in browser and not in development
+let analytics = null;
+try {
+  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
+    analytics = getAnalytics(app);
+  }
+} catch (error) {
+  console.warn('Analytics initialization failed:', error);
+}
+
+export { analytics };
 export default app;
