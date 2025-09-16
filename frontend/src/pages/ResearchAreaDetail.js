@@ -55,7 +55,7 @@ const ResearchAreaDetail = () => {
       {/* Hero Section */}
       <HeroSection
         title={area.title}
-        description={area.description}
+        description=""
         backgroundImage={area.image}
         height="h-96"
       />
