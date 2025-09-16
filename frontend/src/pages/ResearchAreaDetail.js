@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ArrowUp, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowUp, ExternalLink, ArrowRight } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
