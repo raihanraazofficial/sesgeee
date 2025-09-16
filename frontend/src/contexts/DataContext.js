@@ -488,6 +488,21 @@ export function DataProvider({ children }) {
 
       try {
         console.log(`[DataContext] Attempting Firestore query for collection: ${collectionName}`);
+        
+        // For projects, always use mock data to test the redesigned layout
+        if (type === 'projects') {
+          console.log(`[DataContext] Using mock data for projects to test redesigned layout`);
+          const mockData = getMockData(type);
+          console.log(`[DataContext] Mock data loaded for ${type}:`, mockData.length, 'items');
+          
+          dispatch({
+            type: 'SET_DATA',
+            payload: { type, data: mockData },
+          });
+
+          return mockData;
+        }
+        
         // Get data from Firestore with simplified query
         const collectionRef = collection(db, collectionName);
         let q = collectionRef;
