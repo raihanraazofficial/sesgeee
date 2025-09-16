@@ -215,6 +215,17 @@ const People = () => {
               )}
             </>
           )}
+
+          {/* Back to Top */}
+          <div className="mt-12 text-center">
+            <button
+              onClick={scrollToTop}
+              className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition-colors mx-auto"
+            >
+              <span>Back to Top</span>
+              <ArrowUp className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </section>
     </div>
