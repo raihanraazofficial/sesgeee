@@ -70,6 +70,9 @@ export function AuthProvider({ children }) {
       // Use backend API for authentication
       const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://login-network-debug.preview.emergentagent.com';
       
+      console.log('🔍 Backend URL being used:', backendUrl);
+      console.log('🔍 Environment variable REACT_APP_BACKEND_URL:', process.env.REACT_APP_BACKEND_URL);
+      
       const response = await axios.post(`${backendUrl}/api/auth/login`, {
         username: credentials.username,
         password: credentials.password
