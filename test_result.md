@@ -24,6 +24,7 @@
 - **Proper Layout**: All pages maintain proper responsive design and visual hierarchy
 - **UI Consistency**: Navigation and styling remain consistent across all pages
 - **No Breaking Changes**: All existing functionality preserved except for the removed sections
+- **Build Fix**: Removed unused 'Link' import from People.js to resolve Vercel build ESLint error
 
 ### ✅ **Modification Results**:
 - **Homepage**: ✅ "News & Events" title displayed correctly (was "Latest News & Events")
