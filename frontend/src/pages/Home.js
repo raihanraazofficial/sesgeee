@@ -103,7 +103,7 @@ const LatestNewsSection = () => {
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">Latest News & Events</h2>
+          <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">News & Events</h2>
         </div>
 
         <div className="space-y-12">
