@@ -115,15 +115,40 @@ const getMockData = (type) => {
         id: 1, 
         name: 'Smart Grid Implementation for Rural Bangladesh',
         status: 'ongoing',
-        description: 'Developing efficient smart grid solutions for rural energy distribution',
-        year: 2024
+        description: 'A comprehensive project to implement smart grid technology in rural areas of Bangladesh, focusing on renewable energy integration and grid stability. This project aims to bring reliable electricity to remote communities while promoting sustainable energy practices.',
+        start_date: '2024-01-15T00:00:00.000Z',
+        image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxyZXNlYXJjaCUyMHByb2plY3RzfGVufDB8fHx8MTc1NjY1NDE0OXww&ixlib=rb-4.1.0&q=85',
+        project_link: 'https://example.com/smart-grid-project',
+        research_area: 'Smart Grid Technologies'
       },
       { 
         id: 2, 
         name: 'Renewable Energy Integration System',
         status: 'completed',
-        description: 'Advanced system for integrating solar and wind power into the national grid',
-        year: 2023
+        description: 'Advanced system for integrating solar and wind power into the national grid while maintaining stability and efficiency. The project involves developing sophisticated control algorithms and real-time monitoring systems.',
+        start_date: '2023-03-10T00:00:00.000Z',
+        image: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwyfHxyZW5ld2FibGV8ZW58MHx8fHwxNzU2NTM1MTY0fDA&ixlib=rb-4.1.0&q=85',
+        project_link: 'https://example.com/renewable-integration',
+        research_area: 'Renewable Energy Integration'
+      },
+      { 
+        id: 3, 
+        name: 'Microgrid Development for Campus Energy Management',
+        status: 'ongoing',
+        description: 'Design and implementation of a microgrid system for university campuses to achieve energy independence and reduce carbon footprint. The project includes energy storage systems, renewable energy sources, and intelligent load management.',
+        start_date: '2024-06-20T00:00:00.000Z',
+        image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwyfHxzdXN0YWluYWJsZSUyMGVuZXJneXxlbnwwfHx8fDE3NTY1MzUxNTJ8MA&ixlib=rb-4.1.0&q=85',
+        research_area: 'Microgrids & Distributed Energy Systems'
+      },
+      { 
+        id: 4, 
+        name: 'AI-Powered Grid Optimization Algorithm',
+        status: 'completed',
+        description: 'Development of artificial intelligence algorithms for real-time power grid optimization, focusing on load balancing, fault detection, and predictive maintenance. This project leverages machine learning techniques to enhance grid reliability.',
+        start_date: '2022-08-05T00:00:00.000Z',
+        image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHw2fHxBSSUyMHRlY2hub2xvZ3l8ZW58MHx8fHwxNjk3MDI3MDAwfDA&ixlib=rb-4.1.0&q=85',
+        project_link: 'https://example.com/ai-grid-optimization',
+        research_area: 'Grid Optimization & Stability'
       }
     ],
     achievements: [
