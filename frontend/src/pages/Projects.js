@@ -246,59 +246,21 @@ const Projects = () => {
                           </h3>
                           
                           {/* Description - Truncated to 100 words with justified text */}
-                          <p className="text-gray-600 mb-4 leading-relaxed flex-grow text-justify">
+                          <p className="text-gray-600 mb-6 leading-relaxed flex-grow text-justify">
                             {truncateDescription(project.description)}
                           </p>
                           
-                          {/* Project Meta Information */}
-                          <div className="space-y-3 mb-4">
-                            {/* Duration */}
-                            <div className="flex items-center space-x-2 text-sm text-gray-600">
-                              <Calendar className="h-4 w-4 text-primary-500 flex-shrink-0" />
-                              <span>{formatDate(project.start_date)} - {formatDate(project.end_date)}</span>
-                            </div>
-                            
-                            {/* Team Leader */}
-                            {project.team_leader && (
-                              <div className="text-sm text-gray-600">
-                                <span className="font-medium">Team Leader:</span> {project.team_leader}
-                              </div>
-                            )}
-                            
-                            {/* Team Members */}
-                            {project.team_members && project.team_members.length > 0 && (
-                              <div className="text-sm text-gray-600">
-                                <span className="font-medium">Team Members:</span> {
-                                  Array.isArray(project.team_members) 
-                                    ? project.team_members.join(', ')
-                                    : project.team_members
-                                }
-                              </div>
-                            )}
-                          </div>
-                          
-                          {/* Divider */}
+                          {/* Simple Horizontal Line */}
                           <hr className="border-gray-200 my-4" />
                           
-                          {/* Bottom Section - Always Fixed at Bottom */}
-                          <div className="space-y-2 mt-auto">
-                            {/* Funding Information - Only show if funding_amount exists */}
-                            {project.funding_amount && (
-                              <div className="text-sm text-gray-600">
-                                <span className="font-medium">Funding:</span> {project.funding_amount} {project.currency || 'BDT'}
-                              </div>
-                            )}
-                            
-                            <div className="flex items-center justify-between">
-                              <div className="text-sm text-gray-600">
-                                <span className="font-medium">Funded By:</span> {project.funded_by || 'Not specified'}
-                              </div>
-                              <div className="flex items-center space-x-1 text-sm">
-                                <Users className="h-4 w-4 text-primary-500" />
-                                <span className="text-gray-600 font-medium">
-                                  {project.total_members || project.team_members?.length || 0} Members
-                                </span>
-                              </div>
+                          {/* Starting Year - Always Fixed at Bottom */}
+                          <div className="mt-auto">
+                            <div className="text-sm text-gray-600 mb-4">
+                              <span className="font-medium">Started:</span> {
+                                project.start_date 
+                                  ? new Date(project.start_date).getFullYear() 
+                                  : project.year || 'Not specified'
+                              }
                             </div>
                           </div>
                           
