@@ -68,7 +68,7 @@ export function AuthProvider({ children }) {
       dispatch({ type: 'SET_LOADING', payload: true });
       
       // Use backend API for authentication
-      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://firebase-update.preview.emergentagent.com';
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://login-debug-12.preview.emergentagent.com';
       
       console.log('🔍 Backend URL being used:', backendUrl);
       console.log('🔍 Environment variable REACT_APP_BACKEND_URL:', process.env.REACT_APP_BACKEND_URL);
