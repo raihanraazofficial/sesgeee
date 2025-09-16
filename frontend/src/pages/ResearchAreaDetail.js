@@ -75,57 +75,58 @@ const ResearchAreaDetail = () => {
 
       {/* Main Content */}
       <section className="py-20 bg-gray-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Research Overview */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Research Objectives - Redesigned Single Column */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold font-heading text-gray-900 mb-6">Research Overview</h2>
-            <div className="glass rounded-xl p-8">
-              <p className="text-gray-700 text-lg leading-relaxed">
-                {area.research_overview || `
-                  This research area focuses on advancing ${area.title.toLowerCase()} through innovative approaches and cutting-edge technologies. 
-                  Our team conducts comprehensive research to address current challenges and develop next-generation solutions that contribute 
-                  to sustainable energy systems and smart grid infrastructure.
-                `}
-              </p>
+            <div className="text-center mb-10">
+              <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">Research Objectives</h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
-          </div>
-
-          {/* Research Objectives */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold font-heading text-gray-900 mb-6">Research Objectives</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-6">
               {(area.research_objectives || [
                 "Advance theoretical understanding of the field",
                 "Develop practical solutions for real-world problems", 
                 "Foster collaboration with industry partners",
                 "Train next-generation researchers"
               ]).map((objective, index) => (
-                <div key={index} className="glass rounded-lg p-6">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-white text-sm font-bold">{index + 1}</span>
+                <div key={index} className="group glass rounded-xl p-8 hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-primary-300">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-white text-lg font-bold">{index + 1}</span>
                     </div>
-                    <p className="text-gray-700 font-medium">{objective}</p>
+                    <div className="flex-1 pt-2">
+                      <p className="text-gray-800 font-semibold text-lg leading-relaxed group-hover:text-primary-700 transition-colors duration-300">
+                        {objective}
+                      </p>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Key Applications */}
+          {/* Key Applications - Redesigned Single Column */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold font-heading text-gray-900 mb-6">Key Applications</h2>
-            <div className="glass rounded-xl p-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="text-center mb-10">
+              <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">Key Applications</h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
+            </div>
+            <div className="glass rounded-2xl p-8 border border-gray-200">
+              <div className="space-y-6">
                 {(area.key_applications || [
                   "Industrial Applications",
                   "Commercial Solutions", 
                   "Residential Systems",
                   "Research & Development"
                 ]).map((application, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-                    <span className="text-gray-700 font-medium">{application}</span>
+                  <div key={index} className="group flex items-center space-x-4 p-6 bg-white rounded-xl border border-gray-100 hover:border-primary-200 hover:shadow-md transition-all duration-300">
+                    <div className="w-3 h-3 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full group-hover:scale-125 transition-transform duration-300"></div>
+                    <span className="text-gray-800 font-semibold text-lg group-hover:text-primary-700 transition-colors duration-300 flex-1">
+                      {application}
+                    </span>
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-50 to-secondary-50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <ArrowRight className="h-4 w-4 text-primary-600" />
+                    </div>
                   </div>
                 ))}
               </div>
