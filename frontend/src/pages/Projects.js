@@ -100,20 +100,6 @@ const Projects = () => {
     return words.slice(0, wordLimit).join(' ') + '...';
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'Not specified';
-    try {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric',
-        year: 'numeric' 
-      });
-    } catch (error) {
-      return 'Invalid date';
-    }
-  };
-
 
 
   return (
