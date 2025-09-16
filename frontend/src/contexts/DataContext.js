@@ -595,8 +595,8 @@ export function DataProvider({ children }) {
     } catch (error) {
       console.error(`[DataContext] Error fetching ${type}:`, error);
 
-      // Don't use mock data for people, publications, projects, news, and events - return empty array instead
-      if (type === 'people' || type === 'publications' || type === 'projects' || type === 'news' || type === 'events') {
+      // Don't use mock data for people, publications, news, and events - return empty array instead
+      if (type === 'people' || type === 'publications' || type === 'news' || type === 'events') {
         console.log(`[DataContext] General error for ${type}, returning empty array instead of mock data`);
         dispatch({
           type: 'SET_DATA',
