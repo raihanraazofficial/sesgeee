@@ -18,6 +18,7 @@ function ScrollToTop() {
     }, 0);
     
     // Method 3: Use requestAnimationFrame for better performance
+    // eslint-disable-next-line no-undef
     requestAnimationFrame(() => {
       window.scrollTo({
         top: 0,
