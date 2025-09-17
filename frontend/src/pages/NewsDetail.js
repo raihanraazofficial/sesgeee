@@ -179,6 +179,7 @@ Department of EEE, BRAC University
       `;
       
       // Create and download file
+      // eslint-disable-next-line no-undef
       const blob = new Blob([articleContent], { type: 'text/plain;charset=utf-8' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
