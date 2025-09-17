@@ -219,6 +219,7 @@ const AdminNews = () => {
   };
 
   const insertFormula = (quill) => {
+    // eslint-disable-next-line no-undef
     const formula = prompt('Enter LaTeX formula (e.g., E = mc^2, \\frac{a}{b}, \\sqrt{x^2+y^2}):');
     if (!formula) return;
     
