@@ -381,6 +381,7 @@ const ProfessionalContentRenderer = ({ content, className = "" }) => {
     const textNodes = [];
     const walker = document.createTreeWalker(
       element,
+      // eslint-disable-next-line no-undef
       NodeFilter.SHOW_TEXT,
       null,
       false
