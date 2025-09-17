@@ -149,6 +149,7 @@ const AdminNews = () => {
   };
 
   const insertPDF = (quill) => {
+    // eslint-disable-next-line no-undef
     const url = prompt('Enter PDF URL:');
     if (!url) return;
     
@@ -158,6 +159,7 @@ const AdminNews = () => {
       if (!proceed) return;
     }
     
+    // eslint-disable-next-line no-undef
     const title = prompt('Enter PDF title (optional):', 'Document') || 'Document';
     
     const pdfHTML = `
