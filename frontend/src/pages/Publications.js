@@ -76,6 +76,7 @@ const Publications = () => {
     const plainText = textElement.textContent || textElement.innerText || '';
     navigator.clipboard.writeText(plainText);
     // Could add toast notification here
+    // eslint-disable-next-line no-undef
     alert('Citation copied to clipboard!');
   };
 
