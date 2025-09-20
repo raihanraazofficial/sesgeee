@@ -522,43 +522,7 @@ const Home = () => {
       {/* Latest News & Events Section */}
       <LatestNewsSection />
 
-      {/* Photo Gallery Section */}
-      <section className="py-20 bg-gray-50 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">Photo Gallery</h2>
-          </div>
-        </div>
 
-        {/* Railway-style scrolling gallery */}
-        <div className="relative">
-          <div className="flex space-x-6 animate-scroll-x" ref={galleryRef}>
-            {/* Duplicate images for seamless loop */}
-            {[...galleryImages, ...galleryImages].map((image, index) => (
-              <div key={index} className="flex-shrink-0 w-80 h-64 relative rounded-xl overflow-hidden shadow-lg">
-                <img
-                  src={image.url}
-                  alt={image.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-4 text-white">
-                  <span className="bg-primary-500/80 text-xs px-2 py-1 rounded mb-2 block w-fit">
-                    {image.category}
-                  </span>
-                  <h4 className="font-medium">{image.title}</h4>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="text-center mt-12">
-          <Link to="/gallery" className="btn-primary">
-            View All Photos
-          </Link>
-        </div>
-      </section>
     </div>
   );
 };
