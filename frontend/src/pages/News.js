@@ -519,8 +519,8 @@ const News = () => {
                 </div>
               )}
 
-              {/* Upcoming Events Calendar */}
-              {(categoryFilter === 'all' || categoryFilter === 'upcoming_events') && settings.google_calendar_url && (
+              {/* Upcoming Events Calendar - Always show for upcoming_events category */}
+              {categoryFilter === 'upcoming_events' && (
                 <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
                   <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                     <Calendar className="h-6 w-6 mr-3 text-primary-600" />
@@ -528,19 +528,31 @@ const News = () => {
                   </h2>
                   <div className="bg-gray-50 rounded-lg p-4">
                     <div className="relative">
-                      <iframe
-                        src={settings.google_calendar_url}
-                        style={{ border: 0 }}
-                        width="100%"
-                        height="400"
-                        frameBorder="0"
-                        scrolling="no"
-                        title="Upcoming Events Calendar"
-                        className="rounded-lg"
-                        onError={() => console.error('Calendar iframe failed to load')}
-                        onLoad={() => console.log('Calendar iframe loaded successfully')}
-                      ></iframe>
-                      <div className="absolute inset-0 pointer-events-none bg-transparent rounded-lg" style={{zIndex: 1}}></div>
+                      {settings.google_calendar_url ? (
+                        <>
+                          <iframe
+                            src={settings.google_calendar_url}
+                            style={{ border: 0 }}
+                            width="100%"
+                            height="400"
+                            frameBorder="0"
+                            scrolling="no"
+                            title="Upcoming Events Calendar"
+                            className="rounded-lg"
+                            onError={() => console.error('Calendar iframe failed to load')}
+                            onLoad={() => console.log('Calendar iframe loaded successfully')}
+                          ></iframe>
+                          <div className="absolute inset-0 pointer-events-none bg-transparent rounded-lg" style={{zIndex: 1}}></div>
+                        </>
+                      ) : (
+                        <div className="bg-gray-100 rounded-lg p-8 text-center">
+                          <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                          <h3 className="text-lg font-medium text-gray-900 mb-2">Calendar Coming Soon</h3>
+                          <p className="text-gray-600">
+                            Our events calendar is being set up. Please check back soon for upcoming events and workshops.
+                          </p>
+                        </div>
+                      )}
                     </div>
                     <p className="text-sm text-gray-600 mt-3 text-center">
                       Stay updated with our latest events and workshops. 
