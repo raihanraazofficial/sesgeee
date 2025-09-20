@@ -183,6 +183,7 @@ const getMockData = (type) => {
         status: 'completed',
         description: 'Development of artificial intelligence algorithms for real-time power grid optimization, focusing on load balancing, fault detection, and predictive maintenance. This project leverages machine learning techniques to enhance grid reliability.',
         start_date: '2022-08-05T00:00:00.000Z',
+        end_date: '2024-12-20T00:00:00.000Z',
         image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHw2fHxBSSUyMHRlY2hub2xvZ3l8ZW58MHx8fHwxNjk3MDI3MDAwfDA&ixlib=rb-4.1.0&q=85',
         project_link: 'https://example.com/ai-grid-optimization',
         research_area: 'Grid Optimization & Stability'
