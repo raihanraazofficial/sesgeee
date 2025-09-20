@@ -69,10 +69,11 @@ const getMockData = (type) => {
         image: 'https://raw.githubusercontent.com/raihanraazofficial/SESGRG_v2/refs/heads/main/imgdirectory/Amirul%20Islam.jpg',
         email: 'amirul.islam@bracu.ac.bd',
         social_links: {
-          google_scholar: '#',
-          researchgate: '#',
-          orcid: '#',
-          linkedin: '#'
+          google_scholar: 'https://scholar.google.com/citations?user=example2',
+          researchgate: 'https://www.researchgate.net/profile/example2',
+          orcid: 'https://orcid.org/0000-0000-0000-0002',
+          scopus: 'https://www.scopus.com/authid/detail.uri?authorId=example2',
+          web_of_science: 'https://www.webofscience.com/wos/author/rid/example2',
         }
       },
       {
