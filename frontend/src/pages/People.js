@@ -163,7 +163,7 @@ const People = () => {
                                 className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center text-white hover:bg-orange-700 transition-colors"
                                 title="Scopus"
                               >
-                                <span className="text-xs font-bold">SC</span>
+                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/scopus.svg" alt="Scopus" className="w-4 h-4 filter invert" />
                               </a>
                             )}
                             
@@ -175,7 +175,7 @@ const People = () => {
                                 className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white hover:bg-purple-700 transition-colors"
                                 title="Web of Science"
                               >
-                                <span className="text-xs font-bold">WS</span>
+                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/webofscience.svg" alt="Web of Science" className="w-4 h-4 filter invert" />
                               </a>
                             )}
                             
