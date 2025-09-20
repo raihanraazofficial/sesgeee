@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { ArrowUp, Search, Copy, ExternalLink, Mail, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowUp, Search, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
