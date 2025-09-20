@@ -99,11 +99,11 @@ const People = () => {
                     <div key={person.id} className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
                       
                       {/* Photo Section */}
-                      <div className="relative h-64">
+                      <div className="relative h-64 overflow-hidden">
                         <img
                           src={person.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(person.name)}&size=400&background=1e293b&color=ffffff`}
                           alt={person.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                         />
                       </div>
                       
