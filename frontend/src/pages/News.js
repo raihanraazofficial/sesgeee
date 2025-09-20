@@ -113,9 +113,29 @@ const News = () => {
     return filtered;
   }, [news, searchTerm, categoryFilter, sortBy, sortOrder]);
 
-  // Separate featured and regular news
-  const featuredNews = filteredNews.filter(item => item.is_featured);
-  const regularNews = filteredNews.filter(item => !item.is_featured);
+  // Separate featured and regular news based on category filter
+  const getFeaturedItems = () => {
+    if (categoryFilter === 'all') {
+      // All Category: Featured News & Events (mixed display)
+      return filteredNews.filter(item => item.is_featured);
+    } else {
+      // Specific Category: Featured items from that category only
+      return filteredNews.filter(item => item.is_featured && item.category === categoryFilter);
+    }
+  };
+
+  const getLatestItems = () => {
+    if (categoryFilter === 'all') {
+      // All Category: Latest News & Events (mixed display)
+      return filteredNews.filter(item => !item.is_featured);
+    } else {
+      // Specific Category: Latest items from that category only
+      return filteredNews.filter(item => !item.is_featured && item.category === categoryFilter);
+    }
+  };
+
+  const featuredNews = getFeaturedItems();
+  const regularNews = getLatestItems();
 
   // Pagination
   const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
