@@ -220,12 +220,10 @@ const LatestNewsSection = () => {
 const Home = () => {
   const { researchAreas, fetchData, loading } = useData();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const galleryRef = useRef(null);
 
   useEffect(() => {
     // Load data
     fetchData('researchAreas');
-    fetchData('photoGallery');
   }, [fetchData]);
 
   const objectives = [
