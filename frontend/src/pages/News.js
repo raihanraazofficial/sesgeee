@@ -342,7 +342,14 @@ const News = () => {
                 <section>
                   <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                     <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-lg font-medium mr-3">
-                      Featured News
+                      {categoryFilter === 'all' 
+                        ? 'Featured News & Events'
+                        : categoryFilter === 'news' 
+                          ? 'Featured News'
+                          : categoryFilter === 'events'
+                            ? 'Featured Events'  
+                            : 'Featured Upcoming Events'
+                      }
                     </span>
                   </h2>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
