@@ -89,6 +89,8 @@ const AdminPeople = () => {
         google_scholar: '',
         researchgate: '',
         orcid: '',
+        scopus: '',
+        web_of_science: '',
         linkedin: '',
         github: '',
         ieee: ''
