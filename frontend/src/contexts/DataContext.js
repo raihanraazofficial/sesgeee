@@ -87,10 +87,11 @@ const getMockData = (type) => {
         image: 'https://i.ibb.co.com/mVjdfL22/Nazmul-sir.jpg',
         email: 'nazmul.huda@bracu.ac.bd',
         social_links: {
-          google_scholar: '#',
-          researchgate: '#',
-          orcid: '#',
-          linkedin: '#'
+          google_scholar: 'https://scholar.google.com/citations?user=example3',
+          researchgate: 'https://www.researchgate.net/profile/example3',
+          orcid: 'https://orcid.org/0000-0000-0000-0003',
+          scopus: 'https://www.scopus.com/authid/detail.uri?authorId=example3',
+          web_of_science: 'https://www.webofscience.com/wos/author/rid/example3',
         }
       }
     ],
