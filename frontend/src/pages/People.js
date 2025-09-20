@@ -175,7 +175,7 @@ const People = () => {
                                 className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white hover:bg-purple-700 transition-colors"
                                 title="Web of Science"
                               >
-                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/webofscience.svg" alt="Web of Science" className="w-4 h-4 filter invert" />
+                                <span className="text-xs font-bold">WoS</span>
                               </a>
                             )}
                             
