@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Mail, MapPin, ArrowUp, Clock } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 
