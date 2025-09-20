@@ -33,8 +33,8 @@ const Navbar = () => {
               className="h-10 w-10 object-contain"
             />
             <div className="flex flex-col">
-              <span className="text-xs font-heading text-gray-900 leading-tight">Sustainable Energy &</span>
-              <span className="text-xs font-heading text-gray-900 leading-tight">Smart Grid Research Group</span>
+              <span className="text-[10px] font-heading text-gray-900 leading-tight">Sustainable Energy &</span>
+              <span className="text-[10px] font-heading text-gray-900 leading-tight">Smart Grid Research Group</span>
             </div>
           </Link>
 
