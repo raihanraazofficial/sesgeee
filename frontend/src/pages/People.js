@@ -96,93 +96,112 @@ const People = () => {
               {currentData.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {currentData.map((person) => (
-                    <div key={person.id} className="glass rounded-xl flex flex-col shadow-lg border border-gray-200"
-                         style={{ minHeight: '580px' }}>
+                    <div key={person.id} className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
                       
-                      {/* Photo with Overlay Text */}
+                      {/* Photo Section */}
                       <div className="relative h-64">
                         <img
                           src={person.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(person.name)}&size=400&background=1e293b&color=ffffff`}
                           alt={person.name}
-                          className="w-full h-full object-cover rounded-t-xl"
+                          className="w-full h-full object-cover"
                         />
-                        {/* Dark overlay for better text readability */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent rounded-t-xl" />
-                        
-                        {/* Text overlay on photo */}
-                        <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                          <h3 className="text-xl font-bold text-white mb-2 drop-shadow-lg">{person.name}</h3>
-                          <p className="text-primary-300 font-semibold mb-1 drop-shadow-md">{person.title}</p>
-                          <p className="text-gray-200 text-sm drop-shadow-md">{person.department}</p>
-                        </div>
                       </div>
                       
-                      {/* Content Below Photo */}
-                      <div className="p-6 flex flex-col flex-grow">
-                        {/* Bio Section - Dynamic height */}
-                        <div className="flex-grow">
-                          <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                            {person.bio}
-                          </p>
+                      {/* Content Section */}
+                      <div className="p-6">
+                        {/* Basic Info */}
+                        <div className="mb-4">
+                          <h3 className="text-xl font-bold text-gray-900 mb-2">{person.name}</h3>
+                          <p className="text-primary-600 font-semibold mb-1">{person.title}</p>
+                          <p className="text-gray-600 text-sm">{person.department}</p>
                         </div>
                         
-                        {/* Fixed positioning sections at bottom */}
-                        <div className="mt-auto">
-                          {/* Research Interest - Fixed positioning */}
-                          <div className="mb-4" style={{ minHeight: '80px' }}>
-                            {person.research_interests && person.research_interests.length > 0 && (
-                              <>
-                                <h4 className="text-gray-900 font-medium text-sm mb-2">Research Interest:</h4>
-                                <div className="flex flex-wrap gap-2">
-                                  {person.research_interests.map((interest, index) => (
-                                    <span
-                                      key={index}
-                                      className="bg-primary-100 text-primary-700 px-2 py-1 rounded text-xs border border-primary-200"
-                                    >
-                                      {interest}
-                                    </span>
-                                  ))}
-                                </div>
-                              </>
+                        {/* Social/Research Links */}
+                        <div className="mb-6">
+                          <div className="flex flex-wrap gap-3">
+                            {person.social_links?.google_scholar && person.social_links.google_scholar !== '#' && (
+                              <a 
+                                href={person.social_links.google_scholar} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
+                                title="Google Scholar"
+                              >
+                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlescholar.svg" alt="GS" className="w-4 h-4 filter invert" />
+                              </a>
+                            )}
+                            
+                            {person.social_links?.researchgate && person.social_links.researchgate !== '#' && (
+                              <a 
+                                href={person.social_links.researchgate} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white hover:bg-teal-700 transition-colors"
+                                title="ResearchGate"
+                              >
+                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/researchgate.svg" alt="RG" className="w-4 h-4 filter invert" />
+                              </a>
+                            )}
+                            
+                            {person.social_links?.orcid && person.social_links.orcid !== '#' && (
+                              <a 
+                                href={person.social_links.orcid} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white hover:bg-green-700 transition-colors"
+                                title="ORCID"
+                              >
+                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/orcid.svg" alt="ORCID" className="w-4 h-4 filter invert" />
+                              </a>
+                            )}
+                            
+                            {person.social_links?.scopus && person.social_links.scopus !== '#' && (
+                              <a 
+                                href={person.social_links.scopus} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center text-white hover:bg-orange-700 transition-colors"
+                                title="Scopus"
+                              >
+                                <span className="text-xs font-bold">SC</span>
+                              </a>
+                            )}
+                            
+                            {person.social_links?.web_of_science && person.social_links.web_of_science !== '#' && (
+                              <a 
+                                href={person.social_links.web_of_science} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white hover:bg-purple-700 transition-colors"
+                                title="Web of Science"
+                              >
+                                <span className="text-xs font-bold">WS</span>
+                              </a>
+                            )}
+                            
+                            {person.email && (
+                              <a 
+                                href={`mailto:${person.email}`} 
+                                className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white hover:bg-gray-700 transition-colors"
+                                title="Email"
+                              >
+                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                </svg>
+                              </a>
                             )}
                           </div>
-                          
-                          {/* Social/Research Links - Fixed positioning */}
-                          <div className="mb-4" style={{ minHeight: '32px' }}>
-                            <div className="flex flex-wrap gap-3">
-                              <a href={person.social_links?.google_scholar || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlescholar.svg" alt="Scholar" className="w-full h-full" />
-                              </a>
-                              <a href={person.social_links?.researchgate || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/researchgate.svg" alt="RG" className="w-full h-full" />
-                              </a>
-                              <a href={person.social_links?.orcid || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/orcid.svg" alt="ORCID" className="w-full h-full" />
-                              </a>
-                              <a href={person.social_links?.linkedin || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" className="w-full h-full" />
-                              </a>
-                              <a href={person.social_links?.github || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" className="w-full h-full" />
-                              </a>
-                              <a href={person.social_links?.ieee || "#"} target="_blank" rel="noopener noreferrer" className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ieee.svg" alt="IEEE" className="w-full h-full" />
-                              </a>
-                              <a href={`mailto:${person.email || 'example@email.com'}`} className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity">
-                                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/maildotru.svg" alt="Email" className="w-full h-full" />
-                              </a>
-                            </div>
-                          </div>
-                          
-                          {/* Fixed Know More Button at Bottom */}
-                          <div>
-                            <button 
-                              onClick={() => person.website && window.open(person.website, '_blank')}
-                              className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-lg transition-colors border border-gray-300"
-                            >
-                              Know More
-                            </button>
-                          </div>
+                        </div>
+                        
+                        {/* Action Button */}
+                        <div>
+                          <button 
+                            onClick={() => person.website && window.open(person.website, '_blank')}
+                            className="w-full bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-lg transition-colors font-medium"
+                          >
+                            View Profile
+                          </button>
                         </div>
                       </div>
                     </div>
