@@ -114,24 +114,6 @@ const Contact = () => {
                 ))}
               </div>
 
-              {/* Research Areas */}
-              <div className="mt-12 glass rounded-xl p-6 border border-gray-200 shadow-lg">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Research Collaboration Areas</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    'Smart Grid Technologies',
-                    'Renewable Energy Integration',
-                    'Microgrids & Distributed Energy',
-                    'Power System Automation',
-                    'Energy Storage Systems',
-                    'Cybersecurity & AI'
-                  ].map((area, index) => (
-                    <div key={index} className="bg-gray-50 rounded-lg p-3 text-center border border-gray-200">
-                      <span className="text-gray-600 text-sm">{area}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
 
             {/* Contact Form */}
