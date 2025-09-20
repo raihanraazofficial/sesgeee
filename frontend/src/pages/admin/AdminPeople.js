@@ -518,6 +518,32 @@ const AdminPeople = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Scopus
+                    </label>
+                    <input
+                      type="url"
+                      name="social_links.scopus"
+                      value={formData.social_links.scopus}
+                      onChange={handleInputChange}
+                      className="form-input"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Web of Science
+                    </label>
+                    <input
+                      type="url"
+                      name="social_links.web_of_science"
+                      value={formData.social_links.web_of_science}
+                      onChange={handleInputChange}
+                      className="form-input"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       LinkedIn
                     </label>
                     <input
