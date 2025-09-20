@@ -26,15 +26,15 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center space-x-2">
             <img 
               src={settings.logo || "https://customer-assets.emergentagent.com/job_da31abd5-8dec-452e-a49e-9beda777d1d4/artifacts/ii07ct2o_Logo.jpg"} 
               alt="SESGRG Logo" 
               className="h-10 w-10 object-contain"
             />
             <div className="flex flex-col">
-              <span className="text-[10px] font-heading text-gray-900 leading-tight">Sustainable Energy &</span>
-              <span className="text-[10px] font-heading text-gray-900 leading-tight">Smart Grid Research Group</span>
+              <span className="text-[8px] font-heading text-gray-900 leading-tight">Sustainable Energy &</span>
+              <span className="text-[8px] font-heading text-gray-900 leading-tight">Smart Grid Research Group</span>
             </div>
           </Link>
 
