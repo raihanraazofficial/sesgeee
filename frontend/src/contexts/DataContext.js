@@ -55,7 +55,7 @@ const getMockData = (type) => {
           researchgate: 'https://www.researchgate.net/profile/example1',
           orcid: 'https://orcid.org/0000-0000-0000-0001',
           scopus: 'https://www.scopus.com/authid/detail.uri?authorId=example1',
-          web_of_science: 'https://www.webofscience.com/wos/author/rid/example1',
+          web_of_science: 'https://publons.com/researcher/example1',
         }
       },
       {
