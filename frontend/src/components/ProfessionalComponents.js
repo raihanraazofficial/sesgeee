@@ -100,9 +100,11 @@ export const ProfessionalCard = ({
   );
 };
 
-export default {
+const ProfessionalComponents = {
   LoadingSpinner,
   ProfessionalButton,
   ProfessionalBadge,
   ProfessionalCard
 };
+
+export default ProfessionalComponents;
