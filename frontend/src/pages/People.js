@@ -198,9 +198,10 @@ const People = () => {
                         <div>
                           <button 
                             onClick={() => person.website && window.open(person.website, '_blank')}
-                            className="w-full bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-lg transition-colors font-medium"
+                            className="w-full bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-lg transition-colors font-medium flex items-center justify-center space-x-2"
                           >
-                            View Profile
+                            <span>View Profile</span>
+                            <ExternalLink className="h-4 w-4" />
                           </button>
                         </div>
                       </div>
