@@ -96,18 +96,51 @@ const getMockData = (type) => {
       { 
         id: 1, 
         title: 'Advanced Smart Grid Technologies for Renewable Energy Integration',
-        authors: 'Ahmad, S., Islam, A., Huda, N.',
-        journal: 'IEEE Transactions on Smart Grid',
+        authors: ['Ahmad, S.', 'Islam, A.', 'Huda, N.'],
+        journal_name: 'IEEE Transactions on Smart Grid',
+        publication_type: 'journal',
         year: 2024,
-        category: 'journal'
+        volume: '15',
+        issue: '3',
+        pages: '123-145',
+        month: 'March',
+        citations: 15,
+        keywords: ['Smart Grid', 'Renewable Energy', 'Integration'],
+        research_areas: ['Smart Grid Technologies', 'Renewable Energy Integration'],
+        link: 'https://ieeexplore.ieee.org/document/example1',
+        is_open_access: true
       },
       { 
         id: 2, 
         title: 'Microgrids for Sustainable Energy Distribution in Bangladesh',
-        authors: 'Huda, N., Ahmad, S.',
-        journal: 'International Conference on Power Systems',
+        authors: ['Huda, N.', 'Ahmad, S.'],
+        conference_name: 'International Conference on Power Systems',
+        publication_type: 'conference',
         year: 2024,
-        category: 'conference'
+        location: 'Dhaka, Bangladesh',
+        pages: '45-52',
+        citations: 8,
+        keywords: ['Microgrids', 'Sustainable Energy', 'Distribution'],
+        research_areas: ['Microgrids & Distributed Energy Systems'],
+        link: 'https://ieeexplore.ieee.org/document/example2',
+        is_open_access: false
+      },
+      { 
+        id: 3, 
+        title: 'AI-Powered Grid Optimization Strategies',
+        authors: ['Islam, A.', 'Ahmad, S.', 'Rahman, M.'],
+        book_title: 'Advances in Smart Grid Technologies',
+        publication_type: 'book_chapter',
+        year: 2023,
+        editor: ['Smith, J.', 'Doe, A.'],
+        publisher: 'Springer',
+        location: 'Berlin, Germany',
+        pages: '201-230',
+        citations: 22,
+        keywords: ['Artificial Intelligence', 'Grid Optimization', 'Power Systems'],
+        research_areas: ['Grid Optimization & Stability', 'Cybersecurity and AI for Power Infrastructure'],
+        link: 'https://link.springer.com/chapter/example3',
+        is_open_access: true
       }
     ],
     projects: [
