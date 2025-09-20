@@ -26,8 +26,8 @@ const HeroSection = ({
         <div className="absolute bottom-1/4 left-1/3 w-24 h-24 bg-gradient-to-r from-teal-400/25 to-emerald-500/25 rounded-full blur-lg animate-pulse delay-1000"></div>
       </div>
       
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Content - Moved further down and centered */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" style={{ marginTop: '80px' }}>
         <div className={enableAnimations ? "animate-hero-fade-in" : ""}>
           {subtitle && (
             <p className={`text-cyan-400 font-semibold text-lg mb-4 tracking-wide uppercase ${enableAnimations ? 'animate-slide-up' : ''}`}>
