@@ -163,6 +163,7 @@ const getMockData = (type) => {
         status: 'completed',
         description: 'Advanced system for integrating solar and wind power into the national grid while maintaining stability and efficiency. The project involves developing sophisticated control algorithms and real-time monitoring systems.',
         start_date: '2023-03-10T00:00:00.000Z',
+        end_date: '2024-08-15T00:00:00.000Z',
         image: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwyfHxyZW5ld2FibGV8ZW58MHx8fHwxNzU2NTM1MTY0fDA&ixlib=rb-4.1.0&q=85',
         project_link: 'https://example.com/renewable-integration',
         research_area: 'Renewable Energy Integration'
