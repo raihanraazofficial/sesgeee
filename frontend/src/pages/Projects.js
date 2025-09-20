@@ -241,33 +241,24 @@ const Projects = () => {
                           
                           {/* Project Year Display - Logic based on status */}
                           <div className="mt-auto">
-                            <div className="text-sm text-gray-600 mb-4">
+                            <div className="text-sm text-gray-600 mb-4 font-medium">
                               {project.status === 'ongoing' ? (
-                                <>
-                                  <span className="font-medium">Started:</span> {
-                                    project.start_date 
-                                      ? new Date(project.start_date).getFullYear() 
-                                      : project.year || 'Not specified'
-                                  }
-                                </>
+                                // For ongoing projects: Show starting year
+                                project.start_date 
+                                  ? new Date(project.start_date).getFullYear() 
+                                  : project.year || 'Year not specified'
                               ) : project.status === 'completed' ? (
-                                <>
-                                  <span className="font-medium">Ended:</span> {
-                                    project.end_date 
-                                      ? new Date(project.end_date).getFullYear() 
-                                      : project.start_date 
-                                      ? new Date(project.start_date).getFullYear() 
-                                      : project.year || 'Not specified'
-                                  }
-                                </>
+                                // For completed projects: Show ending year
+                                project.end_date 
+                                  ? new Date(project.end_date).getFullYear() 
+                                  : project.start_date 
+                                  ? new Date(project.start_date).getFullYear() 
+                                  : project.year || 'Year not specified'
                               ) : (
-                                <>
-                                  <span className="font-medium">Started:</span> {
-                                    project.start_date 
-                                      ? new Date(project.start_date).getFullYear() 
-                                      : project.year || 'Not specified'
-                                  }
-                                </>
+                                // Default: Show starting year
+                                project.start_date 
+                                  ? new Date(project.start_date).getFullYear() 
+                                  : project.year || 'Year not specified'
                               )}
                             </div>
                           </div>
