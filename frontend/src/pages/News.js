@@ -412,7 +412,16 @@ const News = () => {
 
               {/* Latest News Section */}
               <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Latest News</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                  {categoryFilter === 'all' 
+                    ? 'News & Events'
+                    : categoryFilter === 'news' 
+                      ? 'Latest News'
+                      : categoryFilter === 'events'
+                        ? 'Latest Events'  
+                        : 'Latest Upcoming Events'
+                  }
+                </h2>
                 <div className="space-y-6">
                   {regularNews.slice(0, 6).map((item) => (
                     <article key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
