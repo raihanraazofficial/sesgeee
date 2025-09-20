@@ -29,12 +29,12 @@ const Navbar = () => {
           <Link to="/" className="flex items-center space-x-3">
             <img 
               src={settings.logo || "https://customer-assets.emergentagent.com/job_da31abd5-8dec-452e-a49e-9beda777d1d4/artifacts/ii07ct2o_Logo.jpg"} 
-              alt="SESG Research Logo" 
-              className="h-12 w-12 object-contain"
+              alt="SESGRG Logo" 
+              className="h-10 w-10 object-contain"
             />
             <div className="flex flex-col">
-              <span className="text-xl font-bold font-heading text-gray-900">SESG Research</span>
-              <span className="text-xs text-gray-600 hidden sm:block">Sustainable Energy & Smart Grid Research</span>
+              <span className="text-base font-bold font-heading text-gray-900 leading-tight">Sustainable Energy and Smart Grid</span>
+              <span className="text-base font-bold font-heading text-gray-900 leading-tight">Research Group</span>
             </div>
           </Link>
 
