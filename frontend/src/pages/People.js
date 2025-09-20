@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowUp, Users, UserCheck, Handshake } from 'lucide-react';
+import { ArrowUp, Users, UserCheck, Handshake, ExternalLink } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
