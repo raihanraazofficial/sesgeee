@@ -519,8 +519,8 @@ const News = () => {
                 </div>
               )}
 
-              {/* Upcoming Events Calendar - Always show for upcoming_events category */}
-              {categoryFilter === 'upcoming_events' && (
+              {/* Upcoming Events Calendar - Show for both 'all' category and 'upcoming_events' category */}
+              {(categoryFilter === 'all' || categoryFilter === 'upcoming_events') && (
                 <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
                   <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                     <Calendar className="h-6 w-6 mr-3 text-primary-600" />
