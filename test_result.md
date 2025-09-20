@@ -8,6 +8,7 @@
 - ✅ **People Page Web of Science Icons**: Already properly implemented with uploaded image
 - ✅ **Hero Section Title Positioning**: Moved all hero section titles lower and centered on all pages
 - ✅ **Footer Links Cleanup**: Completely removed FAQ, Privacy Policy, Terms & Conditions, Contact links
+- ✅ **Contact Page Research Areas**: Removed "Research Collaboration Areas" section completely
 - ✅ **ESLint Build Errors**: Fixed all build errors, clean production build achieved
 
 #### **Files Modified**:
