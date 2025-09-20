@@ -38,7 +38,7 @@ const Publications = () => {
     if (pub.publication_type === 'journal') {
       return (
         <>
-          <strong>{authors}</strong>, "<em>{pub.title}</em>," <em>{pub.journal_name || 'Journal'}</em>
+          <strong>{authors}</strong>, "{pub.title}," <em>{pub.journal_name || 'Journal'}</em>
           {pub.volume && `, vol. ${pub.volume}`}
           {pub.issue && `, no. ${pub.issue}`}
           {pub.pages && `, pp. ${pub.pages}`}
@@ -48,7 +48,7 @@ const Publications = () => {
     } else if (pub.publication_type === 'conference') {
       return (
         <>
-          <strong>{authors}</strong>, "<em>{pub.title}</em>," in <em>{pub.conference_name || 'Conference Proceedings'}</em>, 
+          <strong>{authors}</strong>, "{pub.title}," in <em>{pub.conference_name || 'Conference Proceedings'}</em>, 
           {pub.location && ` ${pub.location},`} {pub.year}
           {pub.pages && `, pp. ${pub.pages}`}.
         </>
@@ -56,7 +56,7 @@ const Publications = () => {
     } else if (pub.publication_type === 'book_chapter') {
       return (
         <>
-          <strong>{authors}</strong>, "<em>{pub.title}</em>," in <em>{pub.book_title || 'Book Title'}</em>
+          <strong>{authors}</strong>, "{pub.title}," in <em>{pub.book_title || 'Book Title'}</em>
           {pub.edition && `, ${pub.edition}`}
           {pub.editor && pub.editor.length > 0 && `, ${pub.editor.join(', ')}, ${pub.editor.length === 1 ? 'Ed.' : 'Eds.'}`}
           {pub.publisher && `. ${pub.publisher}`}
