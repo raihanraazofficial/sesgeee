@@ -172,10 +172,10 @@ const People = () => {
                                 href={person.social_links.web_of_science} 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
-                                className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white hover:bg-purple-700 transition-colors"
+                                className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors border border-gray-200"
                                 title="Web of Science"
                               >
-                                <span className="text-xs font-bold">WoS</span>
+                                <img src="https://i.ibb.co.com/xK2dB3fW/webof-science1.png" alt="Web of Science" className="w-5 h-5 object-contain" />
                               </a>
                             )}
                             
