@@ -69,39 +69,6 @@ const Publications = () => {
     return `${authors}, "${pub.title}," ${pub.year}.`;
   };
 
-  // Copy citation to clipboard
-  const copyCitation = (citation) => {
-    const textElement = document.createElement('div');
-    textElement.innerHTML = citation;
-    const plainText = textElement.textContent || textElement.innerText || '';
-    navigator.clipboard.writeText(plainText);
-    // Could add toast notification here
-    // eslint-disable-next-line no-undef
-    alert('Citation copied to clipboard!');
-  };
-
-  // Request paper email
-  const requestPaper = (pub) => {
-    const subject = `Request for Paper: ${pub.title}`;
-    const body = `Dear Author,
-
-I would like to request access to your paper titled "${pub.title}" published in ${pub.year}.
-
-Publication Details:
-- Authors: ${Array.isArray(pub.authors) ? pub.authors.join(', ') : pub.authors}
-- Year: ${pub.year}
-${pub.journal_name ? `- Journal: ${pub.journal_name}` : ''}
-${pub.conference_name ? `- Conference: ${pub.conference_name}` : ''}
-${pub.book_title ? `- Book: ${pub.book_title}` : ''}
-
-Thank you for your consideration.
-
-Best regards,
-[Your Name]`;
-    
-    window.open(`mailto:sesg@bracu.ac.bd?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
-  };
-
   // Generate auto numbering
   const getPublicationNumber = (pub, index, filteredPubs) => {
     const typePrefix = pub.publication_type === 'journal' ? 'J' : 
