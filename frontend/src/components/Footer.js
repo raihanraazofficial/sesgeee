@@ -21,11 +21,9 @@ const Footer = () => {
                 alt="SESG Research Logo" 
                 className="h-24 w-24 object-contain mb-4"
               />
-              <div>
-                <h3 className="text-xl font-bold text-cyan-400 mb-2">
-                  SESG Research
-                </h3>
-                <p className="text-base text-gray-300">Sustainable Energy & Smart Grid Research</p>
+              <div className="flex flex-col">
+                <span className="text-sm font-heading text-gray-300 leading-tight">Sustainable Energy &</span>
+                <span className="text-sm font-heading text-gray-300 leading-tight">Smart Grid Research Group</span>
               </div>
             </div>
           </div>
