@@ -100,6 +100,27 @@ const Projects = () => {
     return words.slice(0, wordLimit).join(' ') + '...';
   };
 
+  const formatDateRange = (startDate, endDate, status) => {
+    const formatMonthYear = (date) => {
+      if (!date) return null;
+      const d = new Date(date);
+      if (isNaN(d.getTime())) return null;
+      return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    };
+
+    const startFormatted = formatMonthYear(startDate);
+    if (!startFormatted) return 'Date not specified';
+
+    if (status === 'ongoing') {
+      return `${startFormatted} - Ongoing`;
+    } else if (status === 'completed' && endDate) {
+      const endFormatted = formatMonthYear(endDate);
+      return endFormatted ? `${startFormatted} - ${endFormatted}` : `${startFormatted} - Completed`;
+    } else {
+      return `${startFormatted} - Present`;
+    }
+  };
+
 
 
   return (
