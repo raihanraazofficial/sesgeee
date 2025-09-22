@@ -24,6 +24,8 @@ const AdminSettings = () => {
       if (settings && settings.length > 0) {
         const settingsData = settings[0];
         setCalendarUrl(settingsData.google_calendar_url || '');
+        setProjectDateDisplay(settingsData.project_date_display || 'dateRange');
+        setProjectDateFormat(settingsData.project_date_format || 'monthYear');
       }
     } catch (error) {
       console.error('Error loading settings:', error);
