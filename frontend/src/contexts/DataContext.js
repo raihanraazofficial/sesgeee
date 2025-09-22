@@ -636,8 +636,8 @@ export function DataProvider({ children }) {
 
         console.log(`[DataContext] Firestore data loaded for ${type}:`, data.length, 'items');
         
-        // If Firestore returns empty data, use mock data fallback (temporarily allow for news for testing)
-        if (data.length === 0 && type !== 'events') {
+        // If Firestore returns empty data, use mock data fallback (but not for projects - show empty for real-time admin panel updates)
+        if (data.length === 0 && type !== 'events' && type !== 'projects') {
           console.log(`[DataContext] Firestore collection ${collectionName} is empty, using mock data`);
           const mockData = getMockData(type);
           console.log(`[DataContext] Mock data loaded for ${type}:`, mockData.length, 'items');
