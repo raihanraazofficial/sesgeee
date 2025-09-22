@@ -100,6 +100,17 @@ const AdminSettings = () => {
     }
   };
 
+  const handleTestCalendar = () => {
+    if (!calendarUrl.trim()) {
+      toast.error('Please enter a Google Calendar URL first');
+      return;
+    }
+    
+    // Open calendar in new tab to test
+    window.open(calendarUrl, '_blank');
+    toast.info('Calendar opened in new tab for testing');
+  };
+
   const handleInitializeDatabase = async () => {
     setInitLoading(true);
     setInitError(null);
