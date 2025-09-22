@@ -356,11 +356,11 @@ const News = () => {
                     {featuredNews.slice(0, 4).map((item) => (
                       <article key={item.id} className="group bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300">
                         {item.image && (
-                          <div className="relative h-48 overflow-hidden">
+                          <div className="relative h-56 overflow-hidden bg-gray-100">
                             <img
                               src={item.image}
                               alt={item.image_alt || item.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                             />
                             <div className="absolute top-4 left-4 flex flex-wrap gap-2">
                               {getFeaturedBadge()}
