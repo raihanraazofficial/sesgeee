@@ -316,16 +316,10 @@ const Home = () => {
             <div className="animate-fade-in">
               <h2 className="text-4xl font-bold font-heading text-gray-900 mb-6">About Us</h2>
               <p className="text-gray-700 text-lg leading-relaxed mb-8 text-justified">
-                The Sustainable Energy and Smart Grid Research Group (SESG Research) is an independent research group established in 2025, 
-                affiliated with the BSRM School of Engineering, BRAC University. We specialize in sustainable energy systems, 
-                smart grid technologies, and advanced power network optimization, taking a comprehensive approach that spans 
-                generation, transmission, distribution, and microgrids.
+                The Sustainable Energy and Smart Grid Research Group (SESG) is committed to advancing research and innovation in sustainable energy systems and intelligent grid technologies. Our work spans across renewable energy integration, energy storage solutions, power system optimization, and AI-driven approaches for smart energy management. We also explore grid resilience, energy policy, and sustainable infrastructure to address the pressing challenges of energy transition and climate change.
               </p>
               <p className="text-gray-700 text-lg leading-relaxed text-justified">
-                Committed to developing innovative and resilient energy solutions, we address modern power system challenges 
-                while promoting environmental stewardship through cutting-edge research and collaboration. Guided by principles 
-                of excellence, integrity, and sustainability, our vision is to revolutionize global power systems by advancing 
-                human well-being through intelligent infrastructure and renewable energy integration.
+                Through interdisciplinary collaboration, cutting-edge tools, and real-world applications, SESG aims to develop cleaner, smarter, and more efficient energy systems that contribute to a sustainable future. By fostering innovation, capacity building, and knowledge sharing, we strive to empower the next generation of researchers, engineers, and policymakers to shape the future of global energy systems.
               </p>
             </div>
 
