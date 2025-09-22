@@ -260,29 +260,13 @@ const Projects = () => {
                           {/* Simple Horizontal Line */}
                           <hr className="border-gray-200 my-4" />
                           
-                          {/* Project Year Display - Logic based on status */}
+                          {/* Project Date Range Display - Calendar icon with date range */}
                           <div className="mt-auto">
-                            <div className="text-sm text-gray-600 mb-4">
-                              <span className="font-medium">Year:</span> {
-                                project.status === 'ongoing' ? (
-                                  // For ongoing projects: Show starting year
-                                  project.start_date 
-                                    ? new Date(project.start_date).getFullYear() 
-                                    : project.year || 'Not specified'
-                                ) : project.status === 'completed' ? (
-                                  // For completed projects: Show ending year
-                                  project.end_date 
-                                    ? new Date(project.end_date).getFullYear() 
-                                    : project.start_date 
-                                    ? new Date(project.start_date).getFullYear() 
-                                    : project.year || 'Not specified'
-                                ) : (
-                                  // Default: Show starting year
-                                  project.start_date 
-                                    ? new Date(project.start_date).getFullYear() 
-                                    : project.year || 'Not specified'
-                                )
-                              }
+                            <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
+                              <Calendar className="h-4 w-4 text-gray-500 flex-shrink-0" />
+                              <span className="font-medium">
+                                {formatDateRange(project.start_date, project.end_date, project.status)}
+                              </span>
                             </div>
                           </div>
                           
