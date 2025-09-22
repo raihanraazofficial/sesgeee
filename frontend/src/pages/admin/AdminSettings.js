@@ -360,6 +360,193 @@ const AdminSettings = () => {
             </div>
           </div>
 
+          {/* Project Display Settings */}
+          <div className="glass rounded-xl p-8 border border-gray-200 shadow-lg">
+            <div className="flex items-center space-x-3 mb-6">
+              <Settings className="h-8 w-8 text-blue-600" />
+              <h2 className="text-2xl font-bold text-gray-900">Project Display Settings</h2>
+            </div>
+            
+            <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">Date Display Configuration</h3>
+              <p className="text-gray-600 text-sm mb-4">
+                Configure how project dates are displayed on the projects page cards.
+              </p>
+              
+              <div className="space-y-6">
+                {/* Display Type Selection */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    Date Display Type
+                  </label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <label className="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50">
+                      <input 
+                        type="radio" 
+                        name="dateDisplay" 
+                        value="year"
+                        checked={projectDateDisplay === 'year'}
+                        onChange={(e) => setProjectDateDisplay(e.target.value)}
+                        className="sr-only"
+                      />
+                      <div className={`w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center ${
+                        projectDateDisplay === 'year' 
+                          ? 'border-primary-600 bg-primary-600' 
+                          : 'border-gray-300'
+                      }`}>
+                        {projectDateDisplay === 'year' && (
+                          <div className="w-2 h-2 rounded-full bg-white"></div>
+                        )}
+                      </div>
+                      <div>
+                        <div className="font-medium text-gray-900">Year Only</div>
+                        <div className="text-sm text-gray-500">Display: "2024"</div>
+                      </div>
+                    </label>
+                    
+                    <label className="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50">
+                      <input 
+                        type="radio" 
+                        name="dateDisplay" 
+                        value="dateRange"
+                        checked={projectDateDisplay === 'dateRange'}
+                        onChange={(e) => setProjectDateDisplay(e.target.value)}
+                        className="sr-only"
+                      />
+                      <div className={`w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center ${
+                        projectDateDisplay === 'dateRange' 
+                          ? 'border-primary-600 bg-primary-600' 
+                          : 'border-gray-300'
+                      }`}>
+                        {projectDateDisplay === 'dateRange' && (
+                          <div className="w-2 h-2 rounded-full bg-white"></div>
+                        )}
+                      </div>
+                      <div>
+                        <div className="font-medium text-gray-900">📅 Date Range</div>
+                        <div className="text-sm text-gray-500">Display with calendar icon</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Date Format Selection (only shown when dateRange is selected) */}
+                {projectDateDisplay === 'dateRange' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Date Format
+                    </label>
+                    <div className="space-y-2">
+                      <label className="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50">
+                        <input 
+                          type="radio" 
+                          name="dateFormat" 
+                          value="monthYear"
+                          checked={projectDateFormat === 'monthYear'}
+                          onChange={(e) => setProjectDateFormat(e.target.value)}
+                          className="sr-only"
+                        />
+                        <div className={`w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center ${
+                          projectDateFormat === 'monthYear' 
+                            ? 'border-primary-600 bg-primary-600' 
+                            : 'border-gray-300'
+                        }`}>
+                          {projectDateFormat === 'monthYear' && (
+                            <div className="w-2 h-2 rounded-full bg-white"></div>
+                          )}
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-900">Month Year Format</div>
+                          <div className="text-sm text-gray-500">Jan 2024 - Dec 2024 / Jan 2024 - Ongoing</div>
+                        </div>
+                      </label>
+                      
+                      <label className="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50">
+                        <input 
+                          type="radio" 
+                          name="dateFormat" 
+                          value="fullDate"
+                          checked={projectDateFormat === 'fullDate'}
+                          onChange={(e) => setProjectDateFormat(e.target.value)}
+                          className="sr-only"
+                        />
+                        <div className={`w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center ${
+                          projectDateFormat === 'fullDate' 
+                            ? 'border-primary-600 bg-primary-600' 
+                            : 'border-gray-300'
+                        }`}>
+                          {projectDateFormat === 'fullDate' && (
+                            <div className="w-2 h-2 rounded-full bg-white"></div>
+                          )}
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-900">Full Date Format</div>
+                          <div className="text-sm text-gray-500">15 Jan 2024 - 20 Dec 2024 / 15 Jan 2024 - Ongoing</div>
+                        </div>
+                      </label>
+                      
+                      <label className="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50">
+                        <input 
+                          type="radio" 
+                          name="dateFormat" 
+                          value="shortDate"
+                          checked={projectDateFormat === 'shortDate'}
+                          onChange={(e) => setProjectDateFormat(e.target.value)}
+                          className="sr-only"
+                        />
+                        <div className={`w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center ${
+                          projectDateFormat === 'shortDate' 
+                            ? 'border-primary-600 bg-primary-600' 
+                            : 'border-gray-300'
+                        }`}>
+                          {projectDateFormat === 'shortDate' && (
+                            <div className="w-2 h-2 rounded-full bg-white"></div>
+                          )}
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-900">Short Date Format</div>
+                          <div className="text-sm text-gray-500">2024-01-15 - 2024-12-20 / 2024-01-15 - Ongoing</div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-center space-x-2">
+                  <button 
+                    onClick={handleSaveProjectSettings}
+                    disabled={projectSettingsLoading}
+                    className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                  >
+                    {projectSettingsLoading ? (
+                      <>
+                        <div className="spinner" />
+                        <span>Saving...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Save className="h-4 w-4" />
+                        <span>Save Project Settings</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+              
+              <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 className="text-sm font-semibold text-blue-900 mb-2">How it works:</h4>
+                <ul className="text-xs text-blue-800 space-y-1 list-disc list-inside">
+                  <li><strong>Year Only:</strong> Shows just the year (ongoing: start year, completed: end year)</li>
+                  <li><strong>Date Range:</strong> Shows calendar icon with start-end date range</li>
+                  <li><strong>Month Year:</strong> Jan 2024 - Dec 2024 format</li>
+                  <li><strong>Full Date:</strong> 15 Jan 2024 - 20 Dec 2024 format</li>
+                  <li><strong>Short Date:</strong> 2024-01-15 - 2024-12-20 format</li>
+                  <li>For ongoing projects: End date shows as "Ongoing"</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
           {/* Admin Credentials */}
           <div className="glass rounded-xl p-8 border border-gray-200 shadow-lg">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Admin Credentials</h2>
