@@ -422,11 +422,11 @@ Department of EEE, BRAC University
         <article className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
           {/* Featured Image */}
           {newsItem.image && (
-            <div className="relative h-64 md:h-96 overflow-hidden">
+            <div className="relative h-80 md:h-[500px] overflow-hidden bg-gray-100">
               <img
                 src={newsItem.image}
                 alt={newsItem.image_alt || newsItem.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
               <div className="absolute bottom-6 left-6 right-6">
