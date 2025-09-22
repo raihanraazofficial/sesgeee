@@ -67,15 +67,37 @@ const AdminSettings = () => {
     }
   };
 
-  const handleTestCalendar = () => {
-    if (!calendarUrl.trim()) {
-      toast.error('Please enter a Google Calendar URL first');
-      return;
+  const handleSaveProjectSettings = async () => {
+    setProjectSettingsLoading(true);
+    try {
+      const settings = await fetchData('settings');
+      const settingsData = {
+        project_date_display: projectDateDisplay,
+        project_date_format: projectDateFormat,
+        updated_at: new Date().toISOString()
+      };
+
+      if (settings && settings.length > 0) {
+        // Update existing settings
+        const currentSettings = settings[0];
+        const updatedSettings = { ...currentSettings, ...settingsData };
+        await updateItem('settings', settings[0].id, updatedSettings);
+      } else {
+        // Create new settings with default calendar URL
+        const newSettings = {
+          ...settingsData,
+          google_calendar_url: calendarUrl || 'https://calendar.google.com/calendar/embed?src=en.bd%23holiday%40group.v.calendar.google.com&ctz=Asia%2FDhaka'
+        };
+        await createItem('settings', newSettings);
+      }
+
+      toast.success('Project display settings saved successfully!');
+    } catch (error) {
+      console.error('Error saving project settings:', error);
+      toast.error('Failed to save project settings');
+    } finally {
+      setProjectSettingsLoading(false);
     }
-    
-    // Open calendar in new tab to test
-    window.open(calendarUrl, '_blank');
-    toast.info('Calendar opened in new tab for testing');
   };
 
   const handleInitializeDatabase = async () => {
