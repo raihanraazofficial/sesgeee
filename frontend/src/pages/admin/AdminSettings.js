@@ -12,6 +12,9 @@ const AdminSettings = () => {
   const [refreshLoading, setRefreshLoading] = useState(false);
   const [calendarUrl, setCalendarUrl] = useState('');
   const [calendarLoading, setCalendarLoading] = useState(false);
+  const [projectDateDisplay, setProjectDateDisplay] = useState('dateRange'); // 'year' or 'dateRange'
+  const [projectDateFormat, setProjectDateFormat] = useState('monthYear'); // 'monthYear' or 'fullDate' or 'shortDate'
+  const [projectSettingsLoading, setProjectSettingsLoading] = useState(false);
   
   const { fetchData, createItem, updateItem } = useData();
 
