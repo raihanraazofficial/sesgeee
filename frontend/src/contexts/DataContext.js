@@ -682,8 +682,8 @@ export function DataProvider({ children }) {
     } catch (error) {
       console.error(`[DataContext] Error fetching ${type}:`, error);
 
-      // Don't use mock data for events - return empty array instead
-      if (type === 'events') {
+      // Don't use mock data for events and projects - return empty array instead
+      if (type === 'events' || type === 'projects') {
         console.log(`[DataContext] General error for ${type}, returning empty array instead of mock data`);
         dispatch({
           type: 'SET_DATA',
