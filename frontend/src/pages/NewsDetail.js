@@ -535,11 +535,13 @@ Department of EEE, BRAC University
                   >
                     <div className="flex items-start space-x-4">
                       {item.image && (
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
-                        />
+                        <div className="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden">
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="w-full h-full object-contain rounded-lg"
+                          />
+                        </div>
                       )}
                       <div className="flex-1">
                         <h3 className="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors mb-2 line-clamp-2">
