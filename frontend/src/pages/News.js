@@ -427,11 +427,11 @@ const News = () => {
                     <article key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
                       <div className="flex flex-col lg:flex-row lg:items-center gap-6">
                         {item.image && (
-                          <div className="flex-shrink-0">
+                          <div className="flex-shrink-0 bg-gray-100 rounded-lg">
                             <img
                               src={item.image}
                               alt={item.image_alt || item.title}
-                              className="w-full lg:w-32 h-24 object-cover rounded-lg"
+                              className="w-full lg:w-40 h-32 object-contain rounded-lg"
                             />
                           </div>
                         )}
