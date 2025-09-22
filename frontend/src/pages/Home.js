@@ -169,11 +169,11 @@ const LatestNewsSection = () => {
                 {regularNews.slice(0, 3).map((item) => (
                   <article key={item.id} className="group bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-200">
                     {item.image && (
-                      <div className="relative h-32 overflow-hidden">
+                      <div className="relative h-40 overflow-hidden bg-gray-100">
                         <img
                           src={item.image}
                           alt={item.image_alt || item.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                         />
                         <div className="absolute top-2 left-2">
                           {getCategoryBadge(item.category)}
