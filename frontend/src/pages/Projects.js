@@ -101,24 +101,87 @@ const Projects = () => {
     return words.slice(0, wordLimit).join(' ') + '...';
   };
 
-  const formatDateRange = (startDate, endDate, status) => {
-    const formatMonthYear = (date) => {
+  const formatDateRange = (startDate, endDate, status, dateFormat = 'monthYear') => {
+    const formatDate = (date, format) => {
       if (!date) return null;
       const d = new Date(date);
       if (isNaN(d.getTime())) return null;
-      return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      
+      switch (format) {
+        case 'monthYear':
+          return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        case 'fullDate':
+          return d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+        case 'shortDate':
+          return d.toISOString().split('T')[0]; // YYYY-MM-DD format
+        default:
+          return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      }
     };
 
-    const startFormatted = formatMonthYear(startDate);
+    const startFormatted = formatDate(startDate, dateFormat);
     if (!startFormatted) return 'Date not specified';
 
     if (status === 'ongoing') {
       return `${startFormatted} - Ongoing`;
     } else if (status === 'completed' && endDate) {
-      const endFormatted = formatMonthYear(endDate);
+      const endFormatted = formatDate(endDate, dateFormat);
       return endFormatted ? `${startFormatted} - ${endFormatted}` : `${startFormatted} - Completed`;
     } else {
       return `${startFormatted} - Present`;
+    }
+  };
+
+  const getProjectDisplaySettings = () => {
+    if (settings && settings.length > 0) {
+      const settingsData = settings[0];
+      return {
+        displayType: settingsData.project_date_display || 'dateRange',
+        dateFormat: settingsData.project_date_format || 'monthYear'
+      };
+    }
+    return {
+      displayType: 'dateRange', // default to dateRange as requested
+      dateFormat: 'monthYear'
+    };
+  };
+
+  const renderProjectDate = (project) => {
+    const { displayType, dateFormat } = getProjectDisplaySettings();
+    
+    if (displayType === 'year') {
+      // Original year display logic
+      const year = project.status === 'ongoing' ? (
+        project.start_date 
+          ? new Date(project.start_date).getFullYear() 
+          : project.year || 'Not specified'
+      ) : project.status === 'completed' ? (
+        project.end_date 
+          ? new Date(project.end_date).getFullYear() 
+          : project.start_date 
+          ? new Date(project.start_date).getFullYear() 
+          : project.year || 'Not specified'
+      ) : (
+        project.start_date 
+          ? new Date(project.start_date).getFullYear() 
+          : project.year || 'Not specified'
+      );
+      
+      return (
+        <div className="text-sm text-gray-600 mb-4">
+          <span className="font-medium">Year: {year}</span>
+        </div>
+      );
+    } else {
+      // Date range display with calendar icon
+      return (
+        <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
+          <Calendar className="h-4 w-4 text-gray-500 flex-shrink-0" />
+          <span className="font-medium">
+            {formatDateRange(project.start_date, project.end_date, project.status, dateFormat)}
+          </span>
+        </div>
+      );
     }
   };
 
