@@ -324,14 +324,9 @@ const Projects = () => {
                           {/* Simple Horizontal Line */}
                           <hr className="border-gray-200 my-4" />
                           
-                          {/* Project Date Range Display - Calendar icon with date range */}
+                          {/* Project Date Display - Configurable from admin panel */}
                           <div className="mt-auto">
-                            <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
-                              <Calendar className="h-4 w-4 text-gray-500 flex-shrink-0" />
-                              <span className="font-medium">
-                                {formatDateRange(project.start_date, project.end_date, project.status)}
-                              </span>
-                            </div>
+                            {renderProjectDate(project)}
                           </div>
                           
                           {/* View Details Button - Only show if project link exists */}
