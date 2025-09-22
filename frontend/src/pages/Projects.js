@@ -294,7 +294,7 @@ const Projects = () => {
                   <div className="max-w-md mx-auto">
                     <ClipboardList className="h-20 w-20 text-gray-300 mx-auto mb-6" />
                     <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-                      No Projects Available
+                      No Projects Found
                     </h3>
                     <p className="text-gray-500 mb-8 text-lg leading-relaxed">
                       {activeTab === 'all' 
