@@ -5,7 +5,7 @@ import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const Projects = () => {
-  const { projects, fetchData, loading } = useData();
+  const { projects, settings, fetchData, loading } = useData();
   const [activeTab, setActiveTab] = useState('all');
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,6 +14,7 @@ const Projects = () => {
 
   useEffect(() => {
     fetchData('projects');
+    fetchData('settings');
   }, [fetchData]);
 
   useEffect(() => {
