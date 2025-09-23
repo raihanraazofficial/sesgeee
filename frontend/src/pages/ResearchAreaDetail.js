@@ -79,7 +79,7 @@ const ResearchAreaDetail = () => {
           {/* Research Objectives - Redesigned Single Column */}
           <div className="mb-16">
             <div className="text-center mb-10">
-              <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">Research Objectives</h2>
+              <h2 className="text-4xl font-bold font-heading text-gray-900 mb-4">Objectives</h2>
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="space-y-6">
