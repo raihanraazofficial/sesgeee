@@ -37,7 +37,7 @@ const Navbar = () => {
               <img 
                 src="https://i.postimg.cc/bvk2TdM5/bracu-logo-12-0-2022-1.png" 
                 alt="BRAC University Logo" 
-                className="h-10 w-10 object-contain"
+                className="h-14 w-14 object-contain"
               />
             </a>
 
@@ -51,7 +51,7 @@ const Navbar = () => {
               <img 
                 src="https://i.postimg.cc/pdznZy7s/FS8qg-Hw-Mwtdsv-Ymzwsnvs-Mwq-BHNLEl-Cnk58vw-XTz-1.png" 
                 alt="BSRM School of Engineering Logo" 
-                className="h-10 w-10 object-contain"
+                className="h-14 w-14 object-contain"
               />
             </a>
 
