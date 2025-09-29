@@ -51,7 +51,7 @@ const Navbar = () => {
               <img 
                 src="https://i.postimg.cc/pdznZy7s/FS8qg-Hw-Mwtdsv-Ymzwsnvs-Mwq-BHNLEl-Cnk58vw-XTz-1.png" 
                 alt="BSRM School of Engineering Logo" 
-                className="h-16 w-16 object-contain"
+                className="h-20 w-20 object-contain"
               />
             </a>
 
