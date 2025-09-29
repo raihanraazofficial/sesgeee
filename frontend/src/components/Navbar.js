@@ -35,7 +35,7 @@ const Navbar = () => {
               className="flex items-center hover:opacity-80 transition-opacity"
             >
               <img 
-                src="https://customer-assets.emergentagent.com/job_79e13cac-f879-498a-bd9e-f04ad4f5bcae/artifacts/1a1a256e-6795-4f59-ba70-ae11e5b40c19.png" 
+                src="https://i.postimg.cc/bvk2TdM5/bracu-logo-12-0-2022-1.png" 
                 alt="BRAC University Logo" 
                 className="h-10 w-10 object-contain"
               />
@@ -49,7 +49,7 @@ const Navbar = () => {
               className="flex items-center hover:opacity-80 transition-opacity"
             >
               <img 
-                src="https://customer-assets.emergentagent.com/job_79e13cac-f879-498a-bd9e-f04ad4f5bcae/artifacts/aeb2e115-92db-4575-bf66-a98ff93b3714.png" 
+                src="https://i.postimg.cc/pdznZy7s/FS8qg-Hw-Mwtdsv-Ymzwsnvs-Mwq-BHNLEl-Cnk58vw-XTz-1.png" 
                 alt="BSRM School of Engineering Logo" 
                 className="h-10 w-10 object-contain"
               />
