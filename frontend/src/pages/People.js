@@ -99,15 +99,11 @@ const People = () => {
                     <div key={person.id} className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
                       
                       {/* Photo Section */}
-                      <div className="relative h-80 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center rounded-t-lg">
+                      <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 rounded-t-lg">
                         <img
                           src={person.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(person.name)}&size=400&background=1e293b&color=ffffff`}
                           alt={person.name}
-                          className="max-w-full max-h-full w-auto h-auto object-contain transition-all duration-300 hover:scale-105 shadow-sm"
-                          style={{
-                            minHeight: '200px',
-                            maxHeight: '320px'
-                          }}
+                          className="w-full h-full object-cover transition-all duration-300 hover:scale-105 shadow-sm"
                         />
                       </div>
                       
