@@ -88,7 +88,7 @@ const Footer = () => {
         {/* Bottom Section - Removed FAQ, Privacy Policy, Terms & Conditions, Contact */}
         <div className="mt-12 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
           <div className="text-sm text-gray-400 mb-4 md:mb-0">
-            © 2025 Sustainable Energy and Smart Grid Research. All rights reserved.
+            © {new Date().getFullYear()} Sustainable Energy and Smart Grid Research. All rights reserved.
           </div>
           
           <button
