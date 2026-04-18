@@ -59,6 +59,12 @@ const AdminNews = () => {
         ['clean']
       ],
       handlers: {
+        'image': function() {
+          insertImageByURL(this.quill);
+        },
+        'video': function() {
+          insertVideoByURL(this.quill);
+        },
         'table': function() {
           insertTable(this.quill);
         },
@@ -88,6 +94,38 @@ const AdminNews = () => {
   ];
 
   // Custom handlers for toolbar buttons
+  const insertImageByURL = (quill) => {
+    const url = prompt('Enter Image URL (e.g. https://example.com/image.jpg):');
+    if (!url) return;
+    const alt = prompt('Enter image description (optional):', '') || '';
+    const imageHTML = `<div style="margin: 20px 0; text-align: center;"><img src="${url}" alt="${alt}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />${alt ? `<p style="margin-top: 8px; font-size: 13px; color: #6b7280; font-style: italic;">${alt}</p>` : ''}</div>`;
+    const range = quill.getSelection();
+    if (range) quill.clipboard.dangerouslyPasteHTML(range.index, imageHTML);
+    toast.success('Image inserted from URL!');
+  };
+
+  const insertVideoByURL = (quill) => {
+    const url = prompt('Enter Video URL (YouTube, Vimeo, or direct video link):');
+    if (!url) return;
+    let embedHTML = '';
+    const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+    if (ytMatch) {
+      embedHTML = `<div style="margin: 20px 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"><iframe src="https://www.youtube.com/embed/${ytMatch[1]}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen loading="lazy"></iframe></div>`;
+    } else if (url.includes('vimeo.com')) {
+      const vimeoId = url.match(/vimeo\.com\/(\d+)/);
+      if (vimeoId) {
+        embedHTML = `<div style="margin: 20px 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px;"><iframe src="https://player.vimeo.com/video/${vimeoId[1]}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen loading="lazy"></iframe></div>`;
+      }
+    } else if (url.match(/\.(mp4|webm|ogg|mov)(\?.*)?$/i)) {
+      embedHTML = `<div style="margin: 20px 0; border-radius: 10px; overflow: hidden;"><video controls style="width: 100%; display: block;" preload="metadata"><source src="${url}" type="video/${url.split('.').pop().split('?')[0]}">Your browser does not support the video tag.</video></div>`;
+    } else {
+      embedHTML = `<div style="margin: 20px 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px;"><iframe src="${url}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen loading="lazy"></iframe></div>`;
+    }
+    const range = quill.getSelection();
+    if (range) quill.clipboard.dangerouslyPasteHTML(range.index, embedHTML);
+    toast.success('Video inserted from URL!');
+  };
+
   const insertTable = (quill) => {
     setCurrentQuillRef(quill);
     setIsTableDialogOpen(true);
