@@ -19,6 +19,7 @@ import {
   Eye
 } from 'lucide-react';
 import { toast } from 'react-toastify';
+import DOMPurify from 'dompurify';
 import { useData } from '../contexts/DataContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ProfessionalContentRenderer from '../components/ProfessionalContentRenderer';
@@ -105,43 +106,26 @@ const NewsDetail = () => {
   }, [sharing]);
 
   const handlePrint = () => {
-    // Add print-specific styles
     const printWindow = window.open('', '_blank');
-    const printContent = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>${newsItem?.title || 'SESGRG Article'}</title>
-        <style>
-          body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
-          .header { border-bottom: 2px solid #ccc; padding-bottom: 20px; margin-bottom: 20px; }
-          .title { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
-          .meta { color: #666; margin-bottom: 20px; }
-          .content { line-height: 1.6; }
-          .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 12px; color: #666; }
-          img { max-width: 100%; height: auto; }
-        </style>
-      </head>
-      <body>
-        <div class="header">
-          <div class="title">${newsItem?.title || ''}</div>
-          <div class="meta">
-            By ${newsItem?.author || ''} | ${formatDate(newsItem?.published_date)}
-          </div>
-        </div>
-        <div class="content">
-          ${newsItem?.content || ''}
-        </div>
-        <div class="footer">
-          <p>© SESGRG - Sustainable Energy & Smart Grid Research Group</p>
-          <p>Original URL: ${window.location.href}</p>
-        </div>
-      </body>
-      </html>
-    `;
+    if (!printWindow) return;
     
-    printWindow.document.write(printContent);
-    printWindow.document.close();
+    const sanitizedTitle = DOMPurify.sanitize(newsItem?.title || 'SESGRG Article');
+    const sanitizedAuthor = DOMPurify.sanitize(newsItem?.author || '');
+    const sanitizedContent = DOMPurify.sanitize(newsItem?.content || '', { ADD_TAGS: ['iframe'], ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'target', 'loading', 'class', 'style'] });
+    
+    const printDoc = printWindow.document;
+    printDoc.open();
+    printDoc.write('<!DOCTYPE html><html><head>');
+    printDoc.write('<meta charset="utf-8">');
+    printDoc.write('<title>' + sanitizedTitle + '</title>');
+    printDoc.write('<style>body { font-family: Arial, sans-serif; margin: 20px; color: #333; } .header { border-bottom: 2px solid #ccc; padding-bottom: 20px; margin-bottom: 20px; } .title { font-size: 28px; font-weight: bold; margin-bottom: 10px; } .meta { color: #666; margin-bottom: 20px; } .content { line-height: 1.6; } .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 12px; color: #666; } img { max-width: 100%; height: auto; }</style>');
+    printDoc.write('</head><body>');
+    printDoc.write('<div class="header"><div class="title">' + sanitizedTitle + '</div>');
+    printDoc.write('<div class="meta">By ' + sanitizedAuthor + ' | ' + formatDate(newsItem?.published_date) + '</div></div>');
+    printDoc.write('<div class="content">' + sanitizedContent + '</div>');
+    printDoc.write('<div class="footer"><p>&copy; SESGRG - Sustainable Energy &amp; Smart Grid Research Group</p></div>');
+    printDoc.write('</body></html>');
+    printDoc.close();
     printWindow.focus();
     printWindow.print();
   };

@@ -356,7 +356,7 @@ const Home = () => {
               <div className="flex justify-center mt-4 space-x-2">
                 {carouselImages.map((_, index) => (
                   <button
-                    key={index}
+                    key={`carousel-dot-${index}`}
                     onClick={() => setCurrentImageIndex(index)}
                     className={`w-3 h-3 rounded-full transition-colors ${
                       index === currentImageIndex ? 'bg-primary-500' : 'bg-gray-400'
@@ -378,7 +378,7 @@ const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {objectives.map((objective, index) => (
-              <div key={index} className="glass rounded-xl p-6 card-hover">
+              <div key={`objective-${objective.number}`} className="glass rounded-xl p-6 card-hover">
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
                     <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center text-white font-bold text-xl">

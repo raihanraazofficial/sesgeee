@@ -233,9 +233,9 @@ const AdminPublications = () => {
                     {publication.keywords && publication.keywords.length > 0 && (
                       <div className="mb-3">
                         <div className="flex flex-wrap gap-2">
-                          {publication.keywords.slice(0, 5).map((keyword, index) => (
+                          {publication.keywords.slice(0, 5).map((keyword) => (
                             <span
-                              key={index}
+                              key={keyword}
                               className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full border border-blue-200"
                             >
                               {keyword}
@@ -251,9 +251,9 @@ const AdminPublications = () => {
                     {publication.research_areas && publication.research_areas.length > 0 && (
                       <div className="mb-3">
                         <div className="flex flex-wrap gap-2">
-                          {publication.research_areas.map((area, index) => (
+                          {publication.research_areas.map((area) => (
                             <span
-                              key={index}
+                              key={area}
                               className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full border border-green-200"
                             >
                               {area}

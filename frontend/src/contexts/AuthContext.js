@@ -44,20 +44,29 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     // Check for existing session on app load
-    const userData = localStorage.getItem('admin_user');
-    const sessionToken = localStorage.getItem('admin_session');
+    const userData = sessionStorage.getItem('admin_user');
+    const sessionToken = sessionStorage.getItem('admin_session');
+    const sessionExpiry = sessionStorage.getItem('admin_session_expiry');
     
     if (userData && sessionToken) {
-      try {
-        const user = JSON.parse(userData);
-        dispatch({
-          type: 'LOGIN_SUCCESS',
-          payload: { user, token: sessionToken }
-        });
-      } catch (error) {
-        console.error('Error parsing stored user data:', error);
-        localStorage.removeItem('admin_user');
-        localStorage.removeItem('admin_session');
+      // Check if session has expired
+      if (sessionExpiry && Date.now() > parseInt(sessionExpiry, 10)) {
+        sessionStorage.removeItem('admin_user');
+        sessionStorage.removeItem('admin_session');
+        sessionStorage.removeItem('admin_session_expiry');
+      } else {
+        try {
+          const user = JSON.parse(userData);
+          dispatch({
+            type: 'LOGIN_SUCCESS',
+            payload: { user, token: sessionToken }
+          });
+        } catch (error) {
+          console.error('Error parsing stored user data:', error);
+          sessionStorage.removeItem('admin_user');
+          sessionStorage.removeItem('admin_session');
+          sessionStorage.removeItem('admin_session_expiry');
+        }
       }
     }
     
@@ -98,9 +107,10 @@ export function AuthProvider({ children }) {
           
           const sessionToken = `session-${Date.now()}`;
           
-          // Store in localStorage
-          localStorage.setItem('admin_user', JSON.stringify(user));
-          localStorage.setItem('admin_session', sessionToken);
+          // Store in sessionStorage (more secure than localStorage - cleared when tab closes)
+          sessionStorage.setItem('admin_user', JSON.stringify(user));
+          sessionStorage.setItem('admin_session', sessionToken);
+          sessionStorage.setItem('admin_session_expiry', (Date.now() + 30 * 60 * 1000).toString());
           
           dispatch({
             type: 'LOGIN_SUCCESS',
@@ -124,9 +134,10 @@ export function AuthProvider({ children }) {
         
         const sessionToken = `session-${Date.now()}`;
         
-        // Store in localStorage
-        localStorage.setItem('admin_user', JSON.stringify(user));
-        localStorage.setItem('admin_session', sessionToken);
+        // Store in sessionStorage (more secure - cleared when tab closes)
+        sessionStorage.setItem('admin_user', JSON.stringify(user));
+        sessionStorage.setItem('admin_session', sessionToken);
+        sessionStorage.setItem('admin_session_expiry', (Date.now() + 30 * 60 * 1000).toString());
         
         dispatch({
           type: 'LOGIN_SUCCESS',
@@ -158,8 +169,9 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    localStorage.removeItem('admin_user');
-    localStorage.removeItem('admin_session');
+    sessionStorage.removeItem('admin_user');
+    sessionStorage.removeItem('admin_session');
+    sessionStorage.removeItem('admin_session_expiry');
     dispatch({ type: 'LOGOUT' });
   };
 

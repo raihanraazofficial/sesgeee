@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import { toast } from 'react-toastify';
+import DOMPurify from 'dompurify';
 import 'katex/dist/katex.min.css';
 import katex from 'katex';
 import 'highlight.js/styles/github.css';
@@ -430,7 +431,7 @@ const ProfessionalContentRenderer = ({ content, className = "" }) => {
     <div className={`professional-content-renderer ${className}`}>
       <div 
         ref={contentRef}
-        dangerouslySetInnerHTML={{ __html: content }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content, { ADD_TAGS: ['iframe'], ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'target', 'loading', 'class', 'style', 'data-formula'] }) }}
         className="rendered-content"
       />
       

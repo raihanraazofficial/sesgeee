@@ -29,9 +29,10 @@ load_dotenv()
 app = FastAPI(title="SESGRG API", version="1.0.0")
 
 # CORS Configuration
+origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for development
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -58,7 +59,9 @@ else:
     firebase_initialized = False
 
 # Security
-SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    raise RuntimeError("SECRET_KEY environment variable is required")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -123,7 +126,7 @@ def add_document(collection_name, data):
             if isinstance(value, str) and 'T' in value and ':' in value:
                 try:
                     data[key] = datetime.fromisoformat(value.replace('Z', '+00:00'))
-                except:
+                except (ValueError, TypeError):
                     pass
         
         doc_ref = db.collection(collection_name).add(data)
@@ -159,7 +162,7 @@ def update_document(collection_name, doc_id, data):
             if isinstance(value, str) and 'T' in value and ':' in value:
                 try:
                     data[key] = datetime.fromisoformat(value.replace('Z', '+00:00'))
-                except:
+                except (ValueError, TypeError):
                     pass
         
         doc_ref = db.collection(collection_name).document(doc_id)

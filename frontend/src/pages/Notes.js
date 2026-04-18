@@ -263,8 +263,8 @@ const Notes = () => {
                       {/* Tags */}
                       {note.tags && note.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-3">
-                          {note.tags.slice(0, 3).map((tag, i) => (
-                            <span key={i} className="inline-flex items-center text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded">
+                          {note.tags.slice(0, 3).map((tag) => (
+                            <span key={tag} className="inline-flex items-center text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded">
                               <Tag className="h-2.5 w-2.5 mr-1" />{tag}
                             </span>
                           ))}

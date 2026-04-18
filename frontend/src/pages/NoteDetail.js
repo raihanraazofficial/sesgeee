@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { BookOpen, ArrowLeft, Clock, User, Tag, Pin, Share2, ChevronRight } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
+import DOMPurify from 'dompurify';
 import 'katex/dist/katex.min.css';
 
 const SUBJECT_COLORS = {
@@ -144,8 +145,8 @@ const NoteDetail = () => {
             {note.tags && note.tags.length > 0 && (
               <div className="flex items-center flex-wrap gap-2">
                 <Tag className="h-4 w-4 text-gray-400" />
-                {note.tags.map((tag, i) => (
-                  <span key={i} className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-xs">{tag}</span>
+                {note.tags.map((tag) => (
+                  <span key={tag} className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-xs">{tag}</span>
                 ))}
               </div>
             )}
@@ -155,7 +156,7 @@ const NoteDetail = () => {
         {/* Article Content */}
         <article
           className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-red-600 prose-code:before:content-none prose-code:after:content-none prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-blockquote:border-l-primary-500 prose-blockquote:bg-primary-50/50 prose-blockquote:py-1 prose-blockquote:italic prose-img:rounded-xl prose-img:shadow-lg prose-table:border-collapse"
-          dangerouslySetInnerHTML={{ __html: note.content }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.content, { ADD_TAGS: ['iframe'], ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'target', 'loading', 'class', 'style'] }) }}
           data-testid="note-detail-content"
         />
       </div>

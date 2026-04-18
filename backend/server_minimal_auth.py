@@ -19,7 +19,9 @@ load_dotenv()
 app = FastAPI(title="SESGRG API", version="1.0.0")
 
 # Security
-SECRET_KEY = os.getenv("SECRET_KEY", "sesgrg-secret-key-2024-super-secure")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    raise RuntimeError("SECRET_KEY environment variable is required")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 
