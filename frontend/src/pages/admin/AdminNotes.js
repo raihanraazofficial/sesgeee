@@ -171,16 +171,30 @@ const AdminNotes = () => {
   };
 
   const insertFormula = (quill) => {
-    const formula = prompt('Enter LaTeX formula (e.g., E = mc^2, \\frac{a}{b}):');
+    const formula = prompt(
+      'Enter LaTeX formula:\n\n' +
+      'Examples:\n' +
+      '  E = mc^2\n' +
+      '  \\frac{a}{b}\n' +
+      '  \\sqrt{x^2 + y^2}\n' +
+      '  \\int_{0}^{\\infty} e^{-x} dx\n' +
+      '  P = VI\\cos\\theta\n' +
+      '  \\sum_{n=1}^{N} x_n\n' +
+      '  V_{base} = \\frac{V_{line}}{\\sqrt{3}}'
+    );
     if (!formula) return;
     try {
-      const katexHTML = katex.renderToString(formula, { throwOnError: false, displayMode: false, output: 'html' });
-      const formulaHTML = `<span style="display: inline-block; background: linear-gradient(135deg, #e3f2fd, #f3e5f5); border: 1px solid #bbdefb; border-radius: 6px; padding: 8px 12px; margin: 4px;"><span class="katex-formula" style="font-size: 16px;">${katexHTML}</span></span>`;
+      // Render in display mode for larger/block formulas, inline for shorter ones
+      const isBlock = formula.includes('\\frac') || formula.includes('\\int') || formula.includes('\\sum') || formula.includes('\\begin') || formula.length > 30;
+      const katexHTML = katex.renderToString(formula, { throwOnError: false, displayMode: isBlock, output: 'html' });
+      const formulaHTML = isBlock
+        ? `<div style="display: block; background: linear-gradient(135deg, #e3f2fd, #f0f4ff); border: 1px solid #90caf9; border-radius: 8px; padding: 16px 20px; margin: 16px 0; text-align: center; overflow-x: auto;"><span class="katex-formula" style="font-size: 18px;">${katexHTML}</span></div>`
+        : `<span style="display: inline-block; background: linear-gradient(135deg, #e3f2fd, #f3e5f5); border: 1px solid #bbdefb; border-radius: 6px; padding: 4px 10px; margin: 2px 4px;"><span class="katex-formula" style="font-size: 16px;">${katexHTML}</span></span>`;
       const range = quill.getSelection();
       if (range) quill.clipboard.dangerouslyPasteHTML(range.index, formulaHTML);
       toast.success('Formula inserted!');
     } catch (error) {
-      toast.error('Invalid LaTeX formula.');
+      toast.error('Invalid LaTeX formula. Check syntax and try again.');
     }
   };
 
@@ -528,28 +542,28 @@ const AdminNotes = () => {
               {/* Rich Text Content */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Content *</label>
-                <div className="border border-gray-300 rounded-lg overflow-hidden" style={{ zIndex: 1000, position: 'relative' }}>
+                <div className="border border-gray-300 rounded-lg" style={{ position: 'relative' }}>
                   <ReactQuill
                     theme="snow"
                     value={formData.content}
                     onChange={(content) => setFormData({ ...formData, content })}
                     modules={quillModules}
                     formats={quillFormats}
-                    style={{ height: '350px', zIndex: 1000, position: 'relative', pointerEvents: 'auto' }}
-                    className="bg-white"
+                    style={{ minHeight: '350px', position: 'relative', pointerEvents: 'auto' }}
+                    className="bg-white admin-quill-editor"
                     readOnly={false}
                   />
                 </div>
-                <div className="mt-4 text-sm text-gray-600">
-                  <p><strong>Editor Features:</strong></p>
-                  <ul className="list-disc list-inside mt-1 space-y-0.5 text-xs text-gray-500">
-                    <li><strong>Image (URL):</strong> Click image icon → paste image URL (no upload, saves DB space)</li>
-                    <li><strong>Video (URL):</strong> Click video icon → paste YouTube/Vimeo/direct video URL</li>
-                    <li><strong>PDF (URL):</strong> Click PDF button → paste PDF URL for embedded viewer</li>
-                    <li><strong>Tables:</strong> Click table button (T) to insert formatted tables</li>
-                    <li><strong>Math:</strong> Click fx button for LaTeX formulas</li>
-                    <li><strong>Code:</strong> Use code-block for code snippets</li>
-                  </ul>
+                <div className="mt-3 p-3 rounded-lg bg-blue-50 border border-blue-200">
+                  <p className="text-xs font-bold text-blue-800 mb-1">Media Insertion (URL-based, no file upload):</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs text-blue-700">
+                    <span>Image icon → Paste image URL</span>
+                    <span>Video icon → Paste YouTube/video URL</span>
+                    <span>PDF button → Paste PDF URL</span>
+                    <span>fx button → LaTeX math formula</span>
+                    <span>T button → Insert table</span>
+                    <span>Code-block → Code snippets</span>
+                  </div>
                 </div>
               </div>
 
@@ -628,13 +642,19 @@ const AdminNotes = () => {
 
       {/* Quill styles */}
       <style>{`
-        .ql-editor { min-height: 300px !important; font-size: 16px; line-height: 1.6; }
-        .ql-toolbar { border-top: 1px solid #e5e7eb; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; background: linear-gradient(135deg, #f9fafb, #ffffff); position: relative; z-index: 1001; padding: 8px; }
-        .ql-container { border-bottom: 1px solid #e5e7eb; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; background: white; position: relative; z-index: 1000; }
-        .ql-toolbar .ql-table::before { content: "T"; font-weight: bold; font-size: 14px; color: #3b82f6; }
-        .ql-toolbar .ql-pdf::before { content: "PDF"; font-weight: bold; font-size: 10px; color: #dc3545; }
-        .ql-toolbar .ql-formula::before { content: "fx"; font-weight: bold; font-size: 11px; background: #2196f3; color: white; border-radius: 3px; padding: 1px 4px; }
-        .ql-toolbar .ql-picker-options { position: absolute; z-index: 1003; background: white; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-radius: 6px; max-height: 200px; overflow-y: auto; }
+        .admin-quill-editor .ql-editor { min-height: 300px !important; max-height: 500px !important; overflow-y: auto !important; font-size: 15px; line-height: 1.6; }
+        .admin-quill-editor .ql-toolbar { border: 1px solid #e5e7eb; background: linear-gradient(135deg, #f9fafb, #ffffff); position: sticky; top: 0; z-index: 1001; padding: 6px; display: flex; flex-wrap: wrap; gap: 2px; }
+        .admin-quill-editor .ql-container { border: 1px solid #e5e7eb; border-top: none; background: white; position: relative; }
+        .admin-quill-editor .ql-toolbar .ql-table::before { content: "T"; font-weight: bold; font-size: 14px; color: #3b82f6; }
+        .admin-quill-editor .ql-toolbar .ql-pdf::before { content: "PDF"; font-weight: bold; font-size: 10px; color: #dc3545; }
+        .admin-quill-editor .ql-toolbar .ql-formula::before { content: "fx"; font-weight: bold; font-size: 11px; background: #2196f3; color: white; border-radius: 3px; padding: 1px 4px; }
+        .admin-quill-editor .ql-toolbar .ql-picker-options { position: absolute; z-index: 1003; background: white; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-radius: 6px; max-height: 200px; overflow-y: auto; }
+        .admin-quill-editor .ql-toolbar .ql-formats { margin-right: 8px; }
+        .admin-quill-editor .ql-toolbar button { width: 28px; height: 28px; padding: 2px; }
+        .admin-quill-editor .ql-toolbar button:hover { background: #e0f2fe; border-radius: 4px; }
+        .admin-quill-editor .ql-toolbar button.ql-active { background: #3b82f6 !important; color: white !important; border-radius: 4px; }
+        .admin-quill-editor .ql-editor img { max-width: 100%; height: auto; border-radius: 8px; }
+        .admin-quill-editor .ql-editor iframe { max-width: 100%; border-radius: 8px; }
       `}</style>
     </div>
   );

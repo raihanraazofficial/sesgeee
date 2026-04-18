@@ -257,35 +257,39 @@ const AdminNews = () => {
   };
 
   const insertFormula = (quill) => {
-    // eslint-disable-next-line no-undef
-    const formula = prompt('Enter LaTeX formula (e.g., E = mc^2, \\frac{a}{b}, \\sqrt{x^2+y^2}):');
+    const formula = prompt(
+      'Enter LaTeX formula:\n\n' +
+      'Examples:\n' +
+      '  E = mc^2\n' +
+      '  \\frac{a}{b}\n' +
+      '  \\sqrt{x^2 + y^2}\n' +
+      '  \\int_{0}^{\\infty} e^{-x} dx\n' +
+      '  P = VI\\cos\\theta\n' +
+      '  \\sum_{n=1}^{N} x_n'
+    );
     if (!formula) return;
     
     try {
-      // Test the formula first
+      const isBlock = formula.includes('\\frac') || formula.includes('\\int') || formula.includes('\\sum') || formula.includes('\\begin') || formula.length > 30;
       const katexHTML = katex.renderToString(formula, {
         throwOnError: false,
-        displayMode: false,
+        displayMode: isBlock,
         output: 'html'
       });
       
-      // Create professional formula wrapper
-      const formulaHTML = `
-        <span style="display: inline-block; background: linear-gradient(135deg, #e3f2fd, #f3e5f5); border: 1px solid #bbdefb; border-radius: 6px; padding: 8px 12px; margin: 4px; font-family: 'Times New Roman', serif; position: relative;">
-          <span class="katex-formula" style="font-size: 16px;">${katexHTML}</span>
-          <span style="position: absolute; top: -8px; right: -8px; background: #2196f3; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">fx</span>
-        </span>
-      `;
+      const formulaHTML = isBlock
+        ? `<div style="display: block; background: linear-gradient(135deg, #e3f2fd, #f0f4ff); border: 1px solid #90caf9; border-radius: 8px; padding: 16px 20px; margin: 16px 0; text-align: center; overflow-x: auto;"><span class="katex-formula" style="font-size: 18px;">${katexHTML}</span></div>`
+        : `<span style="display: inline-block; background: linear-gradient(135deg, #e3f2fd, #f3e5f5); border: 1px solid #bbdefb; border-radius: 6px; padding: 4px 10px; margin: 2px 4px;"><span class="katex-formula" style="font-size: 16px;">${katexHTML}</span></span>`;
       
       const range = quill.getSelection();
       if (range) {
         quill.clipboard.dangerouslyPasteHTML(range.index, formulaHTML);
       }
       
-      toast.success('Formula inserted successfully!');
+      toast.success('Formula inserted!');
     } catch (error) {
       console.error('Formula error:', error);
-      toast.error('Invalid LaTeX formula. Please check your syntax.');
+      toast.error('Invalid LaTeX formula. Check syntax and try again.');
     }
   };
 
@@ -720,7 +724,7 @@ const AdminNews = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Content *
                 </label>
-                <div className="border border-gray-300 rounded-lg overflow-hidden" style={{ zIndex: 1000, position: 'relative' }}>
+                <div className="border border-gray-300 rounded-lg" style={{ position: 'relative' }}>
                   <ReactQuill
                     theme="snow"
                     value={formData.content}
@@ -728,24 +732,24 @@ const AdminNews = () => {
                     modules={quillModules}
                     formats={quillFormats}
                     style={{
-                      height: '300px',
-                      zIndex: 1000,
+                      minHeight: '350px',
                       position: 'relative',
                       pointerEvents: 'auto'
                     }}
-                    className="bg-white"
+                    className="bg-white admin-quill-editor"
                     readOnly={false}
                   />
                 </div>
-                <div className="mt-4 text-sm text-gray-600">
-                  <p><strong>Rich Text Editor Features:</strong></p>
-                  <ul className="list-disc list-inside mt-2 space-y-1">
-                    <li><strong>Formatting:</strong> Bold, Italic, Underline, Headers, Lists, Quotes</li>
-                    <li><strong>Tables:</strong> Click the table button (⊞) to insert formatted tables</li>
-                    <li><strong>PDF:</strong> Click PDF button (📄) to embed PDF documents</li>
-                    <li><strong>Math Formulas:</strong> Click formula button to add LaTeX equations</li>
-                    <li><strong>Links & Media:</strong> Insert links, images, and videos</li>
-                  </ul>
+                <div className="mt-3 p-3 rounded-lg bg-blue-50 border border-blue-200">
+                  <p className="text-xs font-bold text-blue-800 mb-1">Media Insertion (URL-based, no file upload):</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs text-blue-700">
+                    <span>Image icon → Paste image URL</span>
+                    <span>Video icon → Paste YouTube/video URL</span>
+                    <span>PDF button → Paste PDF URL</span>
+                    <span>fx button → LaTeX math formula</span>
+                    <span>T button → Insert table</span>
+                    <span>Code-block → Code snippets</span>
+                  </div>
                 </div>
               </div>
 
@@ -922,29 +926,31 @@ const AdminNews = () => {
 
       {/* Custom Styles for ReactQuill */}
       <style jsx global>{`
-        .ql-editor {
-          min-height: 250px !important;
-          font-size: 16px;
+        .admin-quill-editor .ql-editor {
+          min-height: 300px !important;
+          max-height: 500px !important;
+          overflow-y: auto !important;
+          font-size: 15px;
           line-height: 1.6;
         }
         
-        .ql-toolbar {
-          border-top: 1px solid #e5e7eb;
-          border-left: 1px solid #e5e7eb;
-          border-right: 1px solid #e5e7eb;
+        .admin-quill-editor .ql-toolbar {
+          border: 1px solid #e5e7eb;
           background: linear-gradient(135deg, #f9fafb, #ffffff);
-          position: relative;
+          position: sticky;
+          top: 0;
           z-index: 1001;
-          padding: 8px;
+          padding: 6px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 2px;
         }
         
-        .ql-container {
-          border-bottom: 1px solid #e5e7eb;
-          border-left: 1px solid #e5e7eb;
-          border-right: 1px solid #e5e7eb;
+        .admin-quill-editor .ql-container {
+          border: 1px solid #e5e7eb;
+          border-top: none;
           background: white;
           position: relative;
-          z-index: 1000;
         }
         
         .ql-toolbar .ql-picker {
