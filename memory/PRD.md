@@ -1,75 +1,46 @@
 # SESGRG Website - Product Requirements Document
 
 ## Original Problem Statement
-Build a separate student notes blog system for the SESGRG (Sustainable Energy & Smart Grid Research) website. Notes should be accessible at /notes URL but NOT in the navbar. Professional blog system with full admin panel CRUD. Supports rich text content with math formulas, code blocks, tables, images/videos/PDFs via URL. Subjects are power system related. Admin panel integration into existing admin at /admin/notes.
+Build a separate student notes blog system for the SESGRG (Sustainable Energy & Smart Grid Research) website. Notes accessible at /notes URL (not in navbar). Professional blog system with admin CRUD. Rich text with math, code, tables, images/videos/PDFs via URL (no file upload). Power system subjects. Comment + share system.
 
 ## Architecture
 - **Frontend**: React 18 + Tailwind CSS + Firebase SDK + DOMPurify
-- **Backend**: FastAPI 0.136.0 (minimal, Firebase is primary data store)
+- **Backend**: FastAPI 0.136.0
 - **Database**: Firebase Firestore (primary) + Mock data fallback
-- **Auth**: Firebase Firestore users + hardcoded admin fallback, sessionStorage with 30min expiry
-- **Rich Text**: ReactQuill with KaTeX (math), code blocks, tables, PDF embed
-- **Security**: DOMPurify sanitization on all HTML rendering, no hardcoded secrets
+- **Auth**: sessionStorage with 30min expiry
+- **Rich Text**: ReactQuill with KaTeX, URL-based media (image/video/PDF)
+- **Security**: DOMPurify sanitization, no hardcoded secrets
 
-## User Personas
-1. **Students** - Browse and read course notes at /notes
-2. **Admin/Faculty** - Create, edit, delete notes from /admin/notes
+## What's Been Implemented
 
-## Core Requirements
-- [x] Public notes page at /notes (standalone, no navbar)
-- [x] Note detail page at /notes/:noteId
-- [x] Admin CRUD at /admin/notes (inside existing admin panel)
-- [x] Rich text editor with tables, math formulas, code blocks, PDF/video/image embeds
-- [x] Subject-based filtering (Power System related subjects)
-- [x] Search functionality
-- [x] Pin/unpin notes feature
-- [x] Status: published/draft
-- [x] Admin dashboard integration (stats + quick action)
-- [x] Design matches existing blue/white theme
-
-## What's Been Implemented (Jan 2026)
 ### Session 1 - Notes System MVP
-- Notes.js: Public notes listing page with hero, search, subject filters, cards grid
-- NoteDetail.js: Individual note view with rich content rendering, related notes
-- AdminNotes.js: Full admin CRUD with ReactQuill rich text editor, table/PDF/formula handlers
-- DataContext.js: Extended with notes collection, mock data (3 sample notes)
-- AdminDashboard.js: Updated with Student Notes stats and quick actions
-- App.js: Routes for /notes, /notes/:noteId, /admin/notes
+- Notes.js, NoteDetail.js, AdminNotes.js created
+- DataContext extended with notes collection
+- Admin dashboard integration
 
 ### Session 2 - Code Review Fixes
-**Security (Critical):**
-- DOMPurify sanitization on ProfessionalContentRenderer.js, NoteDetail.js, NewsDetail.js
-- localStorage → sessionStorage with 30min expiry in AuthContext.js
-- Removed hardcoded SECRET_KEY fallback from server.py and server_minimal_auth.py
-- Fixed document.write XSS vector in NewsDetail.js print function
+- DOMPurify sanitization on all HTML rendering
+- localStorage → sessionStorage migration
+- Hardcoded secrets removed
+- Array index keys fixed
+- Old server files cleaned up
 
-**Code Quality (Important):**
-- Replaced array-index keys with stable unique keys in Home.js, Notes.js, NoteDetail.js, AdminPublications.js
-- Cleaned up 12 old/broken backend server files (server_old.py, server_broken.py, etc.)
-- Fixed bare except clauses in server.py (now catches ValueError, TypeError)
-- Upgraded FastAPI 0.105.0 → 0.136.0 (CORS middleware fix)
+### Session 3 - Complete Redesign + Features
+- **Dark Navy Theme**: Complete redesign with #0a1628 dark navy background, cyan accents (#38bdf8)
+- **Content Rendering Fixed**: Code blocks now have dark blue (#0f172a) background with light (#e2e8f0) text, tables styled with dark headers
+- **Responsive Design**: Single column mobile, filter toggle, proper spacing at all breakpoints
+- **Comment System**: Firestore-based comments on each note (name + text)
+- **Share System**: WhatsApp, Facebook, Twitter, Copy Link buttons on note detail
+- **URL-based Media**: Admin image/video/PDF buttons prompt for URLs instead of file upload
+- **Mock Data Fix**: deleteItem/updateItem gracefully handle Firestore errors for mock data
 
-## Subjects List
-- Power System Analysis, Power Electronics, Renewable Energy Integration
-- Smart Grid Technologies, Energy Storage Systems, Power System Protection
-- Electrical Machines, Control Systems, Microgrids & Distributed Energy
-- Grid Optimization & Stability, Cybersecurity for Power Systems, Power System Automation
-
-## Prioritized Backlog
-### P0 (Done)
-- All core CRUD for notes
-- Public notes browsing
-- Admin panel integration
-- Security hardening (DOMPurify, sessionStorage, no hardcoded secrets)
-
-### P1 (Next)
-- React hook dependency fixes (44 missing dependencies across files)
-- Split large components (AdminNews 1112 lines, ProfessionalContentRenderer 1023 lines)
+## Backlog
+### P1
 - Note view counter
 - Print/PDF export for notes
+- React hook dependency fixes
 
-### P2 (Future)
-- Full-text search with Firestore indexing
-- Note commenting system for students
-- Bookmarking/favorites system
-- Subject-specific landing pages
+### P2
+- Full-text search indexing
+- Student bookmarking/favorites
+- Admin bulk operations
