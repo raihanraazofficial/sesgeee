@@ -68,6 +68,8 @@ const AdminNotes = () => {
         ['clean'],
       ],
       handlers: {
+        image: function () { insertImageByURL(this.quill); },
+        video: function () { insertVideoByURL(this.quill); },
         table: function () { insertTable(this.quill); },
         pdf: function () { insertPDF(this.quill); },
         formula: function () { insertFormula(this.quill); },
@@ -85,6 +87,45 @@ const AdminNotes = () => {
     'link', 'image', 'video',
     'table', 'formula',
   ];
+
+  const insertImageByURL = (quill) => {
+    const url = prompt('Enter Image URL (e.g. https://example.com/image.jpg):');
+    if (!url) return;
+    const alt = prompt('Enter image description (optional):', '') || '';
+    const imageHTML = `<div style="margin: 20px 0; text-align: center;"><img src="${url}" alt="${alt}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />${alt ? `<p style="margin-top: 8px; font-size: 13px; color: #6b7280; font-style: italic;">${alt}</p>` : ''}</div>`;
+    const range = quill.getSelection();
+    if (range) quill.clipboard.dangerouslyPasteHTML(range.index, imageHTML);
+    toast.success('Image inserted from URL!');
+  };
+
+  const insertVideoByURL = (quill) => {
+    const url = prompt('Enter Video URL (YouTube, Vimeo, or direct video link):');
+    if (!url) return;
+    let embedHTML = '';
+    // YouTube
+    const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+    if (ytMatch) {
+      embedHTML = `<div style="margin: 20px 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"><iframe src="https://www.youtube.com/embed/${ytMatch[1]}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen loading="lazy"></iframe></div>`;
+    }
+    // Vimeo
+    else if (url.includes('vimeo.com')) {
+      const vimeoId = url.match(/vimeo\.com\/(\d+)/);
+      if (vimeoId) {
+        embedHTML = `<div style="margin: 20px 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"><iframe src="https://player.vimeo.com/video/${vimeoId[1]}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen loading="lazy"></iframe></div>`;
+      }
+    }
+    // Direct video file URL
+    else if (url.match(/\.(mp4|webm|ogg|mov)(\?.*)?$/i)) {
+      embedHTML = `<div style="margin: 20px 0; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"><video controls style="width: 100%; display: block;" preload="metadata"><source src="${url}" type="video/${url.split('.').pop().split('?')[0]}">Your browser does not support the video tag.</video></div>`;
+    }
+    // Fallback: embed as iframe
+    else {
+      embedHTML = `<div style="margin: 20px 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px;"><iframe src="${url}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen loading="lazy"></iframe></div>`;
+    }
+    const range = quill.getSelection();
+    if (range) quill.clipboard.dangerouslyPasteHTML(range.index, embedHTML);
+    toast.success('Video inserted from URL!');
+  };
 
   const insertTable = (quill) => {
     setCurrentQuillRef(quill);
@@ -500,7 +541,15 @@ const AdminNotes = () => {
                   />
                 </div>
                 <div className="mt-4 text-sm text-gray-600">
-                  <p><strong>Editor Features:</strong> Bold, Italic, Headers, Lists, Tables, Code Blocks, Math Formulas (LaTeX), PDF embed, Images (URL), Videos (URL), Links</p>
+                  <p><strong>Editor Features:</strong></p>
+                  <ul className="list-disc list-inside mt-1 space-y-0.5 text-xs text-gray-500">
+                    <li><strong>Image (URL):</strong> Click image icon → paste image URL (no upload, saves DB space)</li>
+                    <li><strong>Video (URL):</strong> Click video icon → paste YouTube/Vimeo/direct video URL</li>
+                    <li><strong>PDF (URL):</strong> Click PDF button → paste PDF URL for embedded viewer</li>
+                    <li><strong>Tables:</strong> Click table button (T) to insert formatted tables</li>
+                    <li><strong>Math:</strong> Click fx button for LaTeX formulas</li>
+                    <li><strong>Code:</strong> Use code-block for code snippets</li>
+                  </ul>
                 </div>
               </div>
 

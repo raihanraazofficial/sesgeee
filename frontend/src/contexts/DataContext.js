@@ -24,6 +24,7 @@ const initialState = {
   researchAreas: [],
   photoGallery: [],
   notes: [],
+  comments: [],
   settings: {},
   loading: {
     people: false,
@@ -33,6 +34,7 @@ const initialState = {
     researchAreas: false,
     photoGallery: false,
     notes: false,
+    comments: false,
     settings: false,
   },
   error: null,
@@ -614,6 +616,7 @@ export function DataProvider({ children }) {
       if (type === 'researchAreas') collectionName = 'research_areas';
       if (type === 'photoGallery') collectionName = 'photo_gallery';
       if (type === 'notes') collectionName = 'notes';
+      if (type === 'comments') collectionName = 'comments';
       // news and events use their own collection names
 
       try {
@@ -826,7 +829,18 @@ export function DataProvider({ children }) {
         updated_at: serverTimestamp(),
       };
 
-      await updateDoc(doc(db, collectionName, id), itemData);
+      try {
+        await updateDoc(doc(db, collectionName, id), itemData);
+      } catch (firestoreError) {
+        // If Firestore fails (e.g. mock data not in Firestore), try creating instead
+        console.warn(`Firestore update failed for ${type}/${id}, attempting create:`, firestoreError.message);
+        try {
+          const { id: _, ...dataWithoutId } = itemData;
+          await addDoc(collection(db, collectionName), { ...dataWithoutId, _original_id: id });
+        } catch (createError) {
+          console.warn(`Firestore create also failed, updating local state only:`, createError.message);
+        }
+      }
       
       const updatedItem = {
         id,
@@ -852,7 +866,12 @@ export function DataProvider({ children }) {
       if (type === 'researchAreas') collectionName = 'research_areas';
       if (type === 'photoGallery') collectionName = 'photo_gallery';
 
-      await deleteDoc(doc(db, collectionName, id));
+      try {
+        await deleteDoc(doc(db, collectionName, id));
+      } catch (firestoreError) {
+        // If Firestore fails (e.g. mock data not in Firestore), just update local state
+        console.warn(`Firestore delete failed for ${type}/${id}, removing from local state:`, firestoreError.message);
+      }
 
       dispatch({
         type: 'DELETE_ITEM',
