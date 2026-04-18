@@ -23,6 +23,7 @@ const initialState = {
   achievements: [],
   researchAreas: [],
   photoGallery: [],
+  notes: [],
   settings: {},
   loading: {
     people: false,
@@ -31,6 +32,7 @@ const initialState = {
     achievements: false,
     researchAreas: false,
     photoGallery: false,
+    notes: false,
     settings: false,
   },
   error: null,
@@ -494,6 +496,47 @@ const getMockData = (type) => {
         google_calendar_link: ''
       }
     ],
+    notes: [
+      {
+        id: 'note-1',
+        title: 'Introduction to Power System Analysis',
+        content: '<h2>Power System Analysis Fundamentals</h2><p>Power system analysis is the study of electrical power systems for planning, design, and operation. This note covers the basic concepts including per-unit system, load flow analysis, and fault analysis.</p><h3>Per-Unit System</h3><p>The per-unit system simplifies calculations in power systems by expressing quantities as fractions of a defined base unit quantity.</p><pre class="ql-code-block">Base Power (S_base) = 100 MVA\nBase Voltage (V_base) = varies per zone\nBase Current = S_base / (sqrt(3) * V_base)\nBase Impedance = V_base^2 / S_base</pre><h3>Key Formulas</h3><p>The power flow equation: <strong>P + jQ = V * I*</strong></p><p>Where P is real power, Q is reactive power, V is voltage phasor, and I* is conjugate of current phasor.</p>',
+        excerpt: 'Fundamentals of power system analysis including per-unit system, load flow, and fault analysis.',
+        author: 'Dr. Shameem Ahmad',
+        subject: 'Power System Analysis',
+        published_date: '2025-01-10T10:00:00.000Z',
+        tags: ['power systems', 'analysis', 'per-unit', 'load flow'],
+        status: 'published',
+        featured_image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwxfHxzbWFydCUyMGdyaWR8ZW58MHx8fHwxNzU2NTM1MTU3fDA&ixlib=rb-4.1.0&q=85',
+        is_pinned: true
+      },
+      {
+        id: 'note-2',
+        title: 'Smart Grid Communication Protocols',
+        content: '<h2>Communication Protocols in Smart Grids</h2><p>Smart grids rely on advanced communication protocols for real-time monitoring and control. This note discusses IEC 61850, DNP3, and Modbus protocols.</p><h3>IEC 61850</h3><p>IEC 61850 is an international standard for communication networks and systems in substations. It provides:</p><ul><li>Standardized data models</li><li>Fast peer-to-peer communication (GOOSE)</li><li>Sampled values for real-time measurements</li></ul><h3>Protocol Comparison</h3><table class="professional-table-content" style="width: 100%; border-collapse: collapse;"><thead><tr><th style="border: 1px solid #e5e7eb; padding: 12px;">Protocol</th><th style="border: 1px solid #e5e7eb; padding: 12px;">Speed</th><th style="border: 1px solid #e5e7eb; padding: 12px;">Application</th></tr></thead><tbody><tr><td style="border: 1px solid #e5e7eb; padding: 12px;">IEC 61850</td><td style="border: 1px solid #e5e7eb; padding: 12px;">4ms</td><td style="border: 1px solid #e5e7eb; padding: 12px;">Substation Automation</td></tr><tr><td style="border: 1px solid #e5e7eb; padding: 12px;">DNP3</td><td style="border: 1px solid #e5e7eb; padding: 12px;">100ms</td><td style="border: 1px solid #e5e7eb; padding: 12px;">SCADA Systems</td></tr><tr><td style="border: 1px solid #e5e7eb; padding: 12px;">Modbus</td><td style="border: 1px solid #e5e7eb; padding: 12px;">250ms</td><td style="border: 1px solid #e5e7eb; padding: 12px;">Industrial Devices</td></tr></tbody></table>',
+        excerpt: 'Overview of IEC 61850, DNP3, and Modbus protocols used in smart grid systems.',
+        author: 'Dr. Amirul Islam',
+        subject: 'Smart Grid Technologies',
+        published_date: '2025-01-08T14:30:00.000Z',
+        tags: ['smart grid', 'communication', 'IEC 61850', 'protocols'],
+        status: 'published',
+        featured_image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHw2fHxBSSUyMHRlY2hub2xvZ3l8ZW58MHx8fHwxNjk3MDI3MDAwfDA&ixlib=rb-4.1.0&q=85',
+        is_pinned: false
+      },
+      {
+        id: 'note-3',
+        title: 'Renewable Energy Integration Challenges',
+        content: '<h2>Challenges in Renewable Energy Integration</h2><p>Integrating renewable energy sources into the power grid presents several technical challenges that need to be addressed for stable operation.</p><h3>Key Challenges</h3><ol><li><strong>Intermittency:</strong> Solar and wind power are inherently variable</li><li><strong>Voltage Regulation:</strong> Distributed generation can cause voltage fluctuations</li><li><strong>Frequency Stability:</strong> Loss of inertia from rotating machines</li><li><strong>Power Quality:</strong> Harmonics from power electronic converters</li></ol><h3>Solutions</h3><blockquote>Energy storage systems and advanced inverter technologies are key enablers for high renewable penetration in power grids.</blockquote><p>Modern solutions include battery energy storage systems (BESS), flexible AC transmission systems (FACTS), and advanced grid-forming inverters.</p>',
+        excerpt: 'Technical challenges and solutions for integrating renewable energy into power grids.',
+        author: 'Dr. A. S. Nazmul Huda',
+        subject: 'Renewable Energy Integration',
+        published_date: '2025-01-05T09:00:00.000Z',
+        tags: ['renewable energy', 'grid integration', 'challenges', 'solutions'],
+        status: 'published',
+        featured_image: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwyfHxyZW5ld2FibGV8ZW58MHx8fHwxNzU2NTM1MTY0fDA&ixlib=rb-4.1.0&q=85',
+        is_pinned: false
+      }
+    ],
     settings: {
       logo: 'https://customer-assets.emergentagent.com/job_da31abd5-8dec-452e-a49e-9beda777d1d4/artifacts/ii07ct2o_Logo.jpg',
       university_name: 'BRAC University',
@@ -570,6 +613,7 @@ export function DataProvider({ children }) {
       let collectionName = type;
       if (type === 'researchAreas') collectionName = 'research_areas';
       if (type === 'photoGallery') collectionName = 'photo_gallery';
+      if (type === 'notes') collectionName = 'notes';
       // news and events use their own collection names
 
       try {

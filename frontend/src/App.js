@@ -21,6 +21,10 @@ import PhotoGallery from './pages/PhotoGallery';
 import News from './pages/News';
 import NewsDetail from './pages/NewsDetail';
 
+// Notes Pages (hidden from navbar, accessible via /notes)
+import NotesPage from './pages/Notes';
+import NoteDetail from './pages/NoteDetail';
+
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -29,6 +33,7 @@ import AdminPublications from './pages/admin/AdminPublications';
 import AdminProjects from './pages/admin/AdminProjects';
 import AdminAchievements from './pages/admin/AdminAchievements';
 import AdminNews from './pages/admin/AdminNews';
+import AdminNotes from './pages/admin/AdminNotes';
 import AdminSettings from './pages/admin/AdminSettings';
 
 // Context
@@ -71,10 +76,15 @@ function App() {
                     <Route path="/projects" element={<AdminProjects />} />
                     <Route path="/achievements" element={<AdminAchievements />} />
                     <Route path="/news" element={<AdminNews />} />
+                    <Route path="/notes" element={<AdminNotes />} />
                     <Route path="/settings" element={<AdminSettings />} />
                   </Routes>
                 </ProtectedRoute>
               } />
+              
+              {/* Notes Routes - No Navbar, accessible via /notes */}
+              <Route path="/notes" element={<NotesPage />} />
+              <Route path="/notes/:noteId" element={<NoteDetail />} />
               
               {/* Public Routes */}
               <Route path="/*" element={

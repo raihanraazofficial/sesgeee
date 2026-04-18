@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Users, FileText, FolderOpen, Award, Calendar, Settings, LogOut } from 'lucide-react';
+import { Users, FileText, FolderOpen, Award, Calendar, Settings, LogOut, BookOpen } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useData } from '../../contexts/DataContext';
 
@@ -7,12 +7,14 @@ const AdminDashboard = () => {
   const { logout, user } = useAuth();
   const { people, publications, projects, achievements, fetchData } = useData();
   const [news, setNews] = useState([]);
+  const [notes, setNotes] = useState([]);
   const [stats, setStats] = useState([
     { name: 'Total People', value: '0', icon: Users, color: 'text-blue-600' },
     { name: 'Publications', value: '0', icon: FileText, color: 'text-green-600' },
     { name: 'Projects', value: '0', icon: FolderOpen, color: 'text-purple-600' },
     { name: 'Achievements', value: '0', icon: Award, color: 'text-yellow-600' },
     { name: 'News & Events', value: '0', icon: Calendar, color: 'text-red-600' },
+    { name: 'Student Notes', value: '0', icon: BookOpen, color: 'text-cyan-600' },
   ]);
   const [loading, setLoading] = useState(true);
 
@@ -25,7 +27,8 @@ const AdminDashboard = () => {
         fetchData('publications'),
         fetchData('projects'),
         fetchData('achievements'),
-        fetchData('news').then(newsData => setNews(newsData || []))
+        fetchData('news').then(newsData => setNews(newsData || [])),
+        fetchData('notes').then(notesData => setNotes(notesData || []))
       ]);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
@@ -46,9 +49,10 @@ const AdminDashboard = () => {
       { name: 'Projects', value: projects.length.toString(), icon: FolderOpen, color: 'text-purple-600' },
       { name: 'Achievements', value: achievements.length.toString(), icon: Award, color: 'text-yellow-600' },
       { name: 'News & Events', value: news.length.toString(), icon: Calendar, color: 'text-red-600' },
+      { name: 'Student Notes', value: notes.length.toString(), icon: BookOpen, color: 'text-cyan-600' },
     ]);
     setLoading(false);
-  }, [people, publications, projects, achievements, news]);
+  }, [people, publications, projects, achievements, news, notes]);
 
   const quickActions = [
     { name: 'Manage People', href: '/admin/people', icon: Users },
@@ -56,6 +60,7 @@ const AdminDashboard = () => {
     { name: 'Projects', href: '/admin/projects', icon: FolderOpen },
     { name: 'Achievements', href: '/admin/achievements', icon: Award },
     { name: 'News & Events', href: '/admin/news', icon: Calendar },
+    { name: 'Student Notes', href: '/admin/notes', icon: BookOpen },
     { name: 'Settings', href: '/admin/settings', icon: Settings },
   ];
 
@@ -83,7 +88,7 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {stats.map((stat) => (
             <div key={stat.name} className="glass rounded-xl p-6 border border-gray-200 shadow-lg">
               <div className="flex items-center">
